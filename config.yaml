@@ -41,11 +41,8 @@ metadata:
       class: enum
       value-type: uint8
       members:
-        - NEW
-        - TERMINATED
-        - READY
-        - RUNNING
-        - WAITING
+        - ACTIVATED
+        - DEACTIVATED       
   clocks:
     default:
       freq: 1000000000

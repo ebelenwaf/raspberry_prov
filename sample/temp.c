@@ -1,7 +1,4 @@
-
- 
 #include <wiringPi.h>
- 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -14,19 +11,22 @@
 int dht11_dat[5] = { 0, 0, 0, 0, 0 };
 
 enum state_t {
-	ACTVATED,
-	DEACTIVATED,
+	NEW,
+	TERMINATED,
+    READY,
+    RUNNING,
+    WAITING
+	
 };
 
 
-/*
 void trace_stuff(struct barectf_default_ctx *ctx)
 {
 	int i;
 	const char *str;
 
 	 //record 40000 events 
-	for (i = 0; i < 5000; ++i) {
+	
 		barectf_trace_simple_uint32(ctx, i * 1500);
 		barectf_trace_simple_int16(ctx, -i * 2);
 		barectf_trace_simple_float(ctx, (float) i / 1.23);
@@ -38,25 +38,25 @@ void trace_stuff(struct barectf_default_ctx *ctx)
 		barectf_trace_trace_sensor(ctx, "hello");
 		barectf_trace_context_no_payload(ctx, i, "ctx");
 		barectf_trace_simple_enum(ctx, RUNNING);
-		barectf_trace_a_few_fields(ctx, -1, 301, -3.14159,
-						     "hello", NEW);
+		
 		barectf_trace_bit_packed_integers(ctx, 1, -1, 3,
 							    -2, 2, 7, 23,
 							    -55, 232);
 		barectf_trace_no_context_no_payload(ctx);
 		barectf_trace_simple_enum(ctx, TERMINATED);
-	}
+
 }
 
-*/
+
  
 void read_dht11_dat()
 {
 
-	struct barectf_platform_linux_fs_ctx *platform_ctx;
+	
 
-	/* initialize platform */
-	platform_ctx = barectf_platform_linux_fs_init(512, "ctf", 1, 2, 7);
+	
+
+	
 
 	
 
@@ -119,7 +119,7 @@ void read_dht11_dat()
 			dht11_dat[0], dht11_dat[1], dht11_dat[2], dht11_dat[3], f );
 
 
-		barectf_trace_trace_sensor(barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), "hello");
+		
 	
 		//barectf_trace_simple_string(barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), "Humidity");
 
@@ -128,40 +128,75 @@ void read_dht11_dat()
 		printf( "Data not good, skip\n" );
 	} */
 
-	/* finalize platform */
-	barectf_platform_linux_fs_fini(platform_ctx);
+	
 }
  
 int main( void )
 {
+	FILE *fp = fopen("experiment.txt", "wb");
+
+	
+	time_t rawtime;
+	struct tm * timeinfo;
+	struct barectf_platform_linux_fs_ctx *platform_ctx;
+
+	/* initialize platform */
+	platform_ctx = barectf_platform_linux_fs_init(512, "ctf", 1, 2, 7);
 
 	printf( "Raspberry Pi wiringPi DHT11 Temperature test program\n" );
+
+
+
+	if(fp== NULL)
+	{
+		printf("Error opening file!\n");
+		exit(1);
+	}
+		
 	
  
 	if ( wiringPiSetup() == -1 )
 		exit( 1 );
  
-	while ( 1 )
+	for ( ;; )
 	{
 		read_dht11_dat();
+
+		time( &rawtime);
+	    timeinfo = localtime(&rawtime);
+		//barectf_trace_trace_sensor(barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), "hello");
+
+		
 		delay( 1000 ); /* wait 1secls to refresh */
+
+
+		//trace_stuff(barectf_platform_linux_fs_get_barectf_ctx(platform_ctx));
+
+		printf("No of packets discarded: %d, time: %s \n",barectf_packet_events_discarded(platform_ctx), asctime(timeinfo));
+		fprintf(fp, "No of packets discarded: %d, time: %s \n",barectf_packet_events_discarded(platform_ctx), asctime(timeinfo));     
+
+		barectf_default_trace_sensor_readings(barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), -1, 301, -3.14159,
+						     "hello", NEW);
 
 		pinMode( 7, INPUT );
 		
 		
 		digitalWrite (7, HIGH) ; 
 		printf( "Blinker activated \n" );
-		barectf_trace_simple_enum(ctx, ACTIVATED);
+		//barectf_trace_simple_enum(barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), ACTIVATED);
 		delay (500) ;
 		
         digitalWrite (7,  LOW) ; 
-		barectf_trace_simple_enum(ctx, DEACTIVATED);
+		//barectf_trace_simple_enum(barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), DEACTIVATED);
 		
 	}
 
 	
+
+    /* finalize platform */
+	barectf_platform_linux_fs_fini(platform_ctx);
+
+	fclose(fp);
  
 	return(0);
 }
-
-
