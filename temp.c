@@ -188,8 +188,8 @@ int main( void )
 
 		  
 
-		barectf_default_trace_sensor_readings(barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), -1, 301, -3.14159,
-						     "hello", ACTIVATED);
+		barectf_default_trace_sensor_readings(barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), -1, 301,
+						     "device_1", "sensor_1", ACTIVATED);
 
 		pinMode( 7, INPUT );
 		

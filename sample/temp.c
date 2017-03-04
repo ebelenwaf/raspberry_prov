@@ -175,8 +175,8 @@ int main( void )
 		printf("No of packets discarded: %d, time: %s \n",barectf_packet_events_discarded(platform_ctx), asctime(timeinfo));
 		fprintf(fp, "No of packets discarded: %d, time: %s \n",barectf_packet_events_discarded(platform_ctx), asctime(timeinfo));     
 
-		barectf_default_trace_sensor_readings(barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), -1, 301, -3.14159,
-						     "hello", NEW);
+		barectf_default_trace_sensor_readings(barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), -1, 301, "Device_1"
+						     "Sensor_1", NEW);
 
 		pinMode( 7, INPUT );
 		

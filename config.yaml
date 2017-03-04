@@ -110,7 +110,9 @@ metadata:
             fields:
               temperature: int32
               humidity: uint16
-              other_readings:
+              device_info:
+                class: string
+              sensor_info:
                 class: string
               state: state
         bit_packed_integers:
