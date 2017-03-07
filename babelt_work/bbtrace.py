@@ -16,7 +16,6 @@ def ctfToProv():
     ex = Namespace('ex', 'http://example/')  # namespaces do not need to be explicitly added to a document
     data = ['timestamp', 'humidity', 'temperature', 'sensor_info', 'device_info']
     for event in trace_collection.events:
-
         dataset = {'ex:'+data[0]:event[data[0]], 'ex:'+data[1]:event[data[1]], 'ex:'+data[2]:event[data[2]]}
         e1 = d1.entity(ex['dataset'],dataset)
         sensor_agent = d1.agent('ex:'+event['sensor_info'])
@@ -25,6 +24,6 @@ def ctfToProv():
         d1.wasGeneratedBy(e1, activity)
         d1.wasAssociatedWith(activity,sensor_agent)
         d1.used(sensor_agent, device_agent)
-        d1.serialize('hey.json')
     return d1
 prov_document = ctfToProv()
+prov_document.serialize('output.json')
