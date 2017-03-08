@@ -164,7 +164,7 @@ int main( void )
 	if ( wiringPiSetup() == -1 )
 		exit( 1 );
  
-	for ( int i = 0; i < 250; i++ )
+	for ( int i = 0; i < 5; i++ )
 	{
 
 		fstat(fp, &st);
@@ -189,7 +189,7 @@ int main( void )
 		  
 
 		barectf_default_trace_sensor_readings(barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), -1, 301,
-						     "device_1", "sensor_1", ACTIVATED);
+						     "device_1", "sensor_1");
 
 		pinMode( 7, INPUT );
 		
