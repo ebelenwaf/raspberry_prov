@@ -17,15 +17,17 @@ def ctfToProv():
     d1 = ProvDocument()
     ex = Namespace('ex', 'http://example/')  # namespaces do not need to be explicitly added to a document
     data = ['timestamp', 'humidity', 'temperature', 'sensor_info', 'device_info']
+    counter = 0
     for event in trace_collection.events:
         dataset = {'ex:'+data[0]:event[data[0]], 'ex:'+data[1]:event[data[1]], 'ex:'+data[2]:event[data[2]]}
-        e1 = d1.entity(ex['dataset'],dataset)
+        e1 = d1.entity(ex['dataset'+str(counter)],dataset)
         sensor_agent = d1.agent('ex:'+event['sensor_info'])
         device_agent = d1.agent('ex:'+event['device_info'])
         activity = d1.activity('ex:read')
         d1.wasGeneratedBy(e1, activity)
         d1.wasAssociatedWith(activity,sensor_agent)
         d1.used(sensor_agent, device_agent)
+        counter+=1
     return d1
 prov_document = ctfToProv()
 prov_document.serialize('output.json')
