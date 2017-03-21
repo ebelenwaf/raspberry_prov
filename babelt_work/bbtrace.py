@@ -1,10 +1,12 @@
 #!/usr/bin/env
+#import provneo4j.api
 import babeltrace
 import sys
-import re
+import datetime
 from prov.dot import prov_to_dot
 from prov.model import ProvDocument, Namespace, Literal, PROV, Identifier
 
+#provneo4j_api = provneo4j.api.Api(base_url="http://localhost:7474/db/data", username="neo4j", password="neo4j")
 
 # get the trace path from the first command line argument
 trace_path = sys.argv[1]
@@ -27,3 +29,5 @@ def ctfToProv():
     return d1
 prov_document = ctfToProv()
 prov_document.serialize('output.json')
+#prov_document.serialize('output.json')
+#provneo4j_api.document.create(prov_document, name="Primer Example")
