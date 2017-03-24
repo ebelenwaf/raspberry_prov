@@ -3,17 +3,19 @@ from provneo4j.api import Api
 import provneo4j.tests.examples as examples
 from prov.model import ProvDocument, Namespace, Literal, PROV, Identifier
 import datetime
+import os
 
 provneo4j_api = Api(base_url="http://localhost:7474/db/data", username="neo4j", password="database")
 
+
+# Function reads the output.json file to gather the serialized Prov Document, deserializes it and returns the Prov Document. 
 def primer():
-	a  = ProvDocument()
-	with open("/Users/andrecampbell/Google Drive/Sophomore Year/Research/raspberry_prov/babelt_work/output.json") as json_file:
-		line = json_file.readline()
-		print line
-		a.deserialize(content=line)
-	print a.get_provn()
-	return a
+        a  = ProvDocument()
+        script_path = os.path.dirname(os.path.abspath( __file__ )) #
+        with open(str(script_path) + "/output.json") as json_file:
+                line = json_file.readline()
+                a.deserialize(content=line)
+        return a
 
 
 prov_document = primer()

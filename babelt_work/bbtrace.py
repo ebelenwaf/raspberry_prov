@@ -26,10 +26,11 @@ def ctfToProv():
         activity = d1.activity('ex:read')
         d1.wasGeneratedBy(e1, activity)
         d1.wasAssociatedWith(activity,sensor_agent)
-        d1.used(sensor_agent, device_agent)
+        d1.used(device_agent, sensor_agent)
         counter+=1
     return d1
 prov_document = ctfToProv()
+prov_document = prov_document.unified()
 prov_document.serialize('output.json')
 #prov_document.serialize('output.json')
 #provneo4j_api.document.create(prov_document, name="Primer Example")
