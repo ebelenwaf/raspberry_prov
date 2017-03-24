@@ -15,9 +15,11 @@ trace_collection.add_trace(trace_path, 'ctf')
 #Outputs the event keys of each trace that was recorded.
 def ctfToProv():
     d1 = ProvDocument()
+    dummy = ProvDocument()
     ex = Namespace('ex', 'http://example/')  # namespaces do not need to be explicitly added to a document
     data = ['timestamp', 'humidity', 'temperature', 'sensor_info', 'device_info']
     counter = 0
+    relationships = []
     for event in trace_collection.events:
         dataset = {'ex:'+data[0]:event[data[0]], 'ex:'+data[1]:event[data[1]], 'ex:'+data[2]:event[data[2]]}
         e1 = d1.entity(ex['dataset'+str(counter)],dataset)
@@ -25,8 +27,16 @@ def ctfToProv():
         device_agent = d1.agent('ex:'+event['device_info'])
         activity = d1.activity('ex:read')
         d1.wasGeneratedBy(e1, activity)
-        d1.wasAssociatedWith(activity,sensor_agent)
-        d1.used(device_agent, sensor_agent)
+        # strings used to detect if the relationship already exists in the d1 document
+        association_relationship = str(dummy.wasAssociatedWith(activity, sensor_agent))
+        used_relationship = str(dummy.used(device_agent, sensor_agent))
+        #check if the association already esists
+        if association_relationship not in relationships:
+            d1.wasAssociatedWith(activity,sensor_agent)
+            relationships.append(association_relationship)
+        if used_relationship not in relationships:
+            d1.used(device_agent, sensor_agent)
+            relationships.append(used_relationship)
         counter+=1
     return d1
 prov_document = ctfToProv()
