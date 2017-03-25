@@ -14,7 +14,7 @@ def primer():
         script_path = os.path.dirname(os.path.abspath( __file__ )) #
         with open(str(script_path) + "/output.json") as json_file:
                 line = json_file.readline()
-                a.deserialize(content=line)
+                a =  a.deserialize(content=line)
         return a
 
 
