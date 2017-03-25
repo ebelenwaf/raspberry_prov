@@ -114,7 +114,6 @@ metadata:
                 class: string
               sensor_info:
                 class: string
-              state: state
         bit_packed_integers:
           log-level: 513
           payload-type:
