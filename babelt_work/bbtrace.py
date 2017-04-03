@@ -20,9 +20,11 @@ def ctfToProv():
     data = ['timestamp', 'humidity', 'temperature', 'sensor_info', 'device_info']
     counter = 0
     relationships = []
+    entities = []
     for event in trace_collection.events:
         dataset = {'ex:'+data[0]:event[data[0]], 'ex:'+data[1]:event[data[1]], 'ex:'+data[2]:event[data[2]]}
         e1 = d1.entity(ex['dataset'+str(counter)],dataset)
+        entities.append(e1)
         sensor_agent = d1.agent('ex:'+event['sensor_info'])
         device_agent = d1.agent('ex:'+event['device_info'])
         activity = d1.activity('ex:read')
@@ -38,6 +40,8 @@ def ctfToProv():
             d1.used(device_agent, sensor_agent)
             relationships.append(used_relationship)
         counter+=1
+    for index in range(len(entities)-1):
+        d1.wasAssociatedWith(entities[index], entities[index + 1])
     return d1
 prov_document = ctfToProv()
 prov_document = prov_document.unified()
