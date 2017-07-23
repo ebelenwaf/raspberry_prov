@@ -1,250 +1,200 @@
-[18:21:16.923197769] (+?.?????????) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:18.442200597] (+1.519002828) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:19.961100092] (+1.518899495) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:21.480101877] (+1.519001785) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:22.999034340] (+1.518932463) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:24.517971594] (+1.518937254) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:26.036906400] (+1.518934806) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:27.555794279] (+1.518887879) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:29.074649554] (+1.518855275) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:30.593560245] (+1.518910691) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:32.112481821] (+1.518921576) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:33.631380793] (+1.518898972) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:35.150403826] (+1.519023033) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:36.669349776] (+1.518945950) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:38.188257028] (+1.518907252) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:39.707184488] (+1.518927460) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:41.226056167] (+1.518871679) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:42.745005137] (+1.518948970) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:44.263913742] (+1.518908605) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:45.782835212] (+1.518921470) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:47.301762358] (+1.518927146) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:48.820781795] (+1.519019437) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:50.339703056] (+1.518921261) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:51.858571920] (+1.518868864) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:53.377397556] (+1.518825636) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:54.896321315] (+1.518923759) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:56.415342887] (+1.519021572) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:57.934271698] (+1.518928811) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:21:59.453178270] (+1.518906572) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:00.972088747] (+1.518910477) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:02.491032037] (+1.518943290) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:04.009823400] (+1.518791363) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:05.528721533] (+1.518898133) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:07.047638155] (+1.518916622) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:08.566528215] (+1.518890060) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:10.085443951] (+1.518915736) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:11.604360104] (+1.518916153) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:13.123262350] (+1.518902246) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:14.642095847] (+1.518833497) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:16.161000280] (+1.518904433) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:17.679983358] (+1.518983078) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:19.198943676] (+1.518960318) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:20.717836026] (+1.518892350) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:22.236716083] (+1.518880057) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:23.755624317] (+1.518908234) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:25.274480676] (+1.518856359) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:26.793410368] (+1.518929692) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:28.312325998] (+1.518915630) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:29.831235012] (+1.518909014) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:31.350145276] (+1.518910264) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:32.876240968] (+1.526095692) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:34.395141180] (+1.518900212) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:35.914079829] (+1.518938649) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:37.432998217] (+1.518918388) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:38.951957177] (+1.518958960) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:40.470865096] (+1.518907919) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:41.989814056] (+1.518948960) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:43.508714370] (+1.518900314) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:45.027625830] (+1.518911460) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:46.546555779] (+1.518929949) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:48.065458853] (+1.518903074) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:49.584383906] (+1.518925053) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:51.103217657] (+1.518833751) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:52.622159740] (+1.518942083) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:54.147950274] (+1.525790534) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:55.670803117] (+1.522852843) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:57.189710929] (+1.518907812) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:22:58.708772333] (+1.519061404) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:00.227641760] (+1.518869427) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:01.746678320] (+1.519036560) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:03.265588891] (+1.518910571) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:04.784533942] (+1.518945051) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:06.303487585] (+1.518953643) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:07.827243649] (+1.523756064) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:09.346182918] (+1.518939269) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:10.865090832] (+1.518907914) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:12.384008016] (+1.518917184) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:13.903160303] (+1.519152287) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:15.422048893] (+1.518888590) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:16.940959619] (+1.518910726) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:18.459873886] (+1.518914267) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:19.978862683] (+1.518988797) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:21.497785074] (+1.518922391) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:23.016723767] (+1.518938693) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:24.540704932] (+1.523981165) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:26.059590031] (+1.518885099) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:27.578505911] (+1.518915880) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:29.097415384] (+1.518909473) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:30.616340535] (+1.518925151) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:32.135270737] (+1.518930202) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:33.654202136] (+1.518931399) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:35.173126713] (+1.518924577) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:36.692013633] (+1.518886920) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:38.210896543] (+1.518882910) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:39.729843046] (+1.518946503) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:41.248759236] (+1.518916190) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:42.767762352] (+1.519003116) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:44.286693021] (+1.518930669) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:45.805498170] (+1.518805149) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:47.330740417] (+1.525242247) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:48.856659275] (+1.525918858) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:50.375530516] (+1.518871241) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:51.894479985] (+1.518949469) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:53.413430653] (+1.518950668) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:54.932366111] (+1.518935458) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:56.451304278] (+1.518938167) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:57.970348486] (+1.519044208) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:23:59.489273631] (+1.518925145) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:01.008160444] (+1.518886813) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:02.527085849] (+1.518925405) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:04.046022817] (+1.518936968) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:05.564941815] (+1.518918998) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:07.083876803] (+1.518934988) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:08.602805385] (+1.518928582) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:10.121717560] (+1.518912175) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:11.640652495] (+1.518934935) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:13.159561128] (+1.518908633) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:14.678460490] (+1.518899362) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:16.197345686] (+1.518885196) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:17.716410567] (+1.519064881) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:19.235339147] (+1.518928580) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:20.760776440] (+1.525437293) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:22.279671374] (+1.518894934) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:23.798579797] (+1.518908423) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:25.317510719] (+1.518930922) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:26.836464402] (+1.518953683) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:28.355435376] (+1.518970974) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:29.874316715] (+1.518881339) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:31.393248105] (+1.518931390) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:32.912659388] (+1.519411283) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:34.431575258] (+1.518915870) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:35.950614147] (+1.519038889) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:37.469605432] (+1.518991285) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:38.988586716] (+1.518981284) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:40.507563261] (+1.518976545) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:42.026506317] (+1.518943056) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:43.545527861] (+1.519021544) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:45.064476280] (+1.518948419) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:46.583393502] (+1.518917222) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:48.102312285] (+1.518918783) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:49.621262058] (+1.518949773) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:51.140147925] (+1.518885867) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:52.659067645] (+1.518919720) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:54.178030750] (+1.518963105) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:55.696932606] (+1.518901856) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:57.216125657] (+1.519193051) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:24:58.735011887] (+1.518886230) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:00.253927492] (+1.518915605) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:01.772917263] (+1.518989771) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:03.291787190] (+1.518869927) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:04.810994928] (+1.519207738) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:06.329888969] (+1.518894041) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:07.849040977] (+1.519152008) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:09.367908039] (+1.518867062) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:10.886830569] (+1.518922530) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:12.405818619] (+1.518988050) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:13.924680628] (+1.518862009) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:15.443575293] (+1.518894665) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:16.962545947] (+1.518970654) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:18.481456080] (+1.518910133) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:20.000522618] (+1.519066538) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:21.519470407] (+1.518947789) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:23.038393091] (+1.518922684) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:24.557312077] (+1.518918986) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:26.076236793] (+1.518924716) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:27.595160518] (+1.518923725) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:29.114125180] (+1.518964662) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:30.633041613] (+1.518916433) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:32.151949921] (+1.518908308) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:33.670986405] (+1.519036484) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:35.189868619] (+1.518882214) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:36.708865051] (+1.518996432) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:38.227762264] (+1.518897213) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:39.746670311] (+1.518908047) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:41.265645804] (+1.518975493) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:42.784565777] (+1.518919973) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:44.303467729] (+1.518901952) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:45.822421243] (+1.518953514) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:47.341285643] (+1.518864400) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:48.860284729] (+1.518999086) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:50.379234909] (+1.518950180) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:51.898156287] (+1.518921378) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:53.417154070] (+1.518997783) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:54.936081489] (+1.518927419) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:56.455020678] (+1.518939189) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:57.973943722] (+1.518923044) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:25:59.492873744] (+1.518930022) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:01.011806474] (+1.518932730) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:02.530756913] (+1.518950439) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:04.049656726] (+1.518899813) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:05.568610862] (+1.518954136) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:07.087482550] (+1.518871688) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:08.606381998] (+1.518899448) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:10.125361758] (+1.518979760) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:11.644284643] (+1.518922885) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:13.163207476] (+1.518922833) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:14.682127756] (+1.518920280) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:16.201015641] (+1.518887885) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:17.719941077] (+1.518925436) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:19.238907190] (+1.518966113) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:20.757774970] (+1.518867780) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:22.277015143] (+1.519240173) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:23.795945787] (+1.518930644) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:25.314977731] (+1.519031944) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:26.833898062] (+1.518920331) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:28.352819069] (+1.518921007) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:29.871783045] (+1.518963976) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:31.390757958] (+1.518974913) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:32.909680371] (+1.518922413) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:34.428635284] (+1.518954913) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:35.947505040] (+1.518869756) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:37.466420213] (+1.518915173) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:38.985373927] (+1.518953714) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:40.504289933] (+1.518916006) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:42.023196042] (+1.518906109) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:43.542132412] (+1.518936370) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:45.061065917] (+1.518933505) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:46.580094837] (+1.519028920) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:48.099048081] (+1.518953244) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:49.617965804] (+1.518917723) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:51.136897745] (+1.518931941) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:52.655793801] (+1.518896056) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:54.174716055] (+1.518922254) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:55.693650339] (+1.518934284) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:57.212567488] (+1.518917149) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:26:58.731513491] (+1.518946003) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:00.250549649] (+1.519036158) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:01.769494974] (+1.518945325) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:03.288423893] (+1.518928919) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:04.807235364] (+1.518811471) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:06.326122980] (+1.518887616) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:07.845122523] (+1.518999543) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:09.364031128] (+1.518908605) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:10.882999525] (+1.518968397) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:12.401895057] (+1.518895532) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:13.920900432] (+1.519005375) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:15.439820859] (+1.518920427) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:16.958728057] (+1.518907198) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:18.477657234] (+1.518929177) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:19.996600733] (+1.518943499) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:21.515519128] (+1.518918395) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:23.034480752] (+1.518961624) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:24.553384980] (+1.518904228) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:26.072286500] (+1.518901520) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:27.591220362] (+1.518933862) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:29.110163027] (+1.518942665) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:30.629078869] (+1.518915842) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:32.148044918] (+1.518966049) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:33.667094717] (+1.519049799) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
-[18:27:35.186056964] (+1.518962247) sensor_readings: { }, { temperature = -1, humidity = 301, other_readings = "hello", state = ( "ACTIVATED" : container = 0 ) }
+[22:59:33.288027557] (+?.?????????) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[22:59:34.807046594] (+1.519019037) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[22:59:36.326098493] (+1.519051899) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[22:59:37.845180025] (+1.519081532) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[22:59:39.364234731] (+1.519054706) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[22:59:40.883313862] (+1.519079131) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[22:59:42.402428721] (+1.519114859) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[22:59:43.921503265] (+1.519074544) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[22:59:45.440613326] (+1.519110061) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[22:59:46.959674323] (+1.519060997) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[22:59:48.479496982] (+1.519822659) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[22:59:49.998585579] (+1.519088597) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[22:59:51.517665580] (+1.519080001) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[22:59:53.036800214] (+1.519134634) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[22:59:54.555840002] (+1.519039788) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[22:59:56.074892185] (+1.519052183) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[22:59:57.593985041] (+1.519092856) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[22:59:59.113026542] (+1.519041501) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:00.632160800] (+1.519134258) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:02.151309952] (+1.519149152) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:03.670512279] (+1.519202327) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:05.189524396] (+1.519012117) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:06.708608697] (+1.519084301) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:08.227734612] (+1.519125915) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:09.746880315] (+1.519145703) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:11.265941798] (+1.519061483) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:12.785041092] (+1.519099294) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:14.304075384] (+1.519034292) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:15.823089673] (+1.519014289) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:17.342174689] (+1.519085016) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:18.861243193] (+1.519068504) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:20.380313413] (+1.519070220) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:21.899433163] (+1.519119750) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:23.418536452] (+1.519103289) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:24.937657395] (+1.519120943) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:26.456652294] (+1.518994899) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:27.975711046] (+1.519058752) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:29.494770525] (+1.519059479) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:31.013844376] (+1.519073851) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:32.532949319] (+1.519104943) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:34.052022854] (+1.519073535) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:35.571088679] (+1.519065825) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:37.090157835] (+1.519069156) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:38.609222718] (+1.519064883) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:40.128305723] (+1.519083005) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:41.647370081] (+1.519064358) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:43.166533656] (+1.519163575) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:44.685609103] (+1.519075447) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:46.204737205] (+1.519128102) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:47.723792961] (+1.519055756) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:49.242911528] (+1.519118567) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:50.761977749] (+1.519066221) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:52.281073812] (+1.519096063) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:53.800222841] (+1.519149029) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:55.319321452] (+1.519098611) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:56.838370894] (+1.519049442) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:58.357405647] (+1.519034753) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:00:59.876469148] (+1.519063501) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:01.395582803] (+1.519113655) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:02.914673175] (+1.519090372) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:04.433763232] (+1.519090057) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:05.952969329] (+1.519206097) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:07.472035737] (+1.519066408) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:08.991097091] (+1.519061354) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:10.510242817] (+1.519145726) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:12.029346199] (+1.519103382) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:13.548494942] (+1.519148743) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:15.067586496] (+1.519091554) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:16.586679403] (+1.519092907) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:18.105733193] (+1.519053790) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:19.624844742] (+1.519111549) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:21.143933945] (+1.519089203) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:22.663057366] (+1.519123421) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:24.182139013] (+1.519081647) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:25.701178784] (+1.519039771) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:27.221113028] (+1.519934244) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:28.740247430] (+1.519134402) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:30.259341831] (+1.519094401) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:31.778419459] (+1.519077628) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:33.297568023] (+1.519148564) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:34.816662469] (+1.519094446) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:36.335765456] (+1.519102987) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:37.854888180] (+1.519122724) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:39.373957674] (+1.519069494) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:40.893021489] (+1.519063815) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:42.412146344] (+1.519124855) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:43.931324946] (+1.519178602) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:45.450514276] (+1.519189330) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:46.969634229] (+1.519119953) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:48.488674442] (+1.519040213) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:50.007728663] (+1.519054221) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:51.526797934] (+1.519069271) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:53.045887828] (+1.519089894) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:54.564964075] (+1.519076247) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:56.084049643] (+1.519085568) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:57.603124897] (+1.519075254) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:01:59.122164368] (+1.519039471) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:00.641241077] (+1.519076709) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:02.160328408] (+1.519087331) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:03.679439801] (+1.519111393) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:05.198514785] (+1.519074984) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:06.717579612] (+1.519064827) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:08.236725218] (+1.519145606) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:09.755796083] (+1.519070865) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:11.274861164] (+1.519065081) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:12.793963692] (+1.519102528) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:14.313045125] (+1.519081433) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:15.832114577] (+1.519069452) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:17.351189184] (+1.519074607) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:18.870345038] (+1.519155854) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:20.389400995] (+1.519055957) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:21.908496950] (+1.519095955) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:23.427603842] (+1.519106892) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:24.946693388] (+1.519089546) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:26.465800745] (+1.519107357) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:27.984930391] (+1.519129646) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:29.504080401] (+1.519150010) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:31.023103169] (+1.519022768) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:32.542264529] (+1.519161360) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:34.061371514] (+1.519106985) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:35.580733755] (+1.519362241) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:37.099821100] (+1.519087345) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:38.618949955] (+1.519128855) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:40.138028339] (+1.519078384) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:41.657075471] (+1.519047132) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:43.176242237] (+1.519166766) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:44.695325512] (+1.519083275) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:46.214382119] (+1.519056607) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:47.733478203] (+1.519096084) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:49.252547880] (+1.519069677) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:50.771601878] (+1.519053998) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:52.290735613] (+1.519133735) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:53.809825338] (+1.519089725) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:55.328904851] (+1.519079513) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:56.847969937] (+1.519065086) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:58.367062989] (+1.519093052) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:02:59.886129946] (+1.519066957) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:01.405143360] (+1.519013414) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:02.928108006] (+1.522964646) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:04.447285844] (+1.519177838) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:05.966331806] (+1.519045962) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:07.485448547] (+1.519116741) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:09.004571015] (+1.519122468) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:10.523619889] (+1.519048874) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:12.042715220] (+1.519095331) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:13.561824872] (+1.519109652) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:15.080983740] (+1.519158868) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:16.601028124] (+1.520044384) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:18.120258344] (+1.519230220) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:19.639308720] (+1.519050376) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:21.158385291] (+1.519076571) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:22.677483163] (+1.519097872) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:24.196578690] (+1.519095527) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:25.715657704] (+1.519079014) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:27.234772447] (+1.519114743) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:28.753868907] (+1.519096460) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:30.272891668] (+1.519022761) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:31.791944739] (+1.519053071) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:33.311132913] (+1.519188174) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:34.830334888] (+1.519201975) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:36.349488163] (+1.519153275) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:37.868633416] (+1.519145253) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:39.387738044] (+1.519104628) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:40.906811992] (+1.519073948) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:42.425982032] (+1.519170040) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:43.945090248] (+1.519108216) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:45.464192629] (+1.519102381) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:46.983330634] (+1.519138005) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:48.502381139] (+1.519050505) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:50.021439141] (+1.519058002) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:51.540673027] (+1.519233886) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:53.059794933] (+1.519121906) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:54.579011994] (+1.519217061) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:56.098096292] (+1.519084298) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:57.617280902] (+1.519184610) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:03:59.136384885] (+1.519103983) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:00.655428034] (+1.519043149) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:02.174521442] (+1.519093408) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:03.693671254] (+1.519149812) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:05.212753722] (+1.519082468) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:06.731864938] (+1.519111216) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:08.250957715] (+1.519092777) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:09.770140387] (+1.519182672) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:11.289176860] (+1.519036473) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:12.808296561] (+1.519119701) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:14.327418812] (+1.519122251) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:15.846535958] (+1.519117146) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:17.365653206] (+1.519117248) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:18.884745402] (+1.519092196) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:20.403818429] (+1.519073027) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:21.922953695] (+1.519135266) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:23.442058021] (+1.519104326) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:24.961155680] (+1.519097659) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:26.480332139] (+1.519176459) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:27.999468181] (+1.519136042) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:29.518592919] (+1.519124738) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:31.037727968] (+1.519135049) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:32.556762808] (+1.519034840) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:34.075922646] (+1.519159838) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
+[23:04:35.595002014] (+1.519079368) sensor_readings: { }, { temperature = -1, humidity = 301, device_info = "device_1", sensor_info = "sensor_1" }
