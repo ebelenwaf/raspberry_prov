@@ -164,7 +164,7 @@ int main( void )
 	if ( wiringPiSetup() == -1 )
 		exit( 1 );
  
-	for ( int i = 0; i < 5; i++ )
+	for ( int i = 0; i < 200; i++ )
 	{
 
 		fstat(fp, &st);
