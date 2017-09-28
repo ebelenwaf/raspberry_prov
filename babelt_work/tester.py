@@ -22,6 +22,10 @@ prov_document = primer()
 
 # Store the document to ProvStore:
 #   - the public parameter is optional and defaults to False
-provneo4j_api.document.create(prov_document, name="Primer Example")
+#provneo4j_api.document.create(prov_document, name="Primer Example")
 
 # => This will store the document and return a ProvStore Document object
+
+dot = prov_to_dot(prov_document)
+#dot.write_png('article-prov.png')
+dot.write_pdf('article-prov.pdf')
