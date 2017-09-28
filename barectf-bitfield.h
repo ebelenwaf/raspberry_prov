@@ -27,28 +27,44 @@
  * SOFTWARE.
  */
 
+#include <stdint.h>	/* C99 5.2.4.2 Numerical limits */
 #include <limits.h>
-
-#ifdef __cplusplus
-# define CAST_PTR(_type, _value) \
-	static_cast<_type>(static_cast<void *>(_value))
-#else
-# define CAST_PTR(_type, _value)	((void *) (_value))
-#endif
 
 #define BARECTF_BYTE_ORDER LITTLE_ENDIAN
 
 /* We can't shift a int from 32 bit, >> 32 and << 32 on int is undefined */
-#define _barectf_bt_piecewise_rshift(_vtype, _v, _shift) \
-do {									\
-	unsigned long ___shift = (_shift);				\
-	unsigned long sb = (___shift) / (sizeof(_v) * CHAR_BIT - 1);	\
-	unsigned long final = (___shift) % (sizeof(_v) * CHAR_BIT - 1); \
+#define _barectf_bt_piecewise_rshift(_v, _shift) \
+__extension__ ({									\
+	__typeof__(_v) ___v = (_v);					\
+	__typeof__(_shift) ___shift = (_shift);				\
+	unsigned long sb = (___shift) / (sizeof(___v) * CHAR_BIT - 1);	\
+	unsigned long final = (___shift) % (sizeof(___v) * CHAR_BIT - 1); \
 									\
 	for (; sb; sb--)						\
-		_v >>= sizeof(_v) * CHAR_BIT - 1;			\
-	_v >>= final;							\
-} while (0)
+		___v >>= sizeof(___v) * CHAR_BIT - 1;			\
+	___v >>= final;							\
+})
+
+#define _barectf_bt_piecewise_lshift(_v, _shift) \
+__extension__ ({									\
+	__typeof__(_v) ___v = (_v);					\
+	__typeof__(_shift) ___shift = (_shift);				\
+	unsigned long sb = (___shift) / (sizeof(___v) * CHAR_BIT - 1);	\
+	unsigned long final = (___shift) % (sizeof(___v) * CHAR_BIT - 1); \
+									\
+	for (; sb; sb--)						\
+		___v <<= sizeof(___v) * CHAR_BIT - 1;			\
+	___v <<= final;							\
+})
+
+#define _barectf_bt_is_signed_type(type)	((type) -1 < (type) 0)
+
+#define _barectf_bt_unsigned_cast(type, v) \
+__extension__ ({									\
+	(sizeof(v) < sizeof(type)) ?					\
+		((type) (v)) & (~(~(type) 0 << (sizeof(v) * CHAR_BIT))) : \
+		(type) (v);						\
+})
 
 /*
  * barectf_bt_bitfield_write - write integer to a bitfield in native endianness
@@ -68,10 +84,10 @@ do {									\
  * Also, consecutive bitfields are placed from higher to lower bits.
  */
 
-#define _barectf_bt_bitfield_write_le(_ptr, type, _start, _length, _vtype, _v) \
+#define _barectf_bt_bitfield_write_le(_ptr, type, _start, _length, _v) \
 do {									\
-	_vtype __v = (_v);					\
-	type *__ptr = CAST_PTR(type *, _ptr);				\
+	__typeof__(_v) __v = (_v);					\
+	type *__ptr = (void *) (_ptr);					\
 	unsigned long __start = (_start), __length = (_length);		\
 	type mask, cmask;						\
 	unsigned long ts = sizeof(type) * CHAR_BIT; /* type size */	\
@@ -87,7 +103,7 @@ do {									\
 									\
 	/* Trim v high bits */						\
 	if (__length < sizeof(__v) * CHAR_BIT)				\
-		__v &= ~((~(_vtype) 0) << __length);		\
+		__v &= ~((~(__typeof__(__v)) 0) << __length);		\
 									\
 	/* We can now append v with a simple "or", shift it piece-wise */ \
 	this_unit = start_unit;						\
@@ -108,13 +124,13 @@ do {									\
 		cmask &= ~mask;						\
 		__ptr[this_unit] &= mask;				\
 		__ptr[this_unit] |= cmask;				\
-		_barectf_bt_piecewise_rshift(_vtype, __v, ts - cshift); \
+		__v = _barectf_bt_piecewise_rshift(__v, ts - cshift); \
 		__start += ts - cshift;					\
 		this_unit++;						\
 	}								\
 	for (; this_unit < end_unit - 1; this_unit++) {			\
 		__ptr[this_unit] = (type) __v;				\
-		_barectf_bt_piecewise_rshift(_vtype, __v, ts); 		\
+		__v = _barectf_bt_piecewise_rshift(__v, ts); \
 		__start += ts;						\
 	}								\
 	if (end % ts) {							\
@@ -127,10 +143,10 @@ do {									\
 		__ptr[this_unit] = (type) __v;				\
 } while (0)
 
-#define _barectf_bt_bitfield_write_be(_ptr, type, _start, _length, _vtype, _v) \
+#define _barectf_bt_bitfield_write_be(_ptr, type, _start, _length, _v) \
 do {									\
-	_vtype __v = (_v);					\
-	type *__ptr = CAST_PTR(type *, _ptr);				\
+	__typeof__(_v) __v = (_v);					\
+	type *__ptr = (void *) (_ptr);					\
 	unsigned long __start = (_start), __length = (_length);		\
 	type mask, cmask;						\
 	unsigned long ts = sizeof(type) * CHAR_BIT; /* type size */	\
@@ -146,7 +162,7 @@ do {									\
 									\
 	/* Trim v high bits */						\
 	if (__length < sizeof(__v) * CHAR_BIT)				\
-		__v &= ~((~(_vtype) 0) << __length);			\
+		__v &= ~((~(__typeof__(__v)) 0) << __length);		\
 									\
 	/* We can now append v with a simple "or", shift it piece-wise */ \
 	this_unit = end_unit - 1;					\
@@ -167,13 +183,13 @@ do {									\
 		cmask &= ~mask;						\
 		__ptr[this_unit] &= mask;				\
 		__ptr[this_unit] |= cmask;				\
-		_barectf_bt_piecewise_rshift(__v, cshift); \
+		__v = _barectf_bt_piecewise_rshift(__v, cshift); \
 		end -= cshift;						\
 		this_unit--;						\
 	}								\
 	for (; (long) this_unit >= (long) start_unit + 1; this_unit--) { \
 		__ptr[this_unit] = (type) __v;				\
-		_barectf_bt_piecewise_rshift(__v, ts); \
+		__v = _barectf_bt_piecewise_rshift(__v, ts); \
 		end -= ts;						\
 	}								\
 	if (__start % ts) {						\
@@ -193,19 +209,19 @@ do {									\
 
 #if (BARECTF_BYTE_ORDER == LITTLE_ENDIAN)
 
-#define barectf_bt_bitfield_write_le(ptr, type, _start, _length, _vtype, _v) \
-	_barectf_bt_bitfield_write_le(ptr, type, _start, _length, _vtype, _v)
+#define barectf_bt_bitfield_write_le(ptr, type, _start, _length, _v) \
+	_barectf_bt_bitfield_write_le(ptr, type, _start, _length, _v)
 
-#define barectf_bt_bitfield_write_be(ptr, type, _start, _length, _vtype, _v) \
-	_barectf_bt_bitfield_write_be(ptr, unsigned char, _start, _length, _vtype, _v)
+#define barectf_bt_bitfield_write_be(ptr, type, _start, _length, _v) \
+	_barectf_bt_bitfield_write_be(ptr, unsigned char, _start, _length, _v)
 
 #elif (BARECTF_BYTE_ORDER == BIG_ENDIAN)
 
-#define barectf_bt_bitfield_write_le(ptr, type, _start, _length, _vtype, _v) \
-	_barectf_bt_bitfield_write_le(ptr, unsigned char, _start, _length, _vtype, _v)
+#define barectf_bt_bitfield_write_le(ptr, type, _start, _length, _v) \
+	_barectf_bt_bitfield_write_le(ptr, unsigned char, _start, _length, _v)
 
-#define barectf_bt_bitfield_write_be(ptr, type, _start, _length, _vtype, _v) \
-	_barectf_bt_bitfield_write_be(ptr, type, _start, _length, _vtype, _v)
+#define barectf_bt_bitfield_write_be(ptr, type, _start, _length, _v) \
+	_barectf_bt_bitfield_write_be(ptr, type, _start, _length, _v)
 
 #else /* (BARECTF_BYTE_ORDER == PDP_ENDIAN) */
 

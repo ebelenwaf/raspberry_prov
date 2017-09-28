@@ -12,7 +12,7 @@ from prov.model import ProvDocument, Namespace, Literal, PROV, Identifier
 trace_path = sys.argv[1]
 trace_collection = babeltrace.TraceCollection()
 trace_collection.add_trace(trace_path, 'ctf')
-if col.add_trace(sys.argv[1], 'ctf') is None:
+if trace_collection.add_trace(sys.argv[1], 'ctf') is None:
     raise RuntimeError('Cannot add trace')
 #Outputs the event keys of each trace that was recorded.
 def ctfToProv():
