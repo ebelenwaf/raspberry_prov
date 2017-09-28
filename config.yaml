@@ -37,12 +37,7 @@ metadata:
         - type: clock
           name: default
           property: value
-    state:
-      class: enum
-      value-type: uint8
-      members:
-        - ACTIVATED
-        - DEACTIVATED       
+     
   clocks:
     default:
       freq: 1000000000
@@ -69,89 +64,36 @@ metadata:
           timestamp: clock-int
           id: uint16
       events:
-        simple_uint32:
-          log-level: CRIT
+        sensor_events:
           payload-type:
             class: struct
             fields:
-              value: uint32
-        simple_int16:
-          payload-type:
-            class: struct
-            fields:
-              value: int16
-        simple_float:
-          payload-type:
-            class: struct
-            fields:
-              value: float
-        trace_sensor:
-          log-level: WARNING
-          payload-type:
-            class: struct
-            fields:
-              value:
-                class: string
-        simple_enum:
-          payload-type:
-            class: struct
-            fields:
-              value: state
-        context_no_payload:
-          context-type:
-            class: struct
-            fields:
-              a: uint32
-              b: string
-        no_context_no_payload: {}
-        sensor_readings:
-          payload-type:
-            class: struct
-            fields:
-              temperature: int32
-              humidity: uint16
+              temperature: uint32
+              humidity: uint32
               device_info:
                 class: string
               sensor_info:
                 class: string
-        bit_packed_integers:
-          log-level: 513
+              activity:
+                class: string
+        file_directory:
           payload-type:
             class: struct
-            min-align: 8
             fields:
-              uint1:
-                $inherit: uint8
-                size: 1
-                align: 1
-              int1:
-                $inherit: int8
-                size: 1
-                align: 1
-              uint2:
-                $inherit: uint8
-                size: 2
-                align: 1
-              int3:
-                $inherit: int8
-                size: 3
-                align: 1
-              uint4:
-                $inherit: uint8
-                size: 4
-                align: 1
-              int5:
-                $inherit: int8
-                size: 5
-                align: 1
-              uint6:
-                $inherit: uint8
-                size: 6
-                align: 1
-              int7:
-                $inherit: int8
-                size: 7
-                align: 1
-              uint8:
-                $inherit: uint8
-                align: 1
+              value: string
+        transformation:
+          payload-type:
+            class: struct
+            fields:
+              temperature: float
+              humidity: float
+              result: int32
+              device_info:
+                class: string
+              sensor_info:
+                class: string
+              activity:
+                class: string
+
+
+       

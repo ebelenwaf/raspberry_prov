@@ -1,0 +1,40 @@
+#include "pi_2_dht_read.h"
+#include <stdbool.h>
+#include <stdlib.h>
+#
+#include "pi_2_mmio.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <time.h>
+#include <barectf-platform-linux-fs.h>
+#include <barectf.h>
+#include<sys/stat.h>
+
+int main(void)
+{
+
+int sensor = 22;
+
+int pin_number = 4;
+
+float humidity = 0; 
+float temperature = 0;
+
+
+for (;;)
+{
+
+int result = pi_2_dht_read(sensor, pin_number, &humidity, &temperature);
+if(humidity!= 0 && temperature !=0){
+	printf( "Humidity = %0.2f%, Temperature = %0.2f*C \n", humidity, temperature);
+barectf_default_trace_sensor_events(
+}
+
+sleep_milliseconds(500);
+
+}
+
+return 0;
+
+}
