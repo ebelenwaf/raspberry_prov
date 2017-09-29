@@ -40,7 +40,7 @@ def ctfToProv():
         used_relationship = str(dummy.used(device_agent, sensor_agent))
 
         #add activity to sensor agent
-        d1.wasAssociatedWith(activity,sensor_agent)
+       # d1.wasAssociatedWith(activity,sensor_agent)
         #check if the association already esists
         # if association_relationship not in relationships:
         #     d1.wasAssociatedWith(activity,sensor_agent)
