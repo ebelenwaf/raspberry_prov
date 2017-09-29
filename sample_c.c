@@ -31,7 +31,7 @@ int hum = 0;
 int temp = 0;
 
 
-for (int i= 0; i < 100; i++)
+for (int i= 0; i < 10; i++)
 {
 
 int result = pi_2_dht_read(sensor, pin_number, &humidity, &temperature);

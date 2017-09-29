@@ -2,7 +2,6 @@
 
 import yaml
 
-
 def event_field(config_file):
 
 	with open(config_file, 'r') as stream:
@@ -16,10 +15,10 @@ def event_field(config_file):
 	        default = val['default']
 
 	        events = default['events']
-	        sensor_readings = events['sensor_readings']
+	        sensor_events = events['sensor_events']
 
 
-	        payload_type = sensor_readings['payload-type']
+	        payload_type = sensor_events['payload-type']
 
 	        fields = payload_type['fields']
 
@@ -32,5 +31,4 @@ def event_field(config_file):
 	    except yaml.YAMLError as exc:
 	        print(exc)
 
-
-return event
+	return list(event_value)
