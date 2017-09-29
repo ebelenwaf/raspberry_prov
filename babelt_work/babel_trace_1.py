@@ -27,7 +27,7 @@ def ctfToProv():
     entities = []
     activities = []
     for event in trace_collection.events:
-        dataset = {'ex:'+'temperature':event['temperature'], 'ex:'+'timestamp':event['timestamp'], 'ex:'+'humidity':event['humidity']}
+        dataset = {'ex:'+'temperature':event['temperature'], 'ex:'+'timestamp':(event['timestamp']/1000000000), 'ex:'+'humidity':event['humidity']}
         e1 = d1.entity(ex['event'+str(counter)],dataset)
         entities.append(e1)
         sensor_agent = d1.agent('ex:'+event['sensor_info'])
