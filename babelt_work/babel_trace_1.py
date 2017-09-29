@@ -50,9 +50,12 @@ def ctfToProv():
             relationships.append(used_relationship)
         counter+=1
     for index in range(len(entities)-1):
+        d1.wasAssociatedWith(entities[index], entities[index + 1])
+
+    for index in range(len(entities)):
         d1.wasGeneratedBy(entities[index], activities[index])
         d1.wasAssociatedWith(activities[index],sensor_agent)
-        d1.wasAssociatedWith(entities[index], entities[index + 1])
+
     return d1
 prov_document = ctfToProv()
 prov_document = prov_document.unified()
