@@ -5,17 +5,16 @@
 #include <time.h>
 #include <barectf-platform-linux-fs.h>
 #include <barectf.h>
+#include<sys/stat.h>
+
 
 #define MAXTIMINGS	85
 #define DHTPIN		13
 int dht11_dat[5] = { 0, 0, 0, 0, 0 };
 
 enum state_t {
-	NEW,
-	TERMINATED,
-    READY,
-    RUNNING,
-    WAITING
+	ACTIVATED,
+	DEACTIVATED
 	
 };
 
@@ -37,13 +36,13 @@ void trace_stuff(struct barectf_default_ctx *ctx)
 
 		barectf_trace_trace_sensor(ctx, "hello");
 		barectf_trace_context_no_payload(ctx, i, "ctx");
-		barectf_trace_simple_enum(ctx, RUNNING);
+		barectf_trace_simple_enum(ctx, ACTIVATED);
 		
 		barectf_trace_bit_packed_integers(ctx, 1, -1, 3,
 							    -2, 2, 7, 23,
 							    -55, 232);
 		barectf_trace_no_context_no_payload(ctx);
-		barectf_trace_simple_enum(ctx, TERMINATED);
+		barectf_trace_simple_enum(ctx, DEACTIVATED);
 
 }
 
@@ -51,15 +50,6 @@ void trace_stuff(struct barectf_default_ctx *ctx)
  
 void read_dht11_dat()
 {
-
-	
-
-	
-
-	
-
-	
-
 	uint8_t laststate	= HIGH;
 	uint8_t counter		= 0;
 	uint8_t j		= 0, i;
@@ -67,6 +57,9 @@ void read_dht11_dat()
  
 	dht11_dat[0] = dht11_dat[1] = dht11_dat[2] = dht11_dat[3] = dht11_dat[4] = 0;
 	pinMode (7, OUTPUT) ;
+	
+
+	
  
 	/* pull pin down for 18 milliseconds */
 	pinMode( DHTPIN, OUTPUT );
@@ -130,10 +123,20 @@ void read_dht11_dat()
 
 	
 }
+
+int fsize(FILE *fp)
+{
+	int prev = ftell(fp);
+	fseek(fp, 0L, SEEK_END);
+	int sz= ftell(fp);
+	fseek(fp, prev, SEEK_SET);
+	
+	return sz;
+}
  
 int main( void )
-{
-	FILE *fp = fopen("experiment.txt", "wb");
+{	struct stat st;
+	FILE *fp = fopen("experiment.txt", "w+");
 
 	
 	time_t rawtime;
@@ -141,9 +144,12 @@ int main( void )
 	struct barectf_platform_linux_fs_ctx *platform_ctx;
 
 	/* initialize platform */
-	platform_ctx = barectf_platform_linux_fs_init(512, "ctf", 1, 2, 7);
+	platform_ctx = barectf_platform_linux_fs_init(1024, "ctf", 1, 2, 20);
 
 	printf( "Raspberry Pi wiringPi DHT11 Temperature test program\n" );
+
+	
+	
 
 
 
@@ -158,8 +164,11 @@ int main( void )
 	if ( wiringPiSetup() == -1 )
 		exit( 1 );
  
-	for ( ;; )
+	for ( int i = 0; i < 200; i++ )
 	{
+
+		fstat(fp, &st);
+		int size = st.st_size;
 		read_dht11_dat();
 
 		time( &rawtime);
@@ -172,11 +181,15 @@ int main( void )
 
 		//trace_stuff(barectf_platform_linux_fs_get_barectf_ctx(platform_ctx));
 
-		printf("No of packets discarded: %d, time: %s \n",barectf_packet_events_discarded(platform_ctx), asctime(timeinfo));
-		fprintf(fp, "No of packets discarded: %d, time: %s \n",barectf_packet_events_discarded(platform_ctx), asctime(timeinfo));     
+		//printf("No of packets discarded: %d, time: %s \n",barectf_packet_events_discarded(platform_ctx), asctime(timeinfo));
+		//fprintf(fp, "No of packets discarded: %d, time: %s \n",barectf_packet_events_discarded(platform_ctx), asctime(timeinfo));  
+		fprintf(fp, "%d, %s \n",fsize(fp), asctime(timeinfo)); 
+		printf("%d, %s \n",fsize(fp), asctime(timeinfo));  
 
-		barectf_default_trace_sensor_readings(barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), -1, 301, "Device_1"
-						     "Sensor_1", NEW);
+		  
+
+		barectf_default_trace_sensor_readings(barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), -1, 301,
+						     "device_1", "sensor_1");
 
 		pinMode( 7, INPUT );
 		
@@ -187,14 +200,22 @@ int main( void )
 		delay (500) ;
 		
         digitalWrite (7,  LOW) ; 
+		printf( "Blinker activated \n" );
 		//barectf_trace_simple_enum(barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), DEACTIVATED);
 		
+
 	}
 
-	
+	time_t rawtime1;
+	struct tm * timeinfo1;
+
+	time( &rawtime1);
+	timeinfo1 = localtime(&rawtime1);
 
     /* finalize platform */
 	barectf_platform_linux_fs_fini(platform_ctx);
+
+	fprintf(fp, "Final time: %s\n", asctime(timeinfo1)); 
 
 	fclose(fp);
  
