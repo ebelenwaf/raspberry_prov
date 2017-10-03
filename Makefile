@@ -25,7 +25,7 @@ RM = rm -rf
 MKDIR = mkdir
 CC=gcc
 
-PLATFORM_DIR = ../
+PLATFORM_DIR = ../platforms/linux-fs
 CFLAGS = -O2 -Wall -pedantic -I$(PLATFORM_DIR) -I.
 
 TARGET = sample_c
