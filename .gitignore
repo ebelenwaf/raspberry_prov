@@ -1,4 +1,16 @@
 
+# sample programs
+sample_c
+
+# barectf generated files
+barectf-bitfield.h
+barectf.c
+barectf.h
+metadata
+
+# trace output
+stream
+
 # Compiled output
 *.o
 *.exe
