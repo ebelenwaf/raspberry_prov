@@ -1,0 +1,30 @@
+
+# sample programs
+sample_c
+
+# barectf generated files
+barectf-bitfield.h
+barectf.c
+barectf.h
+metadata
+
+# trace output
+stream
+
+# babeltrace output
+output.json
+
+# Compiled output
+*.o
+*.exe
+*.out
+*.pyc
+__pycache__
+
+# Temporary files
+*.swp
+*.save
+
+# MACOS
+.DS_Store
+

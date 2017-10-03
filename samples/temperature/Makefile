@@ -23,35 +23,34 @@
 BARECTF ?= barectf
 RM = rm -rf
 MKDIR = mkdir
+CC=gcc
 
-PLATFORM_DIR = ../
+PLATFORM_DIR = ../../platforms/linux-fs
 CFLAGS = -O2 -Wall -pedantic -I$(PLATFORM_DIR) -I.
 
 TARGET = sample_c
-OBJS = $(TARGET).o barectf.o barectf-platform-linux-fs.o pi_2_dht_read.o pi_2_mmio.o  common_dht_read.o
+OBJS = barectf.o barectf-platform-linux-fs.o pi_2_dht_read.o pi_2_mmio.o common_dht_read.o sample_c.o
 
 .PHONY: all view
 
 all: $(TARGET)
 
+%.o: %.c
+	$(CC) $(CFLAGS) -c $<
+
 ctf:
 	$(MKDIR) ctf
 
 $(TARGET): $(OBJS)
-	$(CC) -o $@ $^
+	$(CC)  $^ -o $@  
 
 ctf/metadata barectf-bitfield.h barectf.h barectf.c: config.yaml ctf
 	$(BARECTF) $< -m ctf
 
-barectf.o: barectf.c
-	$(CC) $(CFLAGS) -ansi -c $<
-
 barectf-platform-linux-fs.o: $(PLATFORM_DIR)/barectf-platform-linux-fs.c barectf.h
-	$(CC) $(CFLAGS) -c $<
-
-$(TARGET).o: $(TARGET).c barectf.h barectf-bitfield.h 
 	$(CC) $(CFLAGS) -c $<
 
 clean:
 	$(RM) $(TARGET) $(OBJS) ctf
+	$(RM) *o
 	$(RM) barectf.h barectf-bitfield.h barectf.c
