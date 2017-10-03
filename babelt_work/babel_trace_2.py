@@ -3,6 +3,7 @@
 from yaml_1 import event_field
 import babeltrace
 import sys
+import os
 import datetime
 from prov.dot import prov_to_dot
 from prov.model import ProvDocument, Namespace, Literal, PROV, Identifier
@@ -13,15 +14,16 @@ import yaml
 # get the trace path from the first command line argument
 trace_path = sys.argv[1]
 trace_collection = babeltrace.TraceCollection()
-trace_collection.add_trace(trace_path, 'ctf')
-if trace_collection.add_trace(sys.argv[1], 'ctf') is None:
+trace_handle = trace_collection.add_trace(trace_path,'ctf')
+if trace_handle is None:
     raise RuntimeError('Cannot add trace')
+
 #Outputs the event keys of each trace that was recorded.
 def ctfToProv():
     d1 = ProvDocument()
     dummy = ProvDocument()
     ex = Namespace('ex', 'http://example/')  # namespaces do not need to be explicitly added to a document
-    data = event_field('../config.yaml')
+    data = event_field(os.path.join(trace_path,'../config.yaml'))
     counter = 0
     counter_1 = 0
     relationships = []
