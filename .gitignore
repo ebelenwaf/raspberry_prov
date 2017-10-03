@@ -11,6 +11,9 @@ metadata
 # trace output
 stream
 
+# babeltrace output
+output.json
+
 # Compiled output
 *.o
 *.exe
