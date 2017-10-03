@@ -3,9 +3,9 @@
 ## Getting started
 This instruction will get the project up and running on your local machine. There are three folders contained in the raspberry_prov folder. These folders are described below:
 
-* babelt_work: Contains code that extracts events from ctf stream file located in `ctf/` and converts these events to PROV-DM format.
-* ctf: contains metadata and stream file.
-* prov2neo4j: contains code for storing PROV-DM trace in Neo4j graph database.
+* babelt_work: Contains code that extracts events from ctf stream file located in `ctf/` and converts these events to PROV-DM format. Also contains code for storing provenance into neo4j database.
+* ctf: contains metadata and stream file fromt trace collection.
+
 
 
 
