@@ -18,6 +18,11 @@ In order to run the code here, you need to install the following software
 * GCC (C- Compiler)
 * barectf
 * babeltrace 1.5
+  * Get the latest stable version of babeltrace through the LTTng Stable PPA
+  * `sudo apt-add-repository ppa:lttng/ppa`
+  * `sudo apt-get update`
+  * `sudo apt-get install babeltrace`
+  * `sudo apt-get install python3-babeltrace`
 * python >= 2.7, python3
 * A slew of python3 libraries:
   * PyYAML: `pip3 install PyYAML`
