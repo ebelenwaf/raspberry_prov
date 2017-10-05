@@ -29,7 +29,7 @@ In order to run the code here, you need to install the following software
   * babeltrace python bindings: `python3-babeltrace`
   * PROV Python: `pip3 install prov`
   * ProvNeo4j: `pip install provneo4j`
-  * pydot: `pip install pydot`
+  * pydot: `pip3 install pydot`
 * Neo4j
 * make
 
