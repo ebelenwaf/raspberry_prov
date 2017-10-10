@@ -18,13 +18,18 @@ In order to run the code here, you need to install the following software
 * GCC (C- Compiler)
 * barectf
 * babeltrace 1.5
+  * Get the latest stable version of babeltrace through the LTTng Stable PPA
+  * `sudo apt-add-repository ppa:lttng/ppa`
+  * `sudo apt-get update`
+  * `sudo apt-get install babeltrace`
+  * `sudo apt-get install python3-babeltrace`
 * python >= 2.7, python3
 * A slew of python3 libraries:
   * PyYAML: `pip3 install PyYAML`
   * babeltrace python bindings: `python3-babeltrace`
   * PROV Python: `pip3 install prov`
   * ProvNeo4j: `pip install provneo4j`
-  * pydot: `pip install pydot`
+  * pydot: `pip3 install pydot`
 * Neo4j
 * make
 
@@ -33,7 +38,8 @@ In order to run the code here, you need to install the following software
 
 * To compile the sample `temperature` program, use the command 'make' in `samples/temperature` and to clean the directory, usually before compiling a new version, use the command 'make clean'. The 'make' command generates the stream file contained in the ctf folder. This file contains events trace from the sample application. 
 
-* To convert trace events contained in the stream file to human readable PROV-DM format, run the python3 script `ctf_to_prov.py` located in the `converter` folder, passing as argument the path to a directory containing the metadata file and 1 or more trace (stream) files. *Note: babeltrace will return an error if any other files are found.* This generates a json file `output.json` containing the provenance conversion.
+* To convert trace events contained in the stream file to human readable PROV-DM format, run the *python3* script `ctf_to_prov.py` located in the `converter` folder, passing as argument the path to a directory containing the metadata file and 1 or more trace (stream) files. *Note: babeltrace will return an error if any other files are found.* This generates a json file `output.json` containing the provenance conversion.
+  * `python3 ctf_to_prov.py ../ctf`
 
 
 * To store PROV-DM file in the neo4j database, run python script `tester.py` contained in the `converter` folder. This also produces a pdf file `output.pdf` containing the provenance representation.

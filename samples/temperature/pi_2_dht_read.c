@@ -36,6 +36,8 @@
 #define DHT_PULSES 41
 
 int pi_2_dht_read(int type, int pin, float* humidity, float* temperature) {
+  int i;
+
   // Validate humidity and temperature arguments and set them to zero.
   if (humidity == NULL || temperature == NULL) {
     return DHT_ERROR_ARGUMENT;
@@ -72,7 +74,8 @@ int pi_2_dht_read(int type, int pin, float* humidity, float* temperature) {
   // Set pin at input.
   pi_2_mmio_set_input(pin);
   // Need a very short delay before reading pins or else value is sometimes still low.
-  for (volatile int i = 0; i < 50; ++i) {
+  for (i = 0; i < 50; ++i) {
+    volatile int k = i;
   }
 
   // Wait for DHT to pull pin low.
@@ -86,7 +89,7 @@ int pi_2_dht_read(int type, int pin, float* humidity, float* temperature) {
   }
 
   // Record pulse widths for the expected result bits.
-  for (int i=0; i < DHT_PULSES*2; i+=2) {
+  for (i=0; i < DHT_PULSES*2; i+=2) {
     // Count how long pin is low and store in pulseCounts[i]
     while (!pi_2_mmio_input(pin)) {
       if (++pulseCounts[i] >= DHT_MAXCOUNT) {
@@ -110,19 +113,44 @@ int pi_2_dht_read(int type, int pin, float* humidity, float* temperature) {
   // Drop back to normal priority.
   set_default_priority();
 
-  // Compute the average low pulse width to use as a 50 microsecond reference threshold.
+#if 0
+  // Debugging
+  for (i=0; i < DHT_PULSES*2; i++) {
+    printf("pulseCounts[%d] = %d\n", i, pulseCounts[i]);
+  }
+#endif
+
   // Ignore the first two readings because they are a constant 80 microsecond pulse.
   uint32_t threshold = 0;
-  for (int i=2; i < DHT_PULSES*2; i+=2) {
+  uint32_t min = pulseCounts[0], max = 0;
+#define USE_ORIGINAL_THRESHOLD_CALCULATION
+#if defined(USE_ORIGINAL_THRESHOLD_CALCULATION)
+  for (i=2; i < DHT_PULSES*2; i+=2) {
     threshold += pulseCounts[i];
   }
-  threshold /= DHT_PULSES-1;
 
-  // Interpret each high pulse as a 0 or 1 by comparing it to the 50us reference.
-  // If the count is less than 50us it must be a ~28us 0 pulse, and if it's higher
+  // Compute the average low pulse width to use as a 50 microsecond reference threshold.
+  threshold /= DHT_PULSES-1;
+#else
+  for (i=3; i < DHT_PULSES*2; i+=2) {
+    if ( pulseCounts[i] < min ) min = pulseCounts[i];
+    if ( pulseCounts[i] > max ) max = pulseCounts[i];
+  }
+
+  // Compute the mid-point of high pulse width
+  threshold = min + (max - min) / 2;
+#endif
+
+#if 0
+  printf("Threshold: %d\n", threshold);
+#endif
+
+
+  // Interpret each high pulse as a 0 or 1 by comparing it to the threshold reference.
+  // If the count is less than threshold it must be a ~28us 0 pulse, and if it's higher
   // then it must be a ~70us 1 pulse.
   uint8_t data[5] = {0};
-  for (int i=3; i < DHT_PULSES*2; i+=2) {
+  for (i=3; i < DHT_PULSES*2; i+=2) {
     int index = (i-3)/16;
     data[index] <<= 1;
     if (pulseCounts[i] >= threshold) {
@@ -132,8 +160,10 @@ int pi_2_dht_read(int type, int pin, float* humidity, float* temperature) {
     // Else zero bit for short pulse.
   }
 
+#if 0
   // Useful debug info:
-  //printf("Data: 0x%x 0x%x 0x%x 0x%x 0x%x\n", data[0], data[1], data[2], data[3], data[4]);
+  printf("Data: 0x%x 0x%x 0x%x 0x%x 0x%x\n", data[0], data[1], data[2], data[3], data[4]);
+#endif
 
   // Verify checksum of received data.
   if (data[4] == ((data[0] + data[1] + data[2] + data[3]) & 0xFF)) {

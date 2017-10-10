@@ -30,12 +30,15 @@ int hum = 0;
 
 int temp = 0;
 
+int i;
 
-for (int i= 0; i < 10; i++)
+for (i = 0; i < 10; i++)
 {
 
 int result = pi_2_dht_read(sensor, pin_number, &humidity, &temperature);
-if(humidity!= 0 && temperature !=0){
+    printf( "result = %d\n", result);
+
+//if(humidity!= 0 && temperature !=0){
 	printf( "Humidity = %f%, Temperature = %f*C \n", humidity, temperature);
     temp = temperature;
     hum = humidity;
@@ -43,11 +46,11 @@ if(humidity!= 0 && temperature !=0){
 
 	
 
-}
+//}
 
 
 
-sleep_milliseconds(500);
+sleep_milliseconds(1000);
 
 }
 
