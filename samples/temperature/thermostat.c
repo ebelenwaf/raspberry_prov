@@ -14,6 +14,19 @@ struct TH {
   float humidity;
 };
 
+struct barectf_platform_linux_fs_ctx *platform_ctx;
+
+void initialize( )
+{
+  /* initialize platform */
+  platform_ctx = barectf_platform_linux_fs_init(1024, "ctf", 1, 2, 20);
+}
+
+void finalize( )
+{
+  barectf_platform_linux_fs_fini(platform_ctx);
+}
+
 /**
  * Attempts to get a valid temperature and humidity reading up to tries times.
  * If successful, puts the valid reading into th and returns 0.
@@ -27,6 +40,12 @@ int get_temperature_and_humidity(struct TH* th, int tries)
   th->temperature = th->humidity = 0.0f;
   for (i = 0; i < tries; i++) {
     result = pi_2_dht_read(sensor, pin_number, &th->humidity, &th->temperature);
+    /* FIXME: transformation? this should really be 'sensor_event'? */
+    barectf_default_trace_transformation(
+        barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
+        th->temperature, th->humidity, result,
+        "device_1", "DHT_22_1", "read");
+
     if (!result) break;
   }
   return result;
@@ -35,11 +54,9 @@ int get_temperature_and_humidity(struct TH* th, int tries)
 int main(void)
 {
   int hum = 0, temp = 0, i;
-  struct barectf_platform_linux_fs_ctx *platform_ctx;
   struct TH th;
 
-  /* initialize platform */
-  platform_ctx = barectf_platform_linux_fs_init(1024, "ctf", 1, 2, 20);
+  initialize();
 
   for (i = 0; i < 10; i++) {
     int result = get_temperature_and_humidity(&th, 5);
@@ -56,7 +73,7 @@ int main(void)
     sleep_milliseconds(1000);
   }
 
-  barectf_platform_linux_fs_fini(platform_ctx);
+  finalize();
 
   return 0;
 }
