@@ -28,8 +28,9 @@ CC=gcc
 PLATFORM_DIR = ../../platforms/linux-fs
 CFLAGS = -O2 -Wall -pedantic -I$(PLATFORM_DIR) -I.
 
-TARGET = sample_c
-OBJS = barectf.o barectf-platform-linux-fs.o pi_2_dht_read.o pi_2_mmio.o common_dht_read.o sample_c.o
+#TARGET = sample_c
+TARGET = thermostat
+OBJS = barectf.o barectf-platform-linux-fs.o pi_2_dht_read.o pi_2_mmio.o common_dht_read.o $(TARGET).o
 
 .PHONY: all view
 
