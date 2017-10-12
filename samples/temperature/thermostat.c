@@ -14,12 +14,15 @@ struct TH {
   float humidity;
 };
 
+float setpoint;
+
 struct barectf_platform_linux_fs_ctx *platform_ctx;
 
 void initialize( )
 {
   /* initialize platform */
   platform_ctx = barectf_platform_linux_fs_init(1024, "ctf", 1, 2, 20);
+  setpoint = 70.0f;
 }
 
 void finalize( )
@@ -37,9 +40,11 @@ int get_temperature_and_humidity(struct TH* th, int tries)
   const int sensor = 22;
   const int pin_number = 4;
   int result = -1, i;
+
   th->temperature = th->humidity = 0.0f;
   for (i = 0; i < tries; i++) {
     result = pi_2_dht_read(sensor, pin_number, &th->humidity, &th->temperature);
+
     /* FIXME: transformation? this should really be 'sensor_event'? */
     barectf_default_trace_transformation(
         barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
@@ -49,6 +54,12 @@ int get_temperature_and_humidity(struct TH* th, int tries)
     if (!result) break;
   }
   return result;
+}
+
+/* Convert the temperature from celsius to fahrenheit */
+static inline void convert_C_to_F(struct TH *th)
+{
+  th->temperature = th->temperature * 1.8f + 32.0f;
 }
 
 int main(void)
@@ -63,9 +74,12 @@ int main(void)
     printf("result = %d\n", result);
     printf("H = %f%, T = %f *C\n", th.humidity, th.temperature);
 
+    convert_C_to_F(&th);
+    /* TODO: trace the conversion? */
+
     temp = th.temperature;
     hum = th.humidity;
-    printf("h = %d%, t = %d *C\n", hum, temp);
+    printf("h = %d%, t = %d *F\n", hum, temp);
     barectf_default_trace_sensor_events(
         barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), temp, hum,
         "device_1", "DHT_22_1", "read");
