@@ -9,6 +9,12 @@
 #include <barectf.h>
 #include <sys/stat.h>
 
+#define USE_SIMULATED_SENSOR
+#if defined(USE_SIMULATED_SENSOR)
+FILE *sensor_data_file;
+char *sensor_data_filename = "temperature.csv";
+#endif
+
 struct TH {
   float temperature;
   float humidity;
@@ -29,14 +35,47 @@ void initialize( )
 {
   /* initialize platform */
   platform_ctx = barectf_platform_linux_fs_init(1024, "ctf", 1, 2, 20);
-  setpoint = 70.0f;
+  setpoint = 72.5f;
   current_state = IDLE;
+
+#if defined(USE_SIMULATED_SENSOR)
+  sensor_data_file = fopen(sensor_data_filename, "r");
+  if (!sensor_data_file) {
+    fprintf(stderr, "Unable to open file %s\n", sensor_data_filename);
+    exit(0);
+  }
+#endif
 }
 
 void finalize( )
 {
   barectf_platform_linux_fs_fini(platform_ctx);
+
+#if defined(USE_SIMULATED_SENSOR)
+  fclose(sensor_data_file);
+#endif
 }
+
+#if defined(USE_SIMULATED_SENSOR)
+#define BUFSZ 100
+char buf[BUFSZ];
+int simulate_read(float *h, float *t)
+{
+  int result = 0;
+  char *s;
+  s = fgets(buf, BUFSZ, sensor_data_file);
+  if (s) {
+    *t = (float)atof(buf);
+    s = fgets(buf, BUFSZ, sensor_data_file);
+    *h = (float)atof(buf);
+  } else {
+    *t = 0.0f;
+    result = 1;
+  }
+  return result;
+}
+
+#endif
 
 /**
  * Attempts to get a valid temperature and humidity reading up to tries times.
@@ -50,6 +89,10 @@ int get_temperature_and_humidity(struct TH* th, int tries)
   int result = -1, i;
 
   th->temperature = th->humidity = 0.0f;
+
+#if defined(USE_SIMULATED_SENSOR)
+  result = simulate_read(&th->humidity, &th->temperature);
+#else
   for (i = 0; i < tries; i++) {
     result = pi_2_dht_read(sensor, pin_number, &th->humidity, &th->temperature);
 
@@ -61,6 +104,8 @@ int get_temperature_and_humidity(struct TH* th, int tries)
 
     if (!result) break;
   }
+#endif
+
   return result;
 }
 
