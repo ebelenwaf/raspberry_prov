@@ -1,6 +1,7 @@
 
 # sample programs
 sample_c
+thermostat
 
 # barectf generated files
 barectf-bitfield.h

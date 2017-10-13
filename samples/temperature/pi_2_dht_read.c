@@ -122,7 +122,6 @@ int pi_2_dht_read(int type, int pin, float* humidity, float* temperature) {
 
   // Ignore the first two readings because they are a constant 80 microsecond pulse.
   uint32_t threshold = 0;
-  uint32_t min = pulseCounts[0], max = 0;
 #define USE_ORIGINAL_THRESHOLD_CALCULATION
 #if defined(USE_ORIGINAL_THRESHOLD_CALCULATION)
   for (i=2; i < DHT_PULSES*2; i+=2) {
@@ -132,6 +131,7 @@ int pi_2_dht_read(int type, int pin, float* humidity, float* temperature) {
   // Compute the average low pulse width to use as a 50 microsecond reference threshold.
   threshold /= DHT_PULSES-1;
 #else
+  uint32_t min = pulseCounts[0], max = 0;
   for (i=3; i < DHT_PULSES*2; i+=2) {
     if ( pulseCounts[i] < min ) min = pulseCounts[i];
     if ( pulseCounts[i] > max ) max = pulseCounts[i];
