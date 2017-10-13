@@ -8,6 +8,7 @@
 #include <barectf-platform-linux-fs.h>
 #include <barectf.h>
 #include <sys/stat.h>
+#include <string.h>
 
 #define USE_SIMULATED_SENSOR
 #if defined(USE_SIMULATED_SENSOR)
@@ -61,16 +62,21 @@ void finalize( )
 char buf[BUFSZ];
 int simulate_read(float *h, float *t)
 {
-  int result = 0;
+  int result = 1;
   char *s;
+  *t = 0.0f;
+  *h = 0.0f;
   s = fgets(buf, BUFSZ, sensor_data_file);
   if (s) {
-    *t = (float)atof(buf);
-    s = fgets(buf, BUFSZ, sensor_data_file);
-    *h = (float)atof(buf);
-  } else {
-    *t = 0.0f;
-    result = 1;
+    s = strtok(s, ", ");
+    if (s) {
+      *t = (float)atof(buf);
+      s = strtok(NULL, ", ");
+      if (s) {
+        *h = (float)atof(buf);
+        result = 0;
+      }
+    }
   }
   return result;
 }
