@@ -179,7 +179,7 @@ enum state check_setpoint(struct thermostat_ctx *th)
 
 int main(int argc, char *argv[])
 {
-  int hum = 0, temp = 0, i;
+  int /* hum = 0, temp = 0, */ i;
   struct thermostat_ctx th;
   enum state next_state;
 
@@ -235,16 +235,20 @@ int main(int argc, char *argv[])
 
     }
 
+/*
     temp = th.temperature;
     hum = th.humidity;
+*/
+
 #if defined(DEBUG)
     printf("h = %d%%, t = %d *F\n", hum, temp);
 #endif
 
-    /* TODO: what is this event? */
+/*
     barectf_default_trace_sensor_events(
         barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), temp, hum,
         "device_1", "DHT_22_1", "log");
+*/
 
 #if defined(USE_SIMULATED_SENSOR)
     //sleep_milliseconds(1000);
