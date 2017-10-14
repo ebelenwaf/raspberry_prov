@@ -192,7 +192,7 @@ int main(int argc, char *argv[])
   initialize(&th);
 
   /* TODO: parametrize the runs */
-  for (i = 0; i < 1440; i++) {
+  for (i = 0; i < 4*24; i++) {
     float old_csp = th.cooling_setpoint, old_hsp = th.heating_setpoint;
     int result = get_temperature_and_humidity(&th, 5);
 
