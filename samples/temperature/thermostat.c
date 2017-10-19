@@ -167,7 +167,9 @@ int main(int argc, char *argv[])
   enum state next_state;
 
   if (argc > 1) {
+#if defined(USE_SIMULATED_SENSOR)
     sensor_data_filename = argv[1]; /* FIXME: better arg processing */
+#endif
   }
 
   initialize(&th);
