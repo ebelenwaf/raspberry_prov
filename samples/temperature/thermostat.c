@@ -13,13 +13,8 @@
 #define USE_SIMULATED_SENSOR
 #if defined(USE_SIMULATED_SENSOR)
 FILE *sensor_data_file;
-char *sensor_data_filename = "temperature.csv";
+char *sensor_data_filename = "temperature.csv"; /* TODO: parameterize */
 #endif
-
-struct TH {
-  float temperature;
-  float humidity;
-};
 
 enum state {
   OFF = 0,
@@ -28,21 +23,26 @@ enum state {
 };
 const char *state_names[3] = {"OFF", "HEATING", "COOLING"};
 
-enum state current_state;
-enum state current_mode;
+struct thermostat_ctx {
+  float temperature;
+  float humidity;
+  float cooling_setpoint;
+  float heating_setpoint;
+  enum state current_state;
+  enum state current_mode;
+};
 
-float cooling_setpoint;
-float heating_setpoint;
+
 struct barectf_platform_linux_fs_ctx *platform_ctx;
 
-void initialize( )
+void initialize(struct thermostat_ctx *th)
 {
   /* initialize platform */
   platform_ctx = barectf_platform_linux_fs_init(1024, "ctf", 1, 2, 20);
-  cooling_setpoint = 72.5f;
-  heating_setpoint = 72.5f;
-  current_state = OFF;
-  current_mode = COOLING; /* TODO: parameterize? */
+  th->cooling_setpoint = 72.5f;
+  th->heating_setpoint = 72.5f;
+  th->current_state = OFF;
+  th->current_mode = COOLING; /* TODO: parameterize? */
 
 #if defined(USE_SIMULATED_SENSOR)
   sensor_data_file = fopen(sensor_data_filename, "r");
@@ -65,22 +65,22 @@ void finalize( )
 #if defined(USE_SIMULATED_SENSOR)
 #define BUFSZ 100
 char buf[BUFSZ];
-int simulate_read(float *h, float *t)
+int simulate_read(float *h, float *t, float *csp, float *hsp)
 {
   int result = 1;
   char *s;
+  float *outputs[4] = {t,h,csp,hsp};
+  float **p = outputs;
   *t = 0.0f;
   *h = 0.0f;
+  
   s = fgets(buf, BUFSZ, sensor_data_file);
   if (s) {
     s = strtok(s, ", ");
-    if (s) {
-      *t = (float)atof(buf);
+    while (s) {
+      **p++ = (float)atof(s);
       s = strtok(NULL, ", ");
-      if (s) {
-        *h = (float)atof(buf);
-        result = 0;
-      }
+      result = 0;
     }
   }
   return result;
@@ -93,7 +93,7 @@ int simulate_read(float *h, float *t)
  * If successful, puts the valid reading into th and returns 0.
  * If unsuccessful, puts 0 in th and returns non-zero.
 */
-int get_temperature_and_humidity(struct TH* th, int tries)
+int get_temperature_and_humidity(struct thermostat_ctx* th, int tries)
 {
   int result = -1;
 #if !defined(USE_SIMULATED_SENSOR)
@@ -105,7 +105,7 @@ int get_temperature_and_humidity(struct TH* th, int tries)
   th->temperature = th->humidity = 0.0f;
 
 #if defined(USE_SIMULATED_SENSOR)
-  result = simulate_read(&th->humidity, &th->temperature);
+  result = simulate_read(&th->humidity, &th->temperature, &th->cooling_setpoint, &th->heating_setpoint);
 #else
   for (i = 0; i < tries; i++) {
     result = pi_2_dht_read(sensor, pin_number, &th->humidity, &th->temperature);
@@ -124,33 +124,35 @@ int get_temperature_and_humidity(struct TH* th, int tries)
 }
 
 /* Convert the temperature from celsius to fahrenheit */
-static inline void convert_C_to_F(struct TH *th)
+static inline void convert_C_to_F(struct thermostat_ctx *th)
 {
   th->temperature = th->temperature * 1.8f + 32.0f;
+  th->cooling_setpoint = th->cooling_setpoint * 1.8f + 32.0f;
+  th->heating_setpoint = th->heating_setpoint * 1.8f + 32.0f;
 }
 
 /* Compare the current temperature value in th with the setpoint
  * to determine the next state. */
-enum state check_setpoint(struct TH *th)
+enum state check_setpoint(struct thermostat_ctx *th)
 {
   const float stop_increment = 1.00f;
   const float start_increment = 1.00f;
 
-  enum state next_state = current_state;
+  enum state next_state = th->current_state;
 
-  if ( current_mode == HEATING ) {
-    if ( th->temperature > (heating_setpoint + stop_increment) ) {
+  if ( th->current_mode == HEATING ) {
+    if ( th->temperature > (th->heating_setpoint + stop_increment) ) {
       next_state = OFF;
-    } else if (th->temperature < (heating_setpoint - start_increment) ) {
+    } else if (th->temperature < (th->heating_setpoint - start_increment) ) {
       next_state =  HEATING;
     }
-  } else if ( current_mode == COOLING ) {
-    if ( th->temperature < (cooling_setpoint - stop_increment) ) {
+  } else if ( th->current_mode == COOLING ) {
+    if ( th->temperature < (th->cooling_setpoint - stop_increment) ) {
       next_state = OFF;
-    } else if (th->temperature > (cooling_setpoint + start_increment) ) {
+    } else if (th->temperature > (th->cooling_setpoint + start_increment) ) {
       next_state = COOLING;
     }
-  } else if ( current_mode == OFF ) {
+  } else if ( th->current_mode == OFF ) {
       next_state = OFF;
   }
   return next_state;
@@ -159,10 +161,10 @@ enum state check_setpoint(struct TH *th)
 int main(void)
 {
   int hum = 0, temp = 0, i;
-  struct TH th;
+  struct thermostat_ctx th;
   enum state next_state;
 
-  initialize();
+  initialize(&th);
 
   /* TODO: parametrize the runs */
   for (i = 0; i < 15; i++) {
@@ -173,13 +175,13 @@ int main(void)
     convert_C_to_F(&th);
     /* TODO: trace the conversion? */
 
-    printf("H = %f%%, T = %f *f\n", th.humidity, th.temperature);
+    printf("H = %f%%, T = %f *f, CSP = %f *f, HSP = %f *f\n", th.humidity, th.temperature, th.cooling_setpoint, th.heating_setpoint);
 
     next_state = check_setpoint(&th);
-    if ( next_state != current_state ) {
-      printf("Actuating... %s -> %s\n", state_names[current_state],
+    if ( next_state != th.current_state ) {
+      printf("Actuating... %s -> %s\n", state_names[th.current_state],
         state_names[next_state]);
-      current_state = next_state; /* simulated actuation */
+      th.current_state = next_state; /* simulated actuation */
       /* TODO: trace the actuation. */
     }
 
