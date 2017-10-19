@@ -22,22 +22,27 @@ struct TH {
 };
 
 enum state {
-  IDLE = 0,
+  OFF = 0,
   HEATING = 1,
   COOLING = 2
 };
-const char *state_names[3] = {"IDLE", "HEATING", "COOLING"};
+const char *state_names[3] = {"OFF", "HEATING", "COOLING"};
 
 enum state current_state;
-float setpoint;
+enum state current_mode;
+
+float cooling_setpoint;
+float heating_setpoint;
 struct barectf_platform_linux_fs_ctx *platform_ctx;
 
 void initialize( )
 {
   /* initialize platform */
   platform_ctx = barectf_platform_linux_fs_init(1024, "ctf", 1, 2, 20);
-  setpoint = 72.5f;
-  current_state = IDLE;
+  cooling_setpoint = 72.5f;
+  heating_setpoint = 72.5f;
+  current_state = OFF;
+  current_mode = COOLING; /* TODO: parameterize? */
 
 #if defined(USE_SIMULATED_SENSOR)
   sensor_data_file = fopen(sensor_data_filename, "r");
@@ -90,9 +95,12 @@ int simulate_read(float *h, float *t)
 */
 int get_temperature_and_humidity(struct TH* th, int tries)
 {
+  int result = -1;
+#if !defined(USE_SIMULATED_SENSOR)
   const int sensor = 22;
   const int pin_number = 4;
-  int result = -1, i;
+  int i;
+#endif
 
   th->temperature = th->humidity = 0.0f;
 
@@ -125,23 +133,25 @@ static inline void convert_C_to_F(struct TH *th)
  * to determine the next state. */
 enum state check_setpoint(struct TH *th)
 {
-  const float stop_increment = 0.5f;
-  const float start_increment = 0.75f;
+  const float stop_increment = 1.00f;
+  const float start_increment = 1.00f;
+
   enum state next_state = current_state;
-  if ( current_state == HEATING ) {
-    if ( th->temperature > (setpoint + stop_increment) ) {
-      next_state = IDLE;
+
+  if ( current_mode == HEATING ) {
+    if ( th->temperature > (heating_setpoint + stop_increment) ) {
+      next_state = OFF;
+    } else if (th->temperature < (heating_setpoint - start_increment) ) {
+      next_state =  HEATING;
     }
-  } else if ( current_state == COOLING ) {
-    if ( th->temperature < (setpoint - stop_increment) ) {
-      next_state = IDLE;
-    }
-  } else if ( current_state == IDLE ) {
-    if ( th->temperature < (setpoint - start_increment) ) {
-      next_state = HEATING;
-    } else if (th->temperature > (setpoint + start_increment)) {
+  } else if ( current_mode == COOLING ) {
+    if ( th->temperature < (cooling_setpoint - stop_increment) ) {
+      next_state = OFF;
+    } else if (th->temperature > (cooling_setpoint + start_increment) ) {
       next_state = COOLING;
     }
+  } else if ( current_mode == OFF ) {
+      next_state = OFF;
   }
   return next_state;
 }
@@ -154,7 +164,8 @@ int main(void)
 
   initialize();
 
-  for (i = 0; i < 10; i++) {
+  /* TODO: parametrize the runs */
+  for (i = 0; i < 15; i++) {
     int result = get_temperature_and_humidity(&th, 5);
     printf("result = %d\n", result);
     printf("H = %f%%, T = %f *C\n", th.humidity, th.temperature);
