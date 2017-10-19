@@ -10,6 +10,8 @@
 #include <sys/stat.h>
 #include <string.h>
 
+//#define DEBUG
+
 #define USE_SIMULATED_SENSOR
 #if defined(USE_SIMULATED_SENSOR)
 FILE *sensor_data_file;
@@ -158,19 +160,25 @@ enum state check_setpoint(struct thermostat_ctx *th)
   return next_state;
 }
 
-int main(void)
+int main(int argc, char *argv[])
 {
   int hum = 0, temp = 0, i;
   struct thermostat_ctx th;
   enum state next_state;
+
+  if (argc > 1) {
+    sensor_data_filename = argv[1]; /* FIXME: better arg processing */
+  }
 
   initialize(&th);
 
   /* TODO: parametrize the runs */
   for (i = 0; i < 15; i++) {
     int result = get_temperature_and_humidity(&th, 5);
-    printf("result = %d\n", result);
+
+#if defined(DEBUG)
     printf("H = %f%%, T = %f *C\n", th.humidity, th.temperature);
+#endif
 
     convert_C_to_F(&th);
     /* TODO: trace the conversion? */
@@ -187,7 +195,9 @@ int main(void)
 
     temp = th.temperature;
     hum = th.humidity;
+#if defined(DEBUG)
     printf("h = %d%%, t = %d *F\n", hum, temp);
+#endif
     barectf_default_trace_sensor_events(
         barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), temp, hum,
         "device_1", "DHT_22_1", "read");
