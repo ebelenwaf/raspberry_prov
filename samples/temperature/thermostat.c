@@ -183,7 +183,7 @@ int main(int argc, char *argv[])
   initialize(&th);
 
   /* TODO: parametrize the runs */
-  for (i = 0; i < 15; i++) {
+  for (i = 0; i < 1440; i++) {
     int result = get_temperature_and_humidity(&th, 5);
 
 #if defined(DEBUG)
@@ -215,8 +215,11 @@ int main(int argc, char *argv[])
         barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), temp, hum,
         "device_1", "DHT_22_1", "read");
 
-    sleep_milliseconds(1000);
+#if defined(USE_SIMULATED_SENSOR)
+    //sleep_milliseconds(1000);
+#else
     //sleep_milliseconds(1000000); /* 1 minute sleep */
+#endif
   }
 
   finalize();
