@@ -33,6 +33,7 @@ def ctfToProv():
         dataset = {'ex:'+k:event[k] for k in event.field_list_with_scope(
             babeltrace.CTFScope.EVENT_FIELDS)}
         dataset.update({'ex:'+'timestamp':(event['timestamp']/1000000000)})
+        dataset.update({'ex:'+'name':event.name})
 
         e1 = d1.entity(ex['event'+str(counter)],dataset)
         entities.append(e1)
