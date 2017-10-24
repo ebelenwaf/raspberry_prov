@@ -107,7 +107,15 @@ int get_temperature_and_humidity(struct thermostat_ctx* th, int tries)
   th->temperature = th->humidity = 0.0f;
 
 #if defined(USE_SIMULATED_SENSOR)
-  result = simulate_read(&th->humidity, &th->temperature, &th->cooling_setpoint, &th->heating_setpoint);
+  result = simulate_read(
+      &th->humidity, &th->temperature, &th->cooling_setpoint,
+      &th->heating_setpoint);
+
+  /* FIXME: transformation? this should really be 'sensor_event'? */
+  barectf_default_trace_transformation(
+      barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
+      th->temperature, th->humidity, result,
+      "device_1", "DHT_22_1", "read");
 #else
   for (i = 0; i < tries; i++) {
     result = pi_2_dht_read(sensor, pin_number, &th->humidity, &th->temperature);
@@ -185,7 +193,8 @@ int main(int argc, char *argv[])
     convert_C_to_F(&th);
     /* TODO: trace the conversion? */
 
-    printf("H = %f%%, T = %f *f, CSP = %f *f, HSP = %f *f\n", th.humidity, th.temperature, th.cooling_setpoint, th.heating_setpoint);
+    printf("H = %f%%, T = %f *f, CSP = %f *f, HSP = %f *f\n",
+        th.humidity, th.temperature, th.cooling_setpoint, th.heating_setpoint);
 
     next_state = check_setpoint(&th);
     if ( next_state != th.current_state ) {
@@ -200,6 +209,8 @@ int main(int argc, char *argv[])
 #if defined(DEBUG)
     printf("h = %d%%, t = %d *F\n", hum, temp);
 #endif
+
+    /* TODO: what is this event? */
     barectf_default_trace_sensor_events(
         barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), temp, hum,
         "device_1", "DHT_22_1", "read");
