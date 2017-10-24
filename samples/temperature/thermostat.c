@@ -111,8 +111,7 @@ int get_temperature_and_humidity(struct thermostat_ctx* th, int tries)
       &th->humidity, &th->temperature, &th->cooling_setpoint,
       &th->heating_setpoint);
 
-  /* FIXME: transformation? this should really be 'sensor_event'? */
-  barectf_default_trace_transformation(
+  barectf_default_trace_th_sensor_reading(
       barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
       th->temperature, th->humidity, result,
       "device_1", "DHT_22_1", "read");
@@ -120,8 +119,7 @@ int get_temperature_and_humidity(struct thermostat_ctx* th, int tries)
   for (i = 0; i < tries; i++) {
     result = pi_2_dht_read(sensor, pin_number, &th->humidity, &th->temperature);
 
-    /* FIXME: transformation? this should really be 'sensor_event'? */
-    barectf_default_trace_transformation(
+    barectf_default_trace_th_sensor_reading(
         barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
         th->temperature, th->humidity, result,
         "device_1", "DHT_22_1", "read");
@@ -191,7 +189,11 @@ int main(int argc, char *argv[])
 #endif
 
     convert_C_to_F(&th);
-    /* TODO: trace the conversion? */
+
+    barectf_default_trace_transformation(
+        barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
+        th.temperature, th.humidity, result,
+        "device_1", "DHT_22_1", "read");
 
     printf("H = %f%%, T = %f *f, CSP = %f *f, HSP = %f *f\n",
         th.humidity, th.temperature, th.cooling_setpoint, th.heating_setpoint);
@@ -201,7 +203,11 @@ int main(int argc, char *argv[])
       printf("Actuating... %s -> %s\n", state_names[th.current_state],
         state_names[next_state]);
       th.current_state = next_state; /* simulated actuation */
-      /* TODO: trace the actuation. */
+
+    barectf_default_trace_actuation(
+        barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
+        state_names[th.current_state], "device_1", "DHT_22_1", "actuate");
+
     }
 
     temp = th.temperature;
@@ -218,7 +224,7 @@ int main(int argc, char *argv[])
 #if defined(USE_SIMULATED_SENSOR)
     //sleep_milliseconds(1000);
 #else
-    //sleep_milliseconds(1000000); /* 1 minute sleep */
+    sleep_milliseconds(1000000); /* 1 minute sleep */
 #endif
   }
 
