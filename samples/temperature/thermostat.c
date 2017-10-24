@@ -13,6 +13,8 @@
 //#define DEBUG
 
 #define USE_SIMULATED_SENSOR
+//#define TRACE_SETPOINT
+
 #if defined(USE_SIMULATED_SENSOR)
 FILE *sensor_data_file;
 char *sensor_data_filename = "temperature.csv"; /* TODO: parameterize */
@@ -98,7 +100,8 @@ int simulate_read(float *h, float *t, float *csp, float *hsp)
 int get_temperature_and_humidity(struct thermostat_ctx* th, int tries)
 {
   int result = -1;
-#if !defined(USE_SIMULATED_SENSOR)
+#if defined(USE_SIMULATED_SENSOR)
+#else
   const int sensor = 22;
   const int pin_number = 4;
   int i;
@@ -115,6 +118,14 @@ int get_temperature_and_humidity(struct thermostat_ctx* th, int tries)
       barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
       th->temperature, th->humidity, result,
       "device_1", "DHT_22_1", "read");
+
+#if defined(TRACE_SETPOINT)
+  barectf_default_trace_th_sensor_reading(
+      barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
+      th->cooling_setpoint, th->heating_setpoint, result,
+      "device_1", "TSP_1", "read");
+#endif /* TRACE_SETPOINT */
+
 #else
   for (i = 0; i < tries; i++) {
     result = pi_2_dht_read(sensor, pin_number, &th->humidity, &th->temperature);
@@ -126,7 +137,7 @@ int get_temperature_and_humidity(struct thermostat_ctx* th, int tries)
 
     if (!result) break;
   }
-#endif
+#endif /* USE_SIMULATED_SENSOR */
 
   return result;
 }
@@ -182,6 +193,7 @@ int main(int argc, char *argv[])
 
   /* TODO: parametrize the runs */
   for (i = 0; i < 1440; i++) {
+    float old_csp = th.cooling_setpoint, old_hsp = th.heating_setpoint;
     int result = get_temperature_and_humidity(&th, 5);
 
 #if defined(DEBUG)
@@ -194,6 +206,19 @@ int main(int argc, char *argv[])
         barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
         th.temperature, th.humidity, result,
         "device_1", "DHT_22_1", "convert");
+
+#if defined(TRACE_SETPOINT)
+    barectf_default_trace_transformation(
+        barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
+        th.cooling_setpoint, th.heating_setpoint, result,
+        "device_1", "TSP_1", "convert");
+#endif
+
+    if (old_csp != th.cooling_setpoint || old_hsp != th.heating_setpoint) {
+          printf("Changing setpoint: %f -> %f :: %f -> %f\n",
+              old_csp, th.cooling_setpoint, old_hsp, th.heating_setpoint);
+       /* TODO: trace setpoint changes? */
+    }
 
     printf("H = %f%%, T = %f *f, CSP = %f *f, HSP = %f *f\n",
         th.humidity, th.temperature, th.cooling_setpoint, th.heating_setpoint);
