@@ -193,7 +193,7 @@ int main(int argc, char *argv[])
     barectf_default_trace_transformation(
         barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
         th.temperature, th.humidity, result,
-        "device_1", "DHT_22_1", "read");
+        "device_1", "DHT_22_1", "convert");
 
     printf("H = %f%%, T = %f *f, CSP = %f *f, HSP = %f *f\n",
         th.humidity, th.temperature, th.cooling_setpoint, th.heating_setpoint);
@@ -219,7 +219,7 @@ int main(int argc, char *argv[])
     /* TODO: what is this event? */
     barectf_default_trace_sensor_events(
         barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), temp, hum,
-        "device_1", "DHT_22_1", "read");
+        "device_1", "DHT_22_1", "log");
 
 #if defined(USE_SIMULATED_SENSOR)
     //sleep_milliseconds(1000);
