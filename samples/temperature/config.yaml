@@ -64,6 +64,36 @@ metadata:
           timestamp: clock-int
           id: uint16
       events:
+        dht_raw_sensor_reading:
+          payload-type:
+            class: struct
+            fields:
+              data0: uint8
+              data1: uint8
+              data2: uint8
+              data3: uint8
+              data4: uint8
+              device_info: string
+              sensor_info: string
+              activity: string
+        th_sensor_reading:
+          payload-type:
+            class: struct
+            fields:
+              temperature: float
+              humidity: float
+              result: int32
+              device_info: string
+              sensor_info: string
+              activity: string
+        actuation:
+          payload-type:
+            class: struct
+            fields:
+              state: string
+              device_info: string
+              sensor_info: string
+              activity: string
         sensor_events:
           payload-type:
             class: struct
@@ -96,4 +126,3 @@ metadata:
                 class: string
 
 
-       

@@ -13,6 +13,8 @@
 //#define DEBUG
 
 #define USE_SIMULATED_SENSOR
+//#define TRACE_SETPOINT
+
 #if defined(USE_SIMULATED_SENSOR)
 FILE *sensor_data_file;
 char *sensor_data_filename = "temperature.csv"; /* TODO: parameterize */
@@ -98,7 +100,8 @@ int simulate_read(float *h, float *t, float *csp, float *hsp)
 int get_temperature_and_humidity(struct thermostat_ctx* th, int tries)
 {
   int result = -1;
-#if !defined(USE_SIMULATED_SENSOR)
+#if defined(USE_SIMULATED_SENSOR)
+#else
   const int sensor = 22;
   const int pin_number = 4;
   int i;
@@ -107,20 +110,34 @@ int get_temperature_and_humidity(struct thermostat_ctx* th, int tries)
   th->temperature = th->humidity = 0.0f;
 
 #if defined(USE_SIMULATED_SENSOR)
-  result = simulate_read(&th->humidity, &th->temperature, &th->cooling_setpoint, &th->heating_setpoint);
+  result = simulate_read(
+      &th->humidity, &th->temperature, &th->cooling_setpoint,
+      &th->heating_setpoint);
+
+  barectf_default_trace_th_sensor_reading(
+      barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
+      th->temperature, th->humidity, result,
+      "device_1", "DHT_22_1", "read");
+
+#if defined(TRACE_SETPOINT)
+  barectf_default_trace_th_sensor_reading(
+      barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
+      th->cooling_setpoint, th->heating_setpoint, result,
+      "device_1", "TSP_1", "read");
+#endif /* TRACE_SETPOINT */
+
 #else
   for (i = 0; i < tries; i++) {
     result = pi_2_dht_read(sensor, pin_number, &th->humidity, &th->temperature);
 
-    /* FIXME: transformation? this should really be 'sensor_event'? */
-    barectf_default_trace_transformation(
+    barectf_default_trace_th_sensor_reading(
         barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
         th->temperature, th->humidity, result,
         "device_1", "DHT_22_1", "read");
 
     if (!result) break;
   }
-#endif
+#endif /* USE_SIMULATED_SENSOR */
 
   return result;
 }
@@ -162,7 +179,7 @@ enum state check_setpoint(struct thermostat_ctx *th)
 
 int main(int argc, char *argv[])
 {
-  int hum = 0, temp = 0, i;
+  int /* hum = 0, temp = 0, */ i;
   struct thermostat_ctx th;
   enum state next_state;
 
@@ -175,7 +192,8 @@ int main(int argc, char *argv[])
   initialize(&th);
 
   /* TODO: parametrize the runs */
-  for (i = 0; i < 15; i++) {
+  for (i = 0; i < 1440; i++) {
+    float old_csp = th.cooling_setpoint, old_hsp = th.heating_setpoint;
     int result = get_temperature_and_humidity(&th, 5);
 
 #if defined(DEBUG)
@@ -183,29 +201,60 @@ int main(int argc, char *argv[])
 #endif
 
     convert_C_to_F(&th);
-    /* TODO: trace the conversion? */
 
-    printf("H = %f%%, T = %f *f, CSP = %f *f, HSP = %f *f\n", th.humidity, th.temperature, th.cooling_setpoint, th.heating_setpoint);
+    barectf_default_trace_transformation(
+        barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
+        th.temperature, th.humidity, result,
+        "device_1", "DHT_22_1", "convert");
+
+#if defined(TRACE_SETPOINT)
+    barectf_default_trace_transformation(
+        barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
+        th.cooling_setpoint, th.heating_setpoint, result,
+        "device_1", "TSP_1", "convert");
+#endif
+
+    if (old_csp != th.cooling_setpoint || old_hsp != th.heating_setpoint) {
+          printf("Changing setpoint: %f -> %f :: %f -> %f\n",
+              old_csp, th.cooling_setpoint, old_hsp, th.heating_setpoint);
+       /* TODO: trace setpoint changes? */
+    }
+
+    printf("H = %f%%, T = %f *f, CSP = %f *f, HSP = %f *f\n",
+        th.humidity, th.temperature, th.cooling_setpoint, th.heating_setpoint);
 
     next_state = check_setpoint(&th);
     if ( next_state != th.current_state ) {
       printf("Actuating... %s -> %s\n", state_names[th.current_state],
         state_names[next_state]);
       th.current_state = next_state; /* simulated actuation */
-      /* TODO: trace the actuation. */
+
+    barectf_default_trace_actuation(
+        barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
+        state_names[th.current_state], "device_1", "DHT_22_1", "actuate");
+
     }
 
+/*
     temp = th.temperature;
     hum = th.humidity;
+*/
+
 #if defined(DEBUG)
     printf("h = %d%%, t = %d *F\n", hum, temp);
 #endif
+
+/*
     barectf_default_trace_sensor_events(
         barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), temp, hum,
-        "device_1", "DHT_22_1", "read");
+        "device_1", "DHT_22_1", "log");
+*/
 
-    sleep_milliseconds(1000);
-    //sleep_milliseconds(1000000); /* 1 minute sleep */
+#if defined(USE_SIMULATED_SENSOR)
+    //sleep_milliseconds(1000);
+#else
+    sleep_milliseconds(1000000); /* 1 minute sleep */
+#endif
   }
 
   finalize();
