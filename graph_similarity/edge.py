@@ -46,9 +46,9 @@ class edge:    #class that represents edges
 
 	def isEmpty(self):
 		if self.label != NULL or self.source_node != NULL or self.destination_node != NULL:
-			return false
+			return False
 		else:
-			return true
+			return True
 
 
 	def toString(self):

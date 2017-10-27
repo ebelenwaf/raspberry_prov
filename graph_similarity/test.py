@@ -7,7 +7,7 @@ import numpy as np
 
 '''This file is used to test the graph to vector class'''
 
-graphtovec = GraphtoVector(sys.argv)
+graphtovec = GraphtoVector(sys.argv[1:])
 vecList = graphtovec.genVectorSet()
 print(vecList)
 

@@ -13,7 +13,7 @@ class GraphtoVector:
 	def __init__ (self, prov_list):
 		#self.globalEdgeList = []
 
-		self.file_list = prov_list[1:]    #start from the second element in the list.
+		self.file_list = prov_list    #start from the second element in the list.
 
 
 
