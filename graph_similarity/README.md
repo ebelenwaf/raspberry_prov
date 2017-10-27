@@ -21,7 +21,7 @@ In order to run the code here, you need to install the following software
 
 ## Installing
 
-* To execute the functionalities of the graphtovector class, compile test.py including the file location of the json object containing the provenance representation.  `python3 test.py prov.json output.json`. This returns a set of vectors for each json file specified.
+* To execute the functionalities of the graphtovector class, compile `test.py` including the file location of the json object containing the provenance representation.  `python3 test.py prov.json output.json`. This returns a set of vectors for each json file specified.
 
 
 
