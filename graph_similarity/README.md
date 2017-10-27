@@ -1,7 +1,7 @@
 # Graph Similarity
 
 ## Getting started
-The folders files contained in this folder are described below:
+The files contained in this folder are described below:
 
 * EdgeList.py: Creates a list of edges for each graph from a json output and a unique list of edges given a set of edges (also know as global edge list).
 * edge.py: Creates an edge object with source, destination node and label fields.
