@@ -31,9 +31,18 @@ class EdgeList:
 		#finds edge labes with names wasAssociatedWith,
 		#wasGeneratedBy, and used...
 
-		edgeJsonList.append(provJsonData['wasAssociatedWith'])
-		edgeJsonList.append(provJsonData['wasGeneratedBy'])
-		edgeJsonList.append(provJsonData['used'])
+
+		edge_label = ['wasAssociatedWith', 'wasGeneratedBy', 'used']
+
+		# edgeJsonList.append(provJsonData['wasAssociatedWith'])
+		# edgeJsonList.append(provJsonData['wasGeneratedBy'])
+		# edgeJsonList.append(provJsonData['used'])
+
+
+		for label in edge_label:
+			if label in provJsonData:
+				edgeJsonList.append(provJsonData[label])
+
 
 		#list of edge label values
 		edgeLabel.append('wasAssociatedWith')
