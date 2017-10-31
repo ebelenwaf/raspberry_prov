@@ -17,8 +17,8 @@
 
 #if defined(USE_SIMULATED_SENSOR)
 FILE *sensor_data_file;
-char *sensor_data_filename = "temperature.csv"; /* TODO: parameterize */
 #endif
+char *sensor_data_filename = "temperature.csv";
 
 enum state {
   OFF = 0,
@@ -177,22 +177,36 @@ enum state check_setpoint(struct thermostat_ctx *th)
   return next_state;
 }
 
+static void usage(char *s)
+{
+  printf("USAGE\n\
+%s <sensor_readings> <sensor_data.csv>\n\
+where all arguments are positional, and used as follows:\n\
+<sensor_readings> [default: 96] is an integer number of readings to take\n\
+    This argument is required.\n\
+<sensor_data.csv> [default: temperature.csv] is a CSV file containing\n\
+    temperature (C), humidity (%%), cooling setpoint, heating setpoint\n\
+", s);
+}
+
 int main(int argc, char *argv[])
 {
   int /* hum = 0, temp = 0, */ i;
   struct thermostat_ctx th;
   enum state next_state;
+  int sensor_readings = 4*24;
 
-  if (argc > 1) {
-#if defined(USE_SIMULATED_SENSOR)
-    sensor_data_filename = argv[1]; /* FIXME: better arg processing */
-#endif
+  /* FIXME: better arg processing */
+  switch (argc) {
+  default:
+  case 3: sensor_data_filename = argv[2];
+  case 2: sensor_readings = atoi(argv[1]); break;
+  case 1: usage(argv[0]); exit(1);
   }
 
   initialize(&th);
 
-  /* TODO: parametrize the runs */
-  for (i = 0; i < 4*24; i++) {
+  for (i = 0; i < sensor_readings; i++) {
     float old_csp = th.cooling_setpoint, old_hsp = th.heating_setpoint;
     int result = get_temperature_and_humidity(&th, 5);
 
