@@ -55,7 +55,7 @@ do
     date=${JULY_2012}
     while [ ${date} -lt ${AUGUST_2012} ]
     do
-      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $0}' \
+      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $5,$6,$7,$8}' \
         thermostat_sim_occupant_${occ}.csv \
         > data/jul_2012/thermostat_sim_occupant_${occ}_jul_${date}.csv
       let date=${date}+1
@@ -63,7 +63,7 @@ do
 
     while [ ${date} -lt ${SEPTEMBER_2012} ]
     do
-      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $0}' \
+      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $5,$6,$7,$8}' \
         thermostat_sim_occupant_${occ}.csv \
         > data/aug_2012/thermostat_sim_occupant_${occ}_aug_${date}.csv
       let date=${date}+1
@@ -71,7 +71,7 @@ do
 
     while [ ${date} -lt ${OCTOBER_2012} ]
     do
-      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $0}' \
+      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $5,$6,$7,$8}' \
         thermostat_sim_occupant_${occ}.csv \
         > data/sep_2012/thermostat_sim_occupant_${occ}_september_${date}.csv
       let date=${date}+1
@@ -79,7 +79,7 @@ do
 
     while [ ${date} -lt ${NOVEMBER_2012} ]
     do
-      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $0}' \
+      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $5,$6,$7,$8}' \
         thermostat_sim_occupant_${occ}.csv \
         > data/oct_2012/thermostat_sim_occupant_${occ}_oct_${date}.csv
       let date=${date}+1
@@ -87,7 +87,7 @@ do
 
     while [ ${date} -lt ${DECEMBER_2012} ]
     do
-      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $0}' \
+      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $5,$6,$7,$8}' \
         thermostat_sim_occupant_${occ}.csv \
         > data/nov_2012/thermostat_sim_occupant_${occ}_nov_${date}.csv
       let date=${date}+1
@@ -95,7 +95,7 @@ do
 
     while [ ${date} -lt ${JANUARY_2013} ]
     do
-      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $0}' \
+      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $5,$6,$7,$8}' \
         thermostat_sim_occupant_${occ}.csv \
         > data/dec_2012/thermostat_sim_occupant_${occ}_dec_${date}.csv
       let date=${date}+1
@@ -103,7 +103,7 @@ do
 
     while [ ${date} -lt ${FEBRUARY_2013} ]
     do
-      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $0}' \
+      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $5,$6,$7,$8}' \
         thermostat_sim_occupant_${occ}.csv \
         > data/jan_2013/thermostat_sim_occupant_${occ}_jan_${date}.csv
       let date=${date}+1
@@ -111,7 +111,7 @@ do
 
     while [ ${date} -lt ${MARCH_2013} ]
     do
-      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $0}' \
+      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $5,$6,$7,$8}' \
         thermostat_sim_occupant_${occ}.csv \
         > data/feb_2013/thermostat_sim_occupant_${occ}_feb_${date}.csv
       let date=${date}+1
@@ -119,7 +119,7 @@ do
 
     while [ ${date} -lt ${APRIL_2013} ]
     do
-      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $0}' \
+      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $5,$6,$7,$8}' \
         thermostat_sim_occupant_${occ}.csv \
         > data/mar_2013/thermostat_sim_occupant_${occ}_mar_${date}.csv
       let date=${date}+1
@@ -127,7 +127,7 @@ do
 
     while [ ${date} -lt ${MAY_2013} ]
     do
-      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $0}' \
+      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $5,$6,$7,$8}' \
         thermostat_sim_occupant_${occ}.csv \
         > data/apr_2013/thermostat_sim_occupant_${occ}_apr_${date}.csv
       let date=${date}+1
@@ -135,7 +135,7 @@ do
 
     while [ ${date} -lt ${JUNE_2013} ]
     do
-      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $0}' \
+      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $5,$6,$7,$8}' \
         thermostat_sim_occupant_${occ}.csv \
         > data/may_2013/thermostat_sim_occupant_${occ}_may_${date}.csv
       let date=${date}+1
@@ -143,7 +143,7 @@ do
 
     while [ ${date} -lt ${JULY_2013} ]
     do
-      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $0}' \
+      awk 'BEGIN{ OFS="," ; FS="," } $1 ~ /^'${date}'./ {print $5,$6,$7,$8}' \
         thermostat_sim_occupant_${occ}.csv \
         > data/jun_2013/thermostat_sim_occupant_${occ}_jun_${date}.csv
       let date=${date}+1
