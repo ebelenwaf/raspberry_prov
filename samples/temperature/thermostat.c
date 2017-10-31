@@ -39,14 +39,14 @@ struct thermostat_ctx {
 
 struct barectf_platform_linux_fs_ctx *platform_ctx;
 
-void initialize(struct thermostat_ctx *th)
+void initialize(struct thermostat_ctx *th, enum state init_mode)
 {
   /* initialize platform */
   platform_ctx = barectf_platform_linux_fs_init(1024, "ctf", 1, 2, 20);
   th->cooling_setpoint = 72.5f;
   th->heating_setpoint = 72.5f;
   th->current_state = OFF;
-  th->current_mode = COOLING; /* TODO: parameterize? */
+  th->current_mode = init_mode;
 
 #if defined(USE_SIMULATED_SENSOR)
   sensor_data_file = fopen(sensor_data_filename, "r");
@@ -154,7 +154,7 @@ static inline void convert_C_to_F(struct thermostat_ctx *th)
  * to determine the next state. */
 enum state check_setpoint(struct thermostat_ctx *th)
 {
-  const float stop_increment = 1.00f;
+  const float stop_increment = 0.00f;
   const float start_increment = 1.00f;
 
   enum state next_state = th->current_state;
@@ -174,18 +174,26 @@ enum state check_setpoint(struct thermostat_ctx *th)
   } else if ( th->current_mode == OFF ) {
       next_state = OFF;
   }
+
+  /* XXX the dataset appears to indicate the csp=65 and HSP=80 when the
+   * system is turned off. Use this to override the control decision. */
+  if (th->cooling_setpoint < 65.01f && th->heating_setpoint > 79.9f) {
+    next_state = OFF;
+  }
   return next_state;
 }
 
 static void usage(char *s)
 {
   printf("USAGE\n\
-%s <sensor_readings> <sensor_data.csv>\n\
+%s <sensor_readings> <sensor_data.csv> <thermostat_mode>\n\
 where all arguments are positional, and used as follows:\n\
 <sensor_readings> [default: 96] is an integer number of readings to take\n\
     This argument is required.\n\
 <sensor_data.csv> [default: temperature.csv] is a CSV file containing\n\
     temperature (C), humidity (%%), cooling setpoint, heating setpoint\n\
+<thermostat_mode> [default: 2] is an integer mode of the thermostat, one of:\n\
+    0 = OFF, 1 = HEATING, 2 = COOLING\n\
 ", s);
 }
 
@@ -194,17 +202,19 @@ int main(int argc, char *argv[])
   int /* hum = 0, temp = 0, */ i;
   struct thermostat_ctx th;
   enum state next_state;
+  enum state init_mode = COOLING;
   int sensor_readings = 4*24;
 
   /* FIXME: better arg processing */
   switch (argc) {
   default:
+  case 4: init_mode = atoi(argv[3]);
   case 3: sensor_data_filename = argv[2];
   case 2: sensor_readings = atoi(argv[1]); break;
   case 1: usage(argv[0]); exit(1);
   }
 
-  initialize(&th);
+  initialize(&th, init_mode);
 
   for (i = 0; i < sensor_readings; i++) {
     float old_csp = th.cooling_setpoint, old_hsp = th.heating_setpoint;
@@ -231,7 +241,6 @@ int main(int argc, char *argv[])
     if (old_csp != th.cooling_setpoint || old_hsp != th.heating_setpoint) {
           printf("Changing setpoint: %f -> %f :: %f -> %f\n",
               old_csp, th.cooling_setpoint, old_hsp, th.heating_setpoint);
-       /* TODO: trace setpoint changes? */
     }
 
     printf("H = %f%%, T = %f *f, CSP = %f *f, HSP = %f *f\n",
@@ -248,21 +257,6 @@ int main(int argc, char *argv[])
         state_names[th.current_state], "device_1", "DHT_22_1", "actuate");
 
     }
-
-/*
-    temp = th.temperature;
-    hum = th.humidity;
-*/
-
-#if defined(DEBUG)
-    printf("h = %d%%, t = %d *F\n", hum, temp);
-#endif
-
-/*
-    barectf_default_trace_sensor_events(
-        barectf_platform_linux_fs_get_barectf_ctx(platform_ctx), temp, hum,
-        "device_1", "DHT_22_1", "log");
-*/
 
 #if defined(USE_SIMULATED_SENSOR)
     //sleep_milliseconds(1000);
