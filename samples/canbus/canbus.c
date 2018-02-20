@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
     if ( ts > last_ts ) {
       usleep(ts-last_ts); /* maintain timeliness */
     } else {
-      printf("WARN: rcv timestamp (%d) > (%d) last timestamp\n", ts, last_ts);
+      printf("WARN: rcv timestamp (%d) <= (%d) last timestamp\n", ts, last_ts);
     }
     last_ts = ts;
 
