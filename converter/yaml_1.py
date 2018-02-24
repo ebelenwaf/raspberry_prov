@@ -15,7 +15,7 @@ def event_field(config_file):
 	        default = val['default']
 
 	        events = default['events']
-	        sensor_events = events['sensor_events']
+	        sensor_events = events['canbus_rcv']
 
 
 	        payload_type = sensor_events['payload-type']
