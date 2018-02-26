@@ -32,7 +32,8 @@ class EdgeList:
 		#wasGeneratedBy, and used...
 
 
-		edge_label = ['wasAssociatedWith', 'wasGeneratedBy', 'used']
+		#edge_label = ['wasAssociatedWith', 'wasGeneratedBy', 'used']
+		edge_label = ['wasAssociatedWith', 'wasGeneratedBy', 'actedOnBehalfOf', 'wasDerivedFrom']
 
 		# edgeJsonList.append(provJsonData['wasAssociatedWith'])
 		# edgeJsonList.append(provJsonData['wasGeneratedBy'])
@@ -45,9 +46,14 @@ class EdgeList:
 
 
 		#list of edge label values
+		# edgeLabel.append('wasAssociatedWith')
+		# edgeLabel.append('wasGeneratedBy')
+		# edgeLabel.append('used')
+
 		edgeLabel.append('wasAssociatedWith')
 		edgeLabel.append('wasGeneratedBy')
-		edgeLabel.append('used')
+		edgeLabel.append('actedOnBehalfOf')
+		edgeLabel.append('wasDerivedFrom')
 
 
 		#print(edgeLabel)
@@ -68,6 +74,28 @@ class EdgeList:
 				key_list = list(value.keys())
 				destination_node = value[key_list[0]]
 				source_node = value[key_list[1]]
+
+				# if 'entity' in key_list[1]:
+				if 'event' in source_node:
+					source_node = str(provJsonData['entity'][source_node])
+					#print("Source Node"+source_node)
+				# elif 'activity' in source_node:
+				# 	source_node = value[key_list[1]]   #FIXME: change to prov:type value
+				# elif 'agent' in source_node:
+				# 	source_node = str(provJsonData['activity'][source_node]['prov:type'])
+
+
+				# elif 'entity' in key_list[0]:
+				elif 'event' in destination_node:
+					destination_node = str(provJsonData['entity'][destination_node])
+					# print("\n Destination Node:"+destination_node)
+				# else:
+				# 	source_node = value[key_list[0]]
+				# 	print(source_node)
+
+
+
+
 
 				#creates edge objects
 				edgeVal = edge(source_node, destination_node, edgeLabel[i])
@@ -122,8 +150,8 @@ class EdgeList:
 
 # vector = EdgeList()
 
-# # edges = vector.getEdgeList("output.json")
-# # vectorList = vector.getUniqueEdgeList(edges)
+# edges = vector.getEdgeList("output.json")
+# vectorList = vector.getUniqueEdgeList(edges)
 
 # # edgelist = vector.getEdgeList("output.json")
 # # print(vectorList)
