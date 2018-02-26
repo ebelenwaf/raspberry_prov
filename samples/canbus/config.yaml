@@ -80,8 +80,6 @@ metadata:
               data6: uint8
               data7: uint8
               result: int32
-              device_info: string
-              sensor_info: string
               activity: string
 
 
