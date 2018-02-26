@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
         barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
         ts, network_id, node_id,
         data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7],
-        result, "device_1", "port_id", "read");
+        result, "read");
   }
 
   finalize();
