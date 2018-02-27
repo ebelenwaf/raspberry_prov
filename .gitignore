@@ -2,6 +2,7 @@
 # sample programs
 sample_c
 thermostat
+canbus
 
 # barectf generated files
 barectf-bitfield.h
