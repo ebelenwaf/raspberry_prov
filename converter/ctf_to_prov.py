@@ -41,29 +41,28 @@ def ctfToProv():
         controller_agent = d1.agent('ex:'+event['controller_id'])
         activity = d1.activity('ex:'+event['activity']+str(counter_1))
         activities.append(activity)
-        #d1.wasGeneratedBy(e1, activity)
+        d1.wasGeneratedBy(e1, activity)
         # strings used to detect if the relationship already exists in the d1 document
         association_relationship = str(dummy.wasAssociatedWith(activity, producer_agent))
         used_relationship = str(dummy.used(controller_agent, producer_agent))
 
-        #add activity to producer agent
-       # d1.wasAssociatedWith(activity,producer_agent)
-        #check if the association already esists
+        # Add activity to producer agent if it has not been added before.
+        d1.wasAssociatedWith(activity, producer_agent)
         # if association_relationship not in relationships:
-        #     d1.wasAssociatedWith(activity,producer_agent)
+        #     d1.wasAssociatedWith(activity, producer_agent)
         #     relationships.append(association_relationship)
+
+        # Add producer agent to controller agent if it has not been added yet.
         if used_relationship not in relationships:
             d1.used(controller_agent, producer_agent)
             relationships.append(used_relationship)
+
+        # Add temporal relationship between this event and the previous one.
+        if counter > 0:
+            d1.wasAssociatedWith(entities[counter - 1], e1)
+
         counter+=1
         counter_1 +=1
-    for index in range(len(entities)-1):
-        d1.wasAssociatedWith(entities[index], entities[index + 1])
-
-    for index in range(len(entities)):
-        d1.wasGeneratedBy(entities[index], activities[index])
-        d1.wasAssociatedWith(activities[index],producer_agent)
-
     return d1
 prov_document = ctfToProv()
 prov_document = prov_document.unified()
