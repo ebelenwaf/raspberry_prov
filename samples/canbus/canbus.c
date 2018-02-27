@@ -76,6 +76,7 @@ int main(int argc, char *argv[])
   uint32_t ts;
   char *network_id;
   char *node_id;
+  char *source_address;
   uint8_t data[8];
 
   /* FIXME: better arg processing */
@@ -105,9 +106,10 @@ int main(int argc, char *argv[])
     }
     last_ts = ts;
 
+    source_address = &node_id[6];
     barectf_default_trace_canbus_rcv(
         barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
-        network_id, node_id, "read",
+        network_id, source_address, "read",
         ts,
         data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]
     );
