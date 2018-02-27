@@ -41,6 +41,7 @@ In order to run the code here, you need to install the following software
 
 * To convert trace events contained in the stream file to human readable PROV-DM format, run the *python3* script `ctf_to_prov.py` located in the `converter` folder, passing as argument the path to a directory containing the metadata file and 1 or more trace (stream) files. *Note: babeltrace will return an error if any other files are found.* This generates a json file `output.json` containing the provenance conversion.
   * `python3 ctf_to_prov.py ../ctf`
+  * Note: I had problems with different versions of python3, where babeltrace was using python3.5 but my distro used python3.6 by default. This can be overcome by running `python3.5 ctf_to_prov.py ../ctf`
 
 
 * To store PROV-DM file in the neo4j database, run python script `tester.py` contained in the `converter` folder. This also produces a pdf file `output.pdf` containing the provenance representation.

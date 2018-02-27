@@ -10,6 +10,7 @@
 #include <string.h>
 
 //#define DEBUG
+//#define BE_TIMELY
 
 FILE *data_file;
 char *data_filename = "test.txt";
@@ -91,7 +92,9 @@ int main(int argc, char *argv[])
   while ( result == 0 ) {
     result = simulate_rcv(&ts, &network_id, &node_id, data);
     if ( ts > last_ts ) {
+#if defined(BE_TIMELY)
       usleep(ts-last_ts); /* maintain timeliness */
+#endif
     } else {
       printf("WARN: rcv timestamp (%d) <= (%d) last timestamp\n", ts, last_ts);
     }
