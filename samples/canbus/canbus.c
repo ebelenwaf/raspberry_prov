@@ -76,6 +76,7 @@ int main(int argc, char *argv[])
   uint32_t ts;
   char *network_id;
   char *node_id;
+  char *source_address;
   uint8_t data[8];
 
   /* FIXME: better arg processing */
@@ -87,10 +88,15 @@ int main(int argc, char *argv[])
 
   initialize();
 
+#if defined(BE_TIMELY)
   printf("Running at approximately the same speed as the log.\n");
+#else
+  printf("Running at super speed!\n");
+#endif
 
   while ( result == 0 ) {
     result = simulate_rcv(&ts, &network_id, &node_id, data);
+    if ( result ) break; /* short-circuit */
     if ( ts > last_ts ) {
 #if defined(BE_TIMELY)
       usleep(ts-last_ts); /* maintain timeliness */
@@ -100,11 +106,13 @@ int main(int argc, char *argv[])
     }
     last_ts = ts;
 
+    source_address = &node_id[6];
     barectf_default_trace_canbus_rcv(
         barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
-        ts, network_id, node_id,
-        data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7],
-        result, "read");
+        network_id, source_address, "read",
+        ts,
+        data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]
+    );
   }
 
   finalize();

@@ -33,27 +33,27 @@ def ctfToProv():
         dataset = {'ex:'+k:event[k] for k in event.field_list_with_scope(
             babeltrace.CTFScope.EVENT_FIELDS)}
         dataset.update({'ex:'+'timestamp':(event['timestamp']/1000000000)})
-        dataset.update({'ex:'+'name':event.name})
+        #dataset.update({'ex:'+'name':event.name})
 
         e1 = d1.entity(ex['event'+str(counter)],dataset)
         entities.append(e1)
-        sensor_agent = d1.agent('ex:'+event['sensor_info'])
-        device_agent = d1.agent('ex:'+event['device_info'])
+        producer_agent = d1.agent('ex:'+event['producer_id'])
+        controller_agent = d1.agent('ex:'+event['controller_id'])
         activity = d1.activity('ex:'+event['activity']+str(counter_1))
         activities.append(activity)
         #d1.wasGeneratedBy(e1, activity)
         # strings used to detect if the relationship already exists in the d1 document
-        association_relationship = str(dummy.wasAssociatedWith(activity, sensor_agent))
-        used_relationship = str(dummy.used(device_agent, sensor_agent))
+        association_relationship = str(dummy.wasAssociatedWith(activity, producer_agent))
+        used_relationship = str(dummy.used(controller_agent, producer_agent))
 
-        #add activity to sensor agent
-       # d1.wasAssociatedWith(activity,sensor_agent)
+        #add activity to producer agent
+       # d1.wasAssociatedWith(activity,producer_agent)
         #check if the association already esists
         # if association_relationship not in relationships:
-        #     d1.wasAssociatedWith(activity,sensor_agent)
+        #     d1.wasAssociatedWith(activity,producer_agent)
         #     relationships.append(association_relationship)
         if used_relationship not in relationships:
-            d1.used(device_agent, sensor_agent)
+            d1.used(controller_agent, producer_agent)
             relationships.append(used_relationship)
         counter+=1
         counter_1 +=1
@@ -62,7 +62,7 @@ def ctfToProv():
 
     for index in range(len(entities)):
         d1.wasGeneratedBy(entities[index], activities[index])
-        d1.wasAssociatedWith(activities[index],sensor_agent)
+        d1.wasAssociatedWith(activities[index],producer_agent)
 
     return d1
 prov_document = ctfToProv()
