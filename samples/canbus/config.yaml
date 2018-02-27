@@ -68,9 +68,10 @@ metadata:
           payload-type:
             class: struct
             fields:
+              controller_id: string
+              producer_id: string
+              activity: string
               ts: uint32
-              network_id: string
-              node_id: string
               data0: uint8
               data1: uint8
               data2: uint8
@@ -79,7 +80,5 @@ metadata:
               data5: uint8
               data6: uint8
               data7: uint8
-              result: int32
-              activity: string
 
 

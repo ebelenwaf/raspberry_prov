@@ -87,10 +87,15 @@ int main(int argc, char *argv[])
 
   initialize();
 
+#if defined(BE_TIMELY)
   printf("Running at approximately the same speed as the log.\n");
+#else
+  printf("Running at super speed!\n");
+#endif
 
   while ( result == 0 ) {
     result = simulate_rcv(&ts, &network_id, &node_id, data);
+    if ( result ) break; /* short-circuit */
     if ( ts > last_ts ) {
 #if defined(BE_TIMELY)
       usleep(ts-last_ts); /* maintain timeliness */
@@ -102,9 +107,10 @@ int main(int argc, char *argv[])
 
     barectf_default_trace_canbus_rcv(
         barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
-        ts, network_id, node_id,
-        data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7],
-        result, "read");
+        network_id, node_id, "read",
+        ts,
+        data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]
+    );
   }
 
   finalize();
