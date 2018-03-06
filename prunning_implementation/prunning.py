@@ -1,45 +1,30 @@
 import babeltrace
 from babeltrace import CTFWriter
 import sys
-import tempfile
 from collections import Counter
 from collections import deque
 
-
-#############################################################################
-#    Function to Prunn the data and put in a deque                          #
-#    @param trace_path: The path to the stream file                #
-#           capacity: The capacity of the deque                             #
-############################################################################
-
-def getPrunnedData(trace_path, capacity):
+def get_pruned_data(file_path, capacity):
     
-    myDeque = deque(maxlen = capacity)
+    my_deque = deque(maxlen = capacity)
     trace_collection = babeltrace.TraceCollection()
     
-    # Raise an exception
-    if trace_collection.add_trace(trace_path,'ctf') is None:
+    if trace_collection.add_trace(file_path,'ctf') is None:
         raise RuntimeError('Cannot add trace')
     
-    # Gather all the information and discard what you dont easy.
-    # print(trace_collection)
     for event in trace_collection.events:
         temp_dict = {}
         for key in event:
             temp_dict[key] = event[key]
         temp_dict['event_name'] = event.name
-        if(len(myDeque) >= capacity):
-            myDeque.popleft()
-        myDeque.append(temp_dict)
-    return myDeque
-##########################################################################################
-#    Function to Prunn the data and put in a deque                                       #
-# @param streamFileDestination: The location of where you want the streamfile to go      #
-#        myDeque: contains a collection of all the events in the stream file             #
-##########################################################################################
-def createStreamFile(streamFileDestination, myDeque):
+        if(len(my_deque) >= capacity):
+            my_deque.popleft()
+        my_deque.append(temp_dict)
+    return my_deque
+
+def create_stream_file(streamfile_dest, my_deque):
     
-    writer = CTFWriter.Writer(streamFileDestination)
+    writer = CTFWriter.Writer(streamfile_dest)
     clock = CTFWriter.Clock("A_clock")
     clock.description = "Simple clock"
     writer.add_clock(clock)
@@ -50,7 +35,6 @@ def createStreamFile(streamFileDestination, myDeque):
     
     event_class = CTFWriter.EventClass("SimpleEvent")
     
-    # We can create multiple events here
     # Create a int32_t equivalent type
     int32_type = CTFWriter.IntegerFieldDeclaration(32)
     int32_type.signed = True
@@ -61,11 +45,10 @@ def createStreamFile(streamFileDestination, myDeque):
     int32_type.signed = True
     event_class.add_field(int32_type, "event_id_count")
     
-    
     stream_class.add_event_class(event_class)
     stream = writer.create_stream(stream_class)
     
-    for item in myDeque:
+    for item in my_deque:
         event = CTFWriter.Event(event_class)
         clock.time = item["timestamp"]
         integer_field = event.payload("value")
@@ -73,27 +56,14 @@ def createStreamFile(streamFileDestination, myDeque):
         integer_field = event.payload("event_id_count")
         integer_field.value = item["event_id_counter"]
         stream.append_event(event)
-    
     stream.flush()
 
-######################################################################################
-# A function to test the code                                                        #
-# Note: you can change the function createStreamFile("new_file3", my_deque)          #
-# To accept only a stream path and then call the getPrunnedData inside the function  #
-######################################################################################
-#initialize variables
-capacity = 8
+def main():
+    capacity = 8
+    file_path1 = 'ctf' #replace 'ctf' with a file path that has your stream file
+    my_deque = get_pruned_data(file_path1, capacity)
+    create_stream_file("new_file3", my_deque)
+    print('{}'.format(my_deque))
 
-# File path hard code
-trace_path1 = 'ctf'
-my_deque = getPrunnedData(trace_path1, capacity)
-createStreamFile("new_file3", my_deque)
-print('{}'.format(my_deque))
-
-#######################################################################
-
-
-
-
-
-
+if __name__ == '__main__':
+    main()
