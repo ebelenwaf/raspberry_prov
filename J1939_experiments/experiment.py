@@ -11,13 +11,27 @@ import itertools
 import os
 import sys
 
+import numpy as np
+
+sys.path.append(os.path.join("..", "graph_similarity"))
+
+from graphtovector import GraphtoVector
+from cosine_similarity import cos_sim
+
+def vectorize(files):
+    graphtovec = GraphtoVector(files)
+    vecList = graphtovec.genVectorSet()
+    return vecList
+
+def my_getCosSim(v_x, v_y):
+    return str(cos_sim(np.array(v_x), np.array(v_y)))
+
 def usage():
     print("Usage: experiment.py -[hvi:o:d:n:f:p:]\n\
   -h --help         print this help\n\
   -v --verbose      print more information [False]\n\
-  -i --input        input filename [driving_data.csv]\n\
-  -o --output       output filename [results.txt]\n\
-  -t --temp         temporary filename [temp.txt]\n\
+  -i --input        input log filename [driving_data.csv]\n\
+  -o --output       output directory [out]\n\
   -d --disregard    denominator of 1/d % events not subject to injection [2]\n\
                         Note: d must match that used during injection, and\n\
                         the max window size is n/d.\n\
@@ -50,7 +64,7 @@ def read_lists_from_CSV(filename):
         data = [row for row in reader]
 
     return data
-            
+
 def write_lists_to_CSV(filename, data):
     """Generates a CSV file from a list of lists.
 
@@ -121,29 +135,82 @@ def generate_trace(temp_filename):
     if not os.path.exists(canbus_exe):
         print("Error: canbus executable not found at: " + canbus_exe)
         exit(1)
-    os.system(canbus_exe + " temp.txt")
+    os.system(canbus_exe + " " + temp_filename)
 
-def generate_prov():
+def convert_trace_to_prov(output_dir, tag):
+    # FIXME: import ctf_to_prov?
     converter = os.path.join("..", "converter", "ctf_to_prov.py")
     if not os.path.exists(converter):
         print("Error: ctf_to_prov.py not found at: " + converter)
         exit(1)
-    ctf = os.path.join("..", "J1939_experiments", "ctf")
+    ctf = os.path.join("..", os.path.basename(os.getcwd()), "ctf")
     os.system("python3.5 " + converter + " " + ctf)
+    filename = os.path.join(output_dir, tag + ".json")
+    os.rename("output.json", filename)
 
-def validate_args(input_filename, output_filename, temp_filename, log_format,
+def generate_prov(output_dir, log_format, windows, window_count, train_count, verbose):
+    test_count = window_count - train_count
+    temp_filename = os.path.join(output_dir, "temp.txt")
+
+    if verbose is True:
+        print("Number of windows: " + str(window_count))
+        print("Number of training windows: " + str(train_count))
+        print("Number of test windows: " + str(test_count))
+
+    index = 0
+    for w in windows[0:window_count]:
+        tag = "train"
+        if index >= train_count:
+            tag = "test"
+        if verbose is True:
+            print("Generating provenance (" + tag + ") window #" + str(index))
+        td = generate_trace_metadata(w, log_format)
+        write_lists_to_CSV(temp_filename, td)
+        generate_trace(temp_filename)
+        convert_trace_to_prov(output_dir, tag + str(index))
+        index = index + 1
+
+def calculate_similarity(output_dir, window_count, train_count, verbose):
+    scores = []
+    files = []
+    test_count = window_count - train_count
+
+    for y in xrange(train_count):
+        train = os.path.join(output_dir, "train" + str(y) + ".json")
+        files.append(train)
+
+    for x in xrange(test_count):
+        test = os.path.join(output_dir, "test" + str(x + train_count) + ".json")
+        files.append(test)
+
+    if verbose is True:
+        print("Converting json files into vectors:")
+        for f in files:
+            print(f)
+
+    V = vectorize(files)
+
+    for x in xrange(test_count):
+        test = x + train_count 
+        x_scores = []
+        for train in xrange(train_count):
+            if verbose is True:
+                print("Calculating similarity:" + str(test) + " and " + str(train))
+            x_scores.append(my_getCosSim(V[train], V[test]))
+        scores.append(x_scores)
+    return scores
+
+def validate_args(input_filename, output_dir, log_format,
         disregard, numevts, fraction, prune):
     if not os.path.exists(input_filename):
         print("Error: input file not found: " + input_filename)
         return False
 
-    if os.path.exists(output_filename):
-        print("Warning: will overwrite existing output file: "
-                + output_filename)
-
-    if os.path.exists(temp_filename):
-        print("Warning: will overwrite existing temporary file: "
-                + temp_filename)
+    if os.path.exists(output_dir):
+        print("Warning: will overwrite existing files in output directory: "
+                + output_dir)
+    else:
+        os.mkdir(output_dir)
 
     if log_format is None:
         print("Error: missing required argument to specify the log format.")
@@ -173,10 +240,8 @@ def validate_args(input_filename, output_filename, temp_filename, log_format,
 
 def main():
     # Default Parameters
-    verbose = False
     input_filename = "driving_data.csv"
-    output_filename = "results.txt"
-    temp_filename = "temp.txt"
+    output_dir = "out"
     disregard = 2
     numevts = None
     fraction = 1.0
@@ -186,8 +251,8 @@ def main():
 
     # Parse command line arguments
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hvi:o:t:d:n:f:p:",
-            ["help", "verbose", "input=", "output=", "temp=",
+        opts, args = getopt.getopt(sys.argv[1:], "hvi:o:d:n:f:p:",
+            ["help", "verbose", "input=", "output_dir=",
              "disregard=", "numevts=", "fraction=", "prune="])
     except getopt.GetoptError, err:
         print(str(err))
@@ -202,10 +267,8 @@ def main():
             verbose = True
         elif opt in ("-i", "--input"):
             input_filename = arg
-        elif opt in ("-o", "--output"):
-            output_filename = arg
-        elif opt in ("-t", "--temp"):
-            temp_filename = arg
+        elif opt in ("-o", "--output_dir"):
+            output_dir = arg
         elif opt in ("-d", "--disregard"):
             disregard = int(arg)
         elif opt in ("-n", "--numevts"):
@@ -219,7 +282,7 @@ def main():
             usage()
             sys.exit(2)
 
-    if not validate_args(input_filename, output_filename, temp_filename,
+    if not validate_args(input_filename, output_dir,
             log_format,
             disregard, numevts, fraction, prune):
         usage()
@@ -237,18 +300,19 @@ def main():
 
     window_size = int(fraction * float(numevts)/float(disregard))
     windows = [data[x*window_size:(x+1)*window_size] for x in range(int(disregard/fraction))]
+    wc = len(windows)
+
+    train_count = int(1.0/fraction)
 
     if verbose is True:
         print("Number of events: " + str(numevts))
         print("Window size got: " + str(window_size))
-        print("Number of windows: " + str(len(windows)))
 
-    for w in windows[0:int(1.0/fraction)]:
-        td = generate_trace_metadata(w, log_format)
-        write_lists_to_CSV(temp_filename, td)
-        generate_trace(temp_filename)
-        generate_prov()
-        # TODO: json -> scores
+    generate_prov(output_dir, log_format, windows, wc, train_count, verbose)
+    scores = calculate_similarity(output_dir, wc, train_count, verbose)
+
+    print(scores)
+    # TODO: json -> scores
 
 if __name__ == '__main__':
     main()
