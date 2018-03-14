@@ -5,8 +5,6 @@ from pprint import pprint
 
 class EdgeList(object):
 
-    prov_json = ''
-
     def getEdgeList(self, prov_json_file):
         """Converts a provenance graph file into an edge list.
         
@@ -44,18 +42,6 @@ class EdgeList(object):
                 edgeVal = edge(source_node, destination_node, edgeLabel[i])
                 edgeList.append(edgeVal)
         return edgeList
-
-    def getCounterList(edgelist):
-        edges = []
-        for edge in edgeList:
-            edges.append(edge.getCounter())
-        return edges
-
-    def getUniqueEdgeList(self, edgelist):
-        s = set()
-        for item in edgelist:
-            s.add(item)
-        return list(s)
 
     def getUniqueEdgeListSet(self, edgelistSet):
         s = set()
