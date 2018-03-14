@@ -1,7 +1,6 @@
 import json
 
 from edge import edge
-from pprint import pprint
 
 class EdgeList(object):
 
@@ -10,9 +9,6 @@ class EdgeList(object):
         
         Creates a list of labeled, directed edges.
         """
-        edgeJsonList = []
-        edgeLabel = []
-        loopCounter = 0
         edgeList = []
         json_data = None
         
