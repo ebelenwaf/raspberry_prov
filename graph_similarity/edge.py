@@ -1,7 +1,7 @@
 import os
 
 
-class edge:    #class that represents edges
+class edge:
     """An edge represenation in a labeled, directed graph.
 
     Attributes:
@@ -20,10 +20,13 @@ class edge:    #class that represents edges
         self.label = label
 
     def __repr__(self):
-        return "Item(%s, %s, %s)" %(self.source_node, self.destination_node, self.label)
+        return "Item(%s, %s, %s)" %(self.source_node, self.destination_node,
+                                    self.label)
 
     def __eq__(self, other):
-        return (self.source_node == other.source_node) and (self.destination_node == other.destination_node) and (self.label == other.label)
+        return (self.source_node == other.source_node and
+                self.destination_node == other.destination_node and
+                self.label == other.label)
 
     def __hash__(self):
         return hash(self.__repr__())
@@ -49,11 +52,13 @@ class edge:    #class that represents edges
         self.label = label
 
     def isEmpty(self):
-        if self.label != NULL or self.source_node != NULL or self.destination_node != NULL:
+        if (self.label != NULL or self.source_node != NULL or
+            self.destination_node != NULL):
             return False
         else:
             return True
 
     def toString(self):
-        return 'source node:'+ self.source_node+'\n'+'destination node:'+self.destination_node+'\n'+'\n'+'label:'+self.label
+        return ('source node:' + self.source_node + '\n' + 'destination node:'
+                + self.destination_node + '\n' + '\n' + 'label:' + self.label)
 
