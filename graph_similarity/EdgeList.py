@@ -14,31 +14,22 @@ class EdgeList(object):
         edgeLabel = []
         loopCounter = 0
         edgeList = []
-
-        json_data = open(prov_json_file).read()
+        json_data = None
+        
+        with open(prov_json_file) as json_file:
+            json_data = json_file.read()
         provJsonData = json.loads(json_data)
 
-        #finds edge labes with names wasAssociatedWith,
-        #wasGeneratedBy, and used...
+        # For edge labels given (wAW, wGB, u), create an edge object with
+        # the source and destination nodes from the prov json graph and
+        # store the edges in a list.
         edge_label = ['wasAssociatedWith', 'wasGeneratedBy', 'used']
         for label in edge_label:
-            if label in provJsonData:
-                edgeJsonList.append(provJsonData[label])
-
-        #list of edge label values
-        edgeLabel.append('wasAssociatedWith')
-        edgeLabel.append('wasGeneratedBy')
-        edgeLabel.append('used')
-
-        #creates an edge object with the source and destionation nodes
-        #from the prov json graph and stores the edge object in a list.
-        for i in range(len(edgeJsonList)):
-            for data, value in edgeJsonList[i].items():
-                key_list = list(value.keys())
-                destination_node = value[key_list[0]]
-                source_node = value[key_list[1]]
-
-                edgeVal = edge(source_node, destination_node, edgeLabel[i])
+            for data, value in provJsonData[label].items():
+                keys = value.keys()
+                destination_node = value[keys[0]]
+                source_node = value[keys[1]]
+                edgeVal = edge(source_node, destination_node, label)
                 edgeList.append(edgeVal)
         return edgeList
 
