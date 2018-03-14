@@ -6,7 +6,6 @@ The files contained in this folder are described below:
 * EdgeList.py: Creates a list of edges for each graph from a json output and a unique list of edges given a set of edges (also know as global edge list).
 * edge.py: Creates an edge object with source, destination node and label fields.
 * graphtovector.py: Generates the vector representation of a graph(s) given a set of edgelist.
-* cosine_similarity.py: Contains cosine similarity function implementation.
 * test.py: test function for graphtovector.py
 * compare_weeks.py: Used to generate a file containing cosine similiarity values for a given occupant and mode for 52 weeks.
 

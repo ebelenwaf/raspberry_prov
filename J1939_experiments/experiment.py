@@ -15,16 +15,7 @@ import numpy as np
 
 sys.path.append(os.path.join("..", "graph_similarity"))
 
-from graphtovector import GraphtoVector
-from cosine_similarity import cos_sim
-
-def vectorize(files):
-    graphtovec = GraphtoVector(files)
-    vecList = graphtovec.genVectorSet()
-    return vecList
-
-def my_getCosSim(v_x, v_y):
-    return str(cos_sim(np.array(v_x), np.array(v_y)))
+from graph_driver import calculate_similarity
 
 def usage():
     print("Usage: experiment.py -[hvi:o:d:n:f:p:]\n\
@@ -147,8 +138,11 @@ def convert_trace_to_prov(output_dir, tag):
     os.system("python3.5 " + converter + " " + ctf)
     filename = os.path.join(output_dir, tag + ".json")
     os.rename("output.json", filename)
+    return filename
 
 def generate_prov(output_dir, log_format, windows, window_count, train_count, verbose):
+    train_files = []
+    test_files = []
     test_count = window_count - train_count
     temp_filename = os.path.join(output_dir, "temp.txt")
 
@@ -167,38 +161,13 @@ def generate_prov(output_dir, log_format, windows, window_count, train_count, ve
         td = generate_trace_metadata(w, log_format)
         write_lists_to_CSV(temp_filename, td)
         generate_trace(temp_filename)
-        convert_trace_to_prov(output_dir, tag + str(index))
+        f =  convert_trace_to_prov(output_dir, tag + str(index))
+        if index >= train_count:
+            test_files.append(f)
+        else:
+            train_files.append(f)
         index = index + 1
-
-def calculate_similarity(output_dir, window_count, train_count, verbose):
-    scores = []
-    files = []
-    test_count = window_count - train_count
-
-    for y in xrange(train_count):
-        train = os.path.join(output_dir, "train" + str(y) + ".json")
-        files.append(train)
-
-    for x in xrange(test_count):
-        test = os.path.join(output_dir, "test" + str(x + train_count) + ".json")
-        files.append(test)
-
-    if verbose is True:
-        print("Converting json files into vectors:")
-        for f in files:
-            print(f)
-
-    V = vectorize(files)
-
-    for x in xrange(test_count):
-        test = x + train_count 
-        x_scores = []
-        for train in xrange(train_count):
-            if verbose is True:
-                print("Calculating similarity:" + str(test) + " and " + str(train))
-            x_scores.append(my_getCosSim(V[train], V[test]))
-        scores.append(x_scores)
-    return scores
+    return (train_files, test_files)
 
 def validate_args(input_filename, output_dir, log_format,
         disregard, numevts, fraction, prune):
@@ -308,11 +277,16 @@ def main():
         print("Number of events: " + str(numevts))
         print("Window size got: " + str(window_size))
 
-    generate_prov(output_dir, log_format, windows, wc, train_count, verbose)
-    scores = calculate_similarity(output_dir, wc, train_count, verbose)
+    (train_files, test_files) = generate_prov(output_dir, log_format, windows, wc, train_count, verbose)
+    scores = calculate_similarity(train_files, test_files)
 
-    print(scores)
-    # TODO: json -> scores
+    min_scores = [min(x) for x in scores]
+    m = min(min_scores)
+    i = min_scores.index(m)
+
+    if verbose is True:
+        print("Min = " + str(m) + " @ " + str(i))
+
 
 if __name__ == '__main__':
     main()
