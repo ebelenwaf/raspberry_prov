@@ -2,33 +2,33 @@ import sys
 from EdgeList import EdgeList
 
 
-class GraphtoVector:
+class GraphtoVector(object):
 
-    #list of files location for prov json
     globalEdgeList = []
-    prov_list = []
 
     def __init__ (self, prov_list):
         self.file_list = prov_list
 
     def genVectorSet(self):
-        '''This function takes a set of vectors and returns the vector representation'''
-
+        """Converts a set of provenance graph files to a set of vectors.
+        """
         graphVectorSet = []
         edgelist = EdgeList()
         edgelistSet = edgelist.getEdgeListSet(self.file_list)
         globalEdgeList = edgelist.getUniqueEdgeListSet(edgelistSet)
 
-        #passes the edges list of each provenance graph with the global unique set of edges
         for edgeslist in edgelistSet:
             graphVector = self.genVector(globalEdgeList, edgeslist)
             graphVectorSet.append(graphVector)
         return graphVectorSet
 
     def genVector(self, globalEdge, edges):
-    ''' This function takes a global edge list and an edglist for a graph and
-        returns the vector representation of the edgelist. That is, it counts the number of unique
-        edges found in the global edge list'''
+        """Converts a single edge set for a graph into a vector.
+        
+        Constructs a vector by counting the number of times each
+        edge in the edges set appears. The globalEdge set defines
+        the vector dimensions.
+        """
 
         vector = [0] * len(globalEdge)
 
