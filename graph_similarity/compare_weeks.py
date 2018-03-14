@@ -3,7 +3,7 @@ import sys
 import os
 import errno
 import threading
-from graph_driver import getCosSim
+from graph_driver import calculate_similarity
 
 
 def doIt(occupant, out_dir, data_dir, mode):
@@ -18,7 +18,7 @@ def doIt(occupant, out_dir, data_dir, mode):
           data_dir, "thermostat_sim_occupant_%d_week_%d.csv-%d.json" % (occupant, week, mode))
       arg2 = os.path.join(
           data_dir, "thermostat_sim_occupant_%d_week_%d.csv-%d.json" % (occupant, week + 1, mode))
-      result = getCosSim(arg1, arg2)
+      result = calculate_similarity(arg1, arg2)[0]
       file.write(result + "\n")
 
 
