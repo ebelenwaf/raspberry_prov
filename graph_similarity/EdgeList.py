@@ -8,11 +8,11 @@ class EdgeList:
     prov_json = ''
 
     def getEdgeList(self, prov_json_file):
-    '''
-       This function converts a provenance graph (json object file)
-       into an edge list. An edge consists of source, destionation
-       node and a counter.
-    '''
+        """Converts a provenance graph file into an edge list.
+        
+        Creates a list of edges, where an edge consists of source, destination
+        node and a counter.
+        """
         edgeJsonList = []
         edgeLabel = []
         loopCounter = 0
