@@ -1,11 +1,15 @@
 import os
 
-'''
-A class for an edge object
-
-'''
 
 class edge:    #class that represents edges
+    """An edge represenation in a labeled, directed graph.
+
+    Attributes:
+        source_node: string describing source node in the graph.
+        destination_node: string describing sink node in the graph.
+        label: string label.
+    """
+
 	source_node = ''
 	destination_node = ''
 	label = ''
