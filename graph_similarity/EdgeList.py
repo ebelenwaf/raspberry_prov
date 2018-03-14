@@ -3,7 +3,7 @@ import json
 from edge import edge
 from pprint import pprint
 
-class EdgeList:
+class EdgeList(object):
 
     prov_json = ''
 
