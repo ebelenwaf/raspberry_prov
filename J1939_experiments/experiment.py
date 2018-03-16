@@ -2,6 +2,7 @@
 
 # Authors:
 #   Gedare Bloom
+#   David Hill, Jr.
 
 from __future__ import print_function
 
@@ -91,6 +92,7 @@ def s_to_microseconds(s_time):
     """Converts a fractional second timestamp to fractional microseconds."""
     return float(s_time)*1000.0*1000.0
 
+        
 def generate_trace_metadata_J1939(data):
     td = []
     for r in data:
