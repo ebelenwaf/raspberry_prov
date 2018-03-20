@@ -36,7 +36,7 @@ def avg_time_gap(data):
  	for row in range(len(data)-1):
  		gap_sum += (data[row + 1][0] - data[row][0])
 
- 	return gap_sum/(len(data)/2)
+ 	return gap_sum/(len(data)-1)
 
 def injectMsg():
  	""" """
