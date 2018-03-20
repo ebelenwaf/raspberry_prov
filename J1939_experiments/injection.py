@@ -11,7 +11,7 @@ def min_time_gap(data):
 
     min_gap = data[1][0] - data[0][0]
 
-    for row in range(len(data)/2):
+    for row in range(len(data)-1):
         if data[row + 1][0] - data[row][0] < min_gap:
         	mingap = data[row + 1][0] - data[row][0]
 
@@ -22,7 +22,7 @@ def max_time_gap(data):
 
 	max_gap = data[1][0] - data[0][0]
 
-	for row in range(len(data)/2):
+	for row in range(len(data)-1):
 		if data[row + 1][0] - data[row][0] > max_gap:
 			max_gap = data[row + 1][0] - data[row][0]
 
@@ -33,10 +33,13 @@ def avg_time_gap(data):
  	
  	gap_sum = 0
 
- 	for row in range(len(data)/2):
+ 	for row in range(len(data)-1):
  		gap_sum += (data[row + 1][0] - data[row][0])
 
  	return gap_sum/(len(data)/2)
+
+def injectMsg():
+ 	""" """
 
 
 
@@ -47,9 +50,9 @@ def main():
  		row[0] = HHMMSSmmuu_ts_to_microseconds(row[0])
 
 
- 	print "Average Gap:", avg_time_gap(data)
- 	print "Minimum Gap:", min_time_gap(data)
- 	print "Maximum Gap:", max_time_gap(data)
+ 	print "Average Gap:", avg_time_gap(data), "microseconds"
+ 	print "Minimum Gap:", min_time_gap(data), "microseconds"
+ 	print "Maximum Gap:", max_time_gap(data), "microseconds"
 
 
 
