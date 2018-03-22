@@ -1,58 +1,100 @@
 #!/usr/bin/python
 
 # Authors:
-#   Gedare Bloom
 #   David Hill, Jr.
 
 from experiment import *
+import numpy as np
 
-def min_time_gap(data):
-    """ This function finds the minimum time gap in the data set in microseconds. """
 
-    min_gap = data[1][0] - data[0][0]
+def usage():
+   print("Usage: injection.py -[hvi:o:d:n:f:p:]\n\
+ -h --help         print this help\n\
+ -v --verbose      print more information [False]\n\
+ -i --input        input log filename [driving_data.csv]\n\
+ -o --output       output log filename [injection_driving_data.csv]\n\
+ -d --disregard    denominator of 1/d % events not subject to injection [2]\n\
+                       Note: d must match that used during injection, and\n\
+                       the max window size is n/d.\n\
+")
 
-    for row in range(len(data)-1):
-        if data[row + 1][0] - data[row][0] < min_gap:
-        	mingap = data[row + 1][0] - data[row][0]
 
-    return min_gap
+def min_time_gap(gaps):
+    """ This function finds the minimum time gap in the gaps data set in microseconds. """
+    return max(gaps)
 
-def max_time_gap(data):
-	""" This function finds the maximum time gap in the data set in microseconds. """
+def max_time_gap(gaps):
+	""" This function finds the maximum time gap in the gaps data set in microseconds. """
+	return min(gaps)
 
-	max_gap = data[1][0] - data[0][0]
+def avg_time_gap(gaps):
+	""" This function finds the average time gap of the gaps data set in microseconds. """
+ 	return int(np.mean(gaps))
 
-	for row in range(len(data)-1):
-		if data[row + 1][0] - data[row][0] > max_gap:
-			max_gap = data[row + 1][0] - data[row][0]
-
-	return max_gap
-
-def avg_time_gap(data):
-	""" This function finds the average time gap of the data set in microseconds. """
- 	
- 	gap_sum = 0
-
- 	for row in range(len(data)-1):
- 		gap_sum += (data[row + 1][0] - data[row][0])
-
- 	return gap_sum/(len(data)-1)
-
-def injectMsg():
+def injectMsg(in_file, out_file, disregard, mal_str):
  	""" """
 
+ 	mal_message = mal_str.split(",")
 
+ 	data = read_lists_from_CSV()
+
+ 	gaps = [(data[row+1][0] - data[row][0]) for row in range(len(data)-1)]
+ 	avg_gap = int(avg_time_gap(gaps))
+ 	min_gap = min_time_gap(gaps)
+ 	max_gap = max_time_gap(gaps)
+
+ 	return out_file
 
 def main():
- 	data = read_lists_from_CSV('driving_data.csv')
+
+	usage()
+	
+	# Parse command line arguments
+    """try:
+        opts, args = getopt.getopt(sys.argv[1:], "hvi:o:d:n:f:p:",
+            ["help", "verbose", "input=", "output_dir=",
+             "disregard="])
  	
- 	for row in data:
- 		row[0] = HHMMSSmmuu_ts_to_microseconds(row[0])
+ 	except getopt.GetoptError, err:
+        print(str(err))
+        usage()
+        sys.exit(2)
+
+    for opt, arg in opts:
+        if opt in ("-h", "--help"):
+            usage()
+            sys.exit(0)
+        elif opt in ("-v", "--verbose"):
+            verbose = True
+        elif opt in ("-i", "--input"):
+            input_filename = arg
+        elif opt in ("-o", "--output_dir"):
+            output_dir = arg
+        elif opt in ("-d", "--disregard"):
+            disregard = int(arg)
+        elif opt in ("-n", "--numevts"):
+            numevts = int(arg)
+        elif opt in ("-f", "--fraction"):
+            fraction = float(arg)
+        elif opt in ("-p", "--prune"):
+            prune = int(arg)
+        else:
+            print("Unhandled option: " + opt + "\n")
+            usage()
+            sys.exit(2)
+
+    if not validate_args(input_filename, output_dir,
+            log_format,
+            disregard, numevts, fraction, prune):
+        usage()
+        sys.exit(1)"""
 
 
- 	print "Average Gap:", avg_time_gap(data), "microseconds"
- 	print "Minimum Gap:", min_time_gap(data), "microseconds"
- 	print "Maximum Gap:", max_time_gap(data), "microseconds"
+
+    injectMsg('driving_data.csv',,'1,2,C000003x,C000003x,CAN - EXT,8,01 41 A0 FF FF FF FF FF,Tx')
+	
+
+	
 
 
 
