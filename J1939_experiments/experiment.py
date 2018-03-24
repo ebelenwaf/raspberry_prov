@@ -2,7 +2,8 @@
 
 # Authors:
 #   Gedare Bloom
-#   David Hill, Jr.
+#   David Hill
+
 
 from __future__ import print_function
 
@@ -87,6 +88,18 @@ def HHMMSSmmuu_ts_to_microseconds(timestamp):
     """Converts a timestamp in HH:MM:SS:mm:uu format to microseconds."""
     ts = [int(x) for x in timestamp.split(":")]
     return (((ts[0]*60+ts[1])*60+ts[2])*1000+ts[3])*1000+ts[4]
+
+
+def microseconds_to_HHMMSSmmuu(time_ms):
+    """ This function converts timestamps from microseconds tp HHMMSSmmuu format. """
+
+    ts_microseconds = time_ms % 1000
+    ts_milliseconds = (time_ms/1000) % 1000
+    ts_seconds = (((time_ms/1000) - ts_milliseconds)/1000) % 60
+    ts_minutes = (((((time_ms / 1000) - ts_milliseconds) /1000) - ts_seconds)/60) %60
+    ts_hours = ((((((time_ms / 1000) - ts_milliseconds)/1000) - ts_seconds)/60) - ts_minutes)/60
+    
+    return "%02d:%02d:%02d:%03d:%03d" % (ts_hours, ts_minutes, ts_seconds, ts_milliseconds, ts_microseconds)
 
 def s_to_microseconds(s_time):
     """Converts a fractional second timestamp to fractional microseconds."""

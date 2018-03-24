@@ -31,20 +31,6 @@ def avg_time_gap(gaps):
 	""" This function finds the average time gap of the gaps data set in microseconds. """
  	return int(np.mean(gaps))
 
-def microseconds_to_HHMMSSmmuu(time_ms):
-	""" This function converts timestamps from microseconds tp HHMMSSmmuu format. """
-
-	ts_microseconds = time_ms % 1000
-	ts_milliseconds = (time_ms/1000) % 1000
-	ts_seconds = (((time_ms/1000) - ts_milliseconds)/1000) % 60
-	ts_minutes = (((((time_ms / 1000) - ts_milliseconds) /1000) - ts_seconds)/60) %60
-	ts_hours = ((((((time_ms / 1000) - ts_milliseconds)/1000) - ts_seconds)/60) - ts_minutes)/60
-	
-	return "%02d:%02d:%02d:%03d:%03d" % (ts_hours, ts_minutes, ts_seconds, ts_milliseconds, ts_microseconds)
-
-
-
-
 def injectMsg(in_file, out_file, disregard, mal_str):
  	""" """
 
@@ -58,7 +44,9 @@ def injectMsg(in_file, out_file, disregard, mal_str):
  	min_gap = min_time_gap(gaps)
  	max_gap = max_time_gap(gaps)
 
- 	print microseconds_to_HHMMSSmmuu(timestamp_rows[1750])
+ 	print microseconds_to_HHMMSSmmuu(timestamp_rows[0])
+
+ 	
 
  	
  	
