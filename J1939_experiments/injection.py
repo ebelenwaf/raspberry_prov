@@ -21,11 +21,11 @@ def usage():
 
 def min_time_gap(gaps):
     """ This function finds the minimum time gap in the gaps data set in microseconds. """
-    return max(gaps)
+    return min(gaps)
 
 def max_time_gap(gaps):
 	""" This function finds the maximum time gap in the gaps data set in microseconds. """
-	return min(gaps)
+	return max(gaps)
 
 def avg_time_gap(gaps):
 	""" This function finds the average time gap of the gaps data set in microseconds. """
@@ -38,20 +38,25 @@ def injectMsg(in_file, out_file, disregard, mal_str):
 
  	data = read_lists_from_CSV(in_file)
  	timestamp_rows = [ HHMMSSmmuu_ts_to_microseconds(row[0]) for row in data]
+ 	start_idx = int((1.0/disregard) * len(data))
 
  	gaps = [(timestamp_rows[row+1]) - timestamp_rows[row] for row in range(len(data)-1)]
  	avg_gap = int(avg_time_gap(gaps))
  	min_gap = min_time_gap(gaps)
  	max_gap = max_time_gap(gaps)
 
- 	print microseconds_to_HHMMSSmmuu(timestamp_rows[0])
+ 	anom_file = csv.writer(open(out_file,'wb'))
+
+ 	print min_gap
+ 	print max_gap
+ 	print avg_gap
 
  	
 
  	
  	
 
- 	return out_file
+ 	return anom_file
 
 def main():
 
@@ -97,7 +102,7 @@ def main():
         usage()
         sys.exit(1)"""
 
-	injectMsg('driving_data.csv','output_data.csv',4,'1,2,C000003x,C000003x,CAN - EXT,8,01 41 A0 FF FF FF FF FF,Tx')
+	injectMsg('driving_data.csv','anomalous_data.csv',2,'1,2,C000003x,C000003x,CAN - EXT,8,01 41 A0 FF FF FF FF FF,Tx')
 	
 
 	
