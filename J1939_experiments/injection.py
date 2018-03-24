@@ -8,7 +8,7 @@ import numpy as np
 
 
 def usage():
-   print("Usage: injection.py -[hvi:o:d:n:f:p:]\n\
+   print "Usage: injection.py -[hvi:o:d:n:f:p:]\n\
  -h --help         print this help\n\
  -v --verbose      print more information [False]\n\
  -i --input        input log filename [driving_data.csv]\n\
@@ -16,7 +16,7 @@ def usage():
  -d --disregard    denominator of 1/d % events not subject to injection [2]\n\
                        Note: d must match that used during injection, and\n\
                        the max window size is n/d.\n\
-")
+"
 
 
 def min_time_gap(gaps):
@@ -31,26 +31,46 @@ def avg_time_gap(gaps):
 	""" This function finds the average time gap of the gaps data set in microseconds. """
  	return int(np.mean(gaps))
 
+def microseconds_to_HHMMSSmmuu(time_ms):
+	""" This function converts timestamps from microseconds tp HHMMSSmmuu format. """
+
+	ts_microseconds = time_ms % 1000
+	ts_milliseconds = (time_ms/1000) % 1000
+	ts_seconds = (((time_ms/1000) - ts_milliseconds)/1000) % 60
+	ts_minutes = (((((time_ms / 1000) - ts_milliseconds) /1000) - ts_seconds)/60) %60
+	ts_hours = ((((((time_ms / 1000) - ts_milliseconds)/1000) - ts_seconds)/60) - ts_minutes)/60
+	
+	return "%02d:%02d:%02d:%03d:%03d" % (ts_hours, ts_minutes, ts_seconds, ts_milliseconds, ts_microseconds)
+
+
+
+
 def injectMsg(in_file, out_file, disregard, mal_str):
  	""" """
 
  	mal_message = mal_str.split(",")
 
- 	data = read_lists_from_CSV()
+ 	data = read_lists_from_CSV(in_file)
+ 	timestamp_rows = [ HHMMSSmmuu_ts_to_microseconds(row[0]) for row in data]
 
- 	gaps = [(data[row+1][0] - data[row][0]) for row in range(len(data)-1)]
+ 	gaps = [(timestamp_rows[row+1]) - timestamp_rows[row] for row in range(len(data)-1)]
  	avg_gap = int(avg_time_gap(gaps))
  	min_gap = min_time_gap(gaps)
  	max_gap = max_time_gap(gaps)
+
+ 	print microseconds_to_HHMMSSmmuu(timestamp_rows[1750])
+
+ 	
+ 	
 
  	return out_file
 
 def main():
 
-	usage()
+	#usage()
 	
 	# Parse command line arguments
-    """try:
+	"""try:
         opts, args = getopt.getopt(sys.argv[1:], "hvi:o:d:n:f:p:",
             ["help", "verbose", "input=", "output_dir=",
              "disregard="])
@@ -89,9 +109,7 @@ def main():
         usage()
         sys.exit(1)"""
 
-
-
-    injectMsg('driving_data.csv',,'1,2,C000003x,C000003x,CAN - EXT,8,01 41 A0 FF FF FF FF FF,Tx')
+	injectMsg('driving_data.csv','output_data.csv',4,'1,2,C000003x,C000003x,CAN - EXT,8,01 41 A0 FF FF FF FF FF,Tx')
 	
 
 	
