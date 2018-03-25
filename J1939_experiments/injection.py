@@ -31,7 +31,7 @@ def avg_time_gap(gaps):
 	""" This function finds the average time gap of the gaps data set in microseconds. """
  	return int(np.mean(gaps))
 
-def injectMsg(in_file, out_file, disregard, mal_str):
+def injectMsg(in_file, out_file, disregard, mal_str, intensity):
  	""" """
 
  	mal_message = mal_str.split(",")
@@ -45,22 +45,35 @@ def injectMsg(in_file, out_file, disregard, mal_str):
  	min_gap = min_time_gap(gaps)
  	max_gap = max_time_gap(gaps)
 
+ 	verboseMsgs = []
+
  	anom_file = csv.writer(open(out_file,'wb'))
 
- 	print min_gap
- 	print max_gap
- 	print avg_gap
+ 	for x in range(len(data)-1):
 
- 	
+ 		if x <= start_idx:
+ 			anom_file.writerow(data[x])
 
- 	
- 	
+ 		elif timestamp_rows[x+1] - timestamp_rows[x] >= avg_gap * intensity:
+
+ 			curr_ts = timestamp_rows[x]
+
+ 			for y in range(5):
+				curr_ts = curr_ts + 1
+ 				mal_message[0] = microseconds_to_HHMMSSmmuu(curr_ts)
+				anom_file.writerow(mal_message)
+
+ 		else:
+ 			anom_file.writerow(data[x])
+
+
+
+ 	for message in verboseMsgs:
+ 		print message
 
  	return anom_file
 
 def main():
-
-	#usage()
 	
 	# Parse command line arguments
 	"""try:
@@ -102,7 +115,7 @@ def main():
         usage()
         sys.exit(1)"""
 
-	injectMsg('driving_data.csv','anomalous_data.csv',2,'1,2,C000003x,C000003x,CAN - EXT,8,01 41 A0 FF FF FF FF FF,Tx')
+	injectMsg('driving_data.csv','anomalous_data.csv',4,'1,2,C000003x,C000003x,CAN - EXT,8,01 41 A0 FF FF FF FF FF,Tx', 2.1)
 	
 
 	
