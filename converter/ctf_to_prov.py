@@ -29,6 +29,7 @@ def ctfToProv():
     relationships = []
     entities = []
     activities = []
+    producer_events = {}
     for event in trace_collection.events:
         dataset = {'ex:'+k:event[k] for k in event.field_list_with_scope(
             babeltrace.CTFScope.EVENT_FIELDS)}
@@ -38,6 +39,12 @@ def ctfToProv():
         e1 = d1.entity(ex['event'+str(counter)],dataset)
         entities.append(e1)
         producer_agent = d1.agent('ex:'+event['producer_id'])
+        if event['producer_id'] not in producer_events:
+                producer_events[event['producer_id']] = []
+        else:
+                pel = producer_events[events['producer_id']]
+                d1.wasAssociatedWith(pel[len(pel)-1], e1)
+                pel.append(e1)
         controller_agent = d1.agent('ex:'+event['controller_id'])
         activity = d1.activity('ex:'+event['activity']+str(counter_1))
         activities.append(activity)
@@ -58,8 +65,8 @@ def ctfToProv():
             relationships.append(used_relationship)
 
         # Add temporal relationship between this event and the previous one.
-        if counter > 0:
-            d1.wasAssociatedWith(entities[counter - 1], e1)
+#        if counter > 0:
+#            d1.wasAssociatedWith(entities[counter - 1], e1)
 
         counter+=1
         counter_1 +=1

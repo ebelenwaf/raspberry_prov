@@ -20,7 +20,7 @@ struct barectf_platform_linux_fs_ctx *platform_ctx;
 void initialize()
 {
   /* initialize platform */
-  platform_ctx = barectf_platform_linux_fs_init(1024, "ctf", 1, 2, 20);
+  platform_ctx = barectf_platform_linux_fs_init(1024, "ctf", 0, 2, 20);
   
   data_file = fopen(data_filename, "r");
   if (!data_file) {
