@@ -40,16 +40,26 @@ def fabricate_msg(mal_str, original_ts, offset):
 	return mal_message
 
 
-def injectMsg(in_file, disregard, gap_to_inject ,mal_str, num_msg ,intensity):
+def injectMsg(in_file, disregard, gap_to_inject ,mal_str, num_msg):
+	""" This method injects a user specified amount of malicious J1939 messages into a given data set. 
+		Parameters:
+		in-file - The desired input data file name
+		disregard - The desired portion of the data set that should not be subject to injection. Calculated as 1/disregard.
+					+ EX: disregard = 4
+						  1/4 of the file will be disregarded
+		gap_to_inject - This parameter specifies which gap in the data set of size min_gap * 12 to inject the data.
+					+ EX: gap_to_inject = 1
+					      The first gap after the disregard of size min_gap * 12 or greater will be injected.
+		mal_str - The malicious string the user wants to inject.
+		num_msg - The number of messages desired for injection.
 
+	"""
 	inject = True
 
 	if gap_to_inject <= 0:
 		inject = False
 
 	anom_data = []
-
-	injected_idx = None
 
 	data = read_lists_from_CSV(in_file)
 	timestamp_rows = [ HHMMSSmmuu_ts_to_microseconds(row[0]) for row in data]
@@ -64,10 +74,11 @@ def injectMsg(in_file, disregard, gap_to_inject ,mal_str, num_msg ,intensity):
 	desired_gaps_idx = []
 
 	for event_idx in range(len(timestamp_rows)-1):
-		if timestamp_rows[event_idx+1] - timestamp_rows[event_idx] >= min_gap * 12:
+		if timestamp_rows[event_idx+1] - timestamp_rows[event_idx] >= min_gap * 12 and event_idx > start_idx:
 			desired_gaps_idx.append(event_idx)
 
 
+	injected_idx = None
 	inject_failed = False
 
 	for x in range(len(data)-1):
@@ -142,7 +153,7 @@ def main():
 		usage()
 		sys.exit(1)"""
 
-malData = injectMsg('driving_data.csv',4, 2000, '1,2,C000003x,C000003x,CAN - EXT,8,01 41 A0 FF FF FF FF FF,Tx', 10 , 2)
+malData = injectMsg('driving_data.csv',4, 2, '1,2,C000003x,C000003x,CAN - EXT,8,01 41 A0 FF FF FF FF FF,Tx', 10 )
 write_lists_to_CSV('test.csv', malData[0])
 print malData[1]
 
