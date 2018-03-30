@@ -29,6 +29,7 @@ def usage():
   -n --numevts      number of events in the input file\n\
   -f --fraction     fraction in (0,1] to subdivide window sizes [1]\n\
   -p --prune        pruning algorithm to use, one of:\n\
+                        0   None\n\
                         1   FIFO\n\
                         2   J1939 Priority\n\
 ")
@@ -201,7 +202,7 @@ def validate_args(input_filename, output_dir, log_format,
         print("Error: invalid fraction: " + str(fraction))
         return False
 
-    if prune < 1 or prune > 2:
+    if prune < 0 or prune > 2:
         print("Error: invalid prune: " + str(prune))
         return False
 
@@ -214,7 +215,7 @@ def main():
     disregard = 2
     numevts = None
     fraction = 1.0
-    prune = 1
+    prune = 0
 
     log_format = "J1939"
 
