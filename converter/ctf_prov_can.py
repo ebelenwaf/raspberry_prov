@@ -27,8 +27,8 @@ def ctfToProv():
     counter = 0
     #counter_1 = 0
     relationships = []
-    entities = []
-    activities = []
+    entityActivityList = []
+    # activities = []
     can_events = defaultdict(list)
     for event in trace_collection.events:
         dataset = {'ex:'+k:event[k] for k in event.field_list_with_scope(
@@ -36,33 +36,38 @@ def ctfToProv():
         #dataset.update({'ex:'+'timestamp':(event['timestamp']/1000000000)})
         dataset.update({'ex:'+'name':event.name})
 
-        #calculates PGN
+        # #calculates PGN
 
-        pf = str(bin(int(dataset['node_id'], 16)))[5:13]
+        # pf = str(bin(int(dataset['node_id'], 16)))[5:13]
 
-        if int(pf) > 240:
-            pgn = int(str(bin(int(dataset['node_id'], 16)))[3:21], 2)
-        else:
-            pgn = int(str(bin(int(dataset['node_id'], 16)))[3:13], 2)
-
-
-
-        #Gets source address.
-        sa = str(bin(int(dataset['node_id'], 16)))[-8:]  #gets last byte.
-
-        e1 = d1.entity(ex[str(pgn)],dataset)
-        #entities.append(e1)
+        # if int(pf) > 240:
+        #     pgn = int(str(bin(int(dataset['node_id'], 16)))[3:21], 2)
+        # else:
+        #     pgn = int(str(bin(int(dataset['node_id'], 16)))[3:13], 2)
 
 
 
+        # #Gets source address.
+        # sa = str(bin(int(dataset['node_id'], 16)))[-8:]  #gets last byte.
 
+        sa = event['producer_id']
+
+        activity = event['activity']
+
+
+        e1 = d1.entity(ex['event'+str(counter)],dataset)
+
+        #create class object to store entity and activity data field.
+
+        entity_activity = entityActivity()
+
+        entity_activity.addEntityActivity(e1, activity)
+        #entityActivityList.append(e1)
         #can_events.setdefault(str(sa),[]).append(e1)
 
-        can_events[sa].append(e1)
-
-
+        can_events[sa].append(entity_activity)
         #node_id = d1.agent('ex:'+event['node_id'])
-        network_id = d1.agent('ex:'+event['network_id'])
+        controller_agent = d1.agent('ex:'+event['controller_id'])
 
 
         # activity = d1.activity('ex:'+event['activity']+str(counter))
@@ -89,31 +94,31 @@ def ctfToProv():
         #     relationships.append(used_relationship)
         #counter+=1
         #counter_1 +=1
-    # for index in range(len(entities)-1):
-    #     d1.wasAssociatedWith(entities[index], entities[index + 1])
+    # for index in range(len(entityActivityList)-1):
+    #     d1.wasAssociatedWith(entityActivityList[index], entityActivityList[index + 1])
 
-    # for index in range(len(entities)):
-    #     d1.wasGeneratedBy(entities[index], activities[index])
+    # for index in range(len(entityActivityList)):
+    #     d1.wasGeneratedBy(entityActivityList[index], activities[index])
     #     d1.wasAssociatedWith(activities[index],sa)
 
 
 
     for key in can_events.keys():
 
-        source_agent = d1.agent('ex:'+str(key))
-        used_relationship = str(dummy.used(network_id, source_agent))
+        producer_agent = d1.agent('ex:'+str(key))
+        used_relationship = str(dummy.used(controller_agent, producer_agent))
         #association_relationship = str(dummy.wasAssociatedWith(activity, sa))
 
         if used_relationship not in relationships:
-            d1.used(network_id, source_agent)
+            d1.used(controller_agent, producer_agent)
             relationships.append(used_relationship)
 
-        entities = can_events[key]
+        entityActivityList = can_events[key]
 
-        for index in range(len(entities)-1):
-            d1.wasAssociatedWith(entities[index], entities[index + 1])
-            d1.wasGeneratedBy(entities[index], 'RX'+str(index))
-            d1.wasAssociatedWith('RX'+str(index),source_agent)
+        for index in range(len(entityActivityList)-1):
+            d1.wasAssociatedWith(entityActivityList[index].getEntity(), entityActivityList[index + 1].getEntity())
+            d1.wasGeneratedBy(entityActivityList[index], entityActivityList[index].getActivity())
+            d1.wasAssociatedWith(entityActivityList[index].getActivity(), producer_agent)
 
 
     return d1
