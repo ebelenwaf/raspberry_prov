@@ -88,7 +88,7 @@ def injectMsg(in_file, disregard, gap_to_inject ,mal_str, num_msg):
 		
 		elif x > start_idx:
 			try:
-				if x == desired_gaps_idx[gap_to_inject]:
+				if x == desired_gaps_idx[gap_to_inject] and inject == True:
 
 					curr_ts = timestamp_rows[x]
 					injected_idx = x + 1
@@ -102,7 +102,7 @@ def injectMsg(in_file, disregard, gap_to_inject ,mal_str, num_msg):
 
 			except:
 				inject_failed = True
-				print "ERROR: Cannot inject message. gap_to_inject is either out of range or 0."
+				print "ERROR: Cannot inject message. gap_to_inject is either out of range."
 				return -1
 
 		else:
@@ -112,11 +112,22 @@ def injectMsg(in_file, disregard, gap_to_inject ,mal_str, num_msg):
 	return anom_data, injected_idx
 
 def main():
+
+	# Default Parameters
+	in_file = 'driving_data.csv'
+	disregard = 2
+	inject_point = 1
+	malicious_msg = '1,2,C000003x,C000003x,CAN - EXT,8,01 41 A0 FF FF FF FF FF,Tx'
+	output = 'anomalous_data.csv'
+	number_injections = 10
+
+
 	
 	# Parse command line arguments
-	"""try:
-		opts, args = getopt.getopt(sys.argv[1:], "hvi:o:d:n:f:p:",
-			["help", "verbose", "input=", "output_dir=",
+
+	try:
+		opts, args = getopt.getopt(sys.argv[1:], "hvi:o:d:p:n",
+			["help", "verbose", "input=", "output=",
 			 "disregard="])
 	
 	except getopt.GetoptError, err:
@@ -132,30 +143,25 @@ def main():
 			verbose = True
 		elif opt in ("-i", "--input"):
 			input_filename = arg
-		elif opt in ("-o", "--output_dir"):
-			output_dir = arg
+		elif opt in ("-o", "--output"):
+			output = arg
 		elif opt in ("-d", "--disregard"):
 			disregard = int(arg)
-		elif opt in ("-n", "--numevts"):
+		elif opt in ("-p", "--inject_point"):
 			numevts = int(arg)
-		elif opt in ("-f", "--fraction"):
-			fraction = float(arg)
-		elif opt in ("-p", "--prune"):
-			prune = int(arg)
+		elif opt in ("-n", "--number_injections"):
+			fraction = int(arg)
 		else:
 			print("Unhandled option: " + opt + "\n")
 			usage()
 			sys.exit(2)
 
-	if not validate_args(input_filename, output_dir,
-			log_format,
-			disregard, numevts, fraction, prune):
-		usage()
-		sys.exit(1)"""
+	malData = injectMsg(in_file, disregard, inject_point, malicious_msg, number_injections )
+	write_lists_to_CSV(output, malData[0])
 
-malData = injectMsg('driving_data.csv',4, 2, '1,2,C000003x,C000003x,CAN - EXT,8,01 41 A0 FF FF FF FF FF,Tx', 10 )
-write_lists_to_CSV('test.csv', malData[0])
-print malData[1]
+	if verbose == True:
+
+		print " Messages injected at index %d " % malData[1]
 
 
 
