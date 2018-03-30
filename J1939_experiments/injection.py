@@ -31,6 +31,15 @@ def avg_time_gap(gaps):
 	""" This function finds the average time gap of the gaps data set in microseconds. """
 	return int(np.mean(gaps))
 
+def fabricate_msg(mal_str, original_ts, offset):
+
+	mal_message = mal_str.split(",")
+	new_ts = original_ts + offset
+	mal_message[0] = str(microseconds_to_HHMMSSmmuu(new_ts))
+
+	return mal_message
+
+
 def injectMsg(in_file, disregard, gap_to_inject ,mal_str, num_msg ,intensity):
 
 	inject = True
@@ -38,7 +47,6 @@ def injectMsg(in_file, disregard, gap_to_inject ,mal_str, num_msg ,intensity):
 	if gap_to_inject <= 0:
 		inject = False
 
-	mal_message = mal_str.split(",")
 	anom_data = []
 
 	injected_idx = None
@@ -75,13 +83,10 @@ def injectMsg(in_file, disregard, gap_to_inject ,mal_str, num_msg ,intensity):
 					injected_idx = x + 1
 
 					for y in range(num_msg):
-						curr_ts = curr_ts + (timestamp_rows[x+1]-timestamp_rows[x])/12
-						mal_message[0] = microseconds_to_HHMMSSmmuu(curr_ts)
-						print mal_message
-						anom_data.append(mal_message)
+						curr_ts	+= (timestamp_rows[x+1]-timestamp_rows[x])/12
+						anom_data.append(fabricate_msg(mal_str, curr_ts, (timestamp_rows[x+1]-timestamp_rows[x])/12))
 
 				else:
-					print(data[x])
 					anom_data.append(data[x])
 
 			except:
@@ -92,8 +97,8 @@ def injectMsg(in_file, disregard, gap_to_inject ,mal_str, num_msg ,intensity):
 		else:
 			anom_data.append(data[x])
 	
-	print injected_idx
-	return anom_data
+	
+	return anom_data, injected_idx
 
 def main():
 	
@@ -138,7 +143,10 @@ def main():
 		sys.exit(1)"""
 
 malData = injectMsg('driving_data.csv',4, 2000, '1,2,C000003x,C000003x,CAN - EXT,8,01 41 A0 FF FF FF FF FF,Tx', 10 , 2)
-write_lists_to_CSV('test.csv', malData)
+write_lists_to_CSV('test.csv', malData[0])
+print malData[1]
+
+
 
 
 
