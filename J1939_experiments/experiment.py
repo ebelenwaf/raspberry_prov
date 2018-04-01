@@ -119,7 +119,10 @@ def generate_trace_metadata(data, log_format):
     else:
         assert False, "Error: unrecognized log format: " + log_format
 
-def generate_trace(temp_filename):
+def prune_trace(prune, ctf):
+    pass # FIXME
+
+def generate_trace(temp_filename, prune):
     if not os.path.exists("ctf"):
         print("Error: ctf subdirectory does not exist")
         exit(1)
@@ -128,6 +131,8 @@ def generate_trace(temp_filename):
         print("Error: canbus executable not found at: " + canbus_exe)
         exit(1)
     os.system(canbus_exe + " " + temp_filename)
+    if prune > 0:
+        prune_trace(prune, "ctf")
 
 def convert_trace_to_prov(output_dir, tag):
     # FIXME: import ctf_to_prov?
@@ -141,7 +146,7 @@ def convert_trace_to_prov(output_dir, tag):
     os.rename("output.json", filename)
     return filename
 
-def generate_prov(output_dir, log_format, windows, window_count, train_count, verbose):
+def generate_prov(output_dir, log_format, windows, window_count, train_count, prune, verbose):
     train_files = []
     test_files = []
     test_count = window_count - train_count
@@ -161,7 +166,7 @@ def generate_prov(output_dir, log_format, windows, window_count, train_count, ve
             print("Generating provenance (" + tag + ") window #" + str(index))
         td = generate_trace_metadata(w, log_format)
         write_lists_to_CSV(temp_filename, td)
-        generate_trace(temp_filename)
+        generate_trace(temp_filename, prune)
         f =  convert_trace_to_prov(output_dir, tag + str(index))
         if index >= train_count:
             test_files.append(f)
@@ -278,12 +283,19 @@ def main():
         print("Number of events: " + str(numevts))
         print("Window size got: " + str(window_size))
 
-    (train_files, test_files) = generate_prov(output_dir, log_format, windows, wc, train_count, verbose)
+    (train_files, test_files) = generate_prov(output_dir, log_format, windows, wc, train_count, prune, verbose)
     scores = calculate_similarity(train_files, test_files)
 
     min_scores = [min(x) for x in scores]
     m = min(min_scores)
     i = min_scores.index(m)
+
+    max_scores = [max(x) for x in scores]
+    M = max(max_scores)
+    I = max_scores.index(m)
+
+
+
 
     if verbose is True:
         print("Min = " + str(m) + " @ " + str(i))
