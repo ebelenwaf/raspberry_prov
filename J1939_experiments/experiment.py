@@ -176,6 +176,17 @@ def generate_prov(output_dir, log_format, windows, window_count, train_count, pr
         index = index + 1
     return (train_files, test_files)
 
+def get_ground_truth(input_filename, window_size, window_count, train_count):
+    anom_windows = []
+    infile_base = os.path.basename(input_filename)
+    s = infile_base.split("_")
+    injection_index = int(s[3])
+    injection_window = injection_index / window_size
+    iw_index = injection_window - train_count
+    anom_windows = [i != iw_index for i in range(window_count - train_count)]
+    return anom_windows 
+
+
 def validate_args(input_filename, output_dir, log_format,
         disregard, numevts, fraction, prune):
     if not os.path.exists(input_filename):
@@ -291,22 +302,28 @@ def main():
     (train_files, test_files) = generate_prov(output_dir, log_format, windows, wc, train_count, prune, verbose)
     scores = calculate_similarity(train_files, test_files)
 
-    ##min_scores = [min(x) for x in scores]
-    ##m = min(min_scores)
-    ##i = min_scores.index(m)
-
     # Anomaly Detection. scores is a list of lists containing the similarity
     # of each test window (from test_files) compared to every training window
     # (from train_files). An anomaly is detected in a test window if its score
     # is below a threshold for all training windows.
     max_scores = [max(x) for x in scores]
-    anomalies = [x <= threshold for x in max_scores]
+    detected_anomalies = [x <= threshold for x in max_scores]
 
+    real_anomalies = get_ground_truth(input_filename, window_size, wc, train_count)
 
+    TN = TP = FN = FP = 0
+    for w in range(wc - train_count):
+        if detected_anomalies[w] == False and real_anomalies[w] == False:
+             TN += 1
+        elif detected_anomalies[w] == True and real_anomalies[w] == True:
+             TP += 1
+        elif detected_anomalies[w] == False and real_anomalies[w] == True:
+             FN += 1
+        elif detected_anomalies[w] == True and real_anomalies[w] == False:
+             FP += 1
 
+    print("%d\t%d\t%d\t%d" % (TN, TP, FN, FP))
 
-    if verbose is True:
-        print("Min = " + str(m) + " @ " + str(i))
 
 
 if __name__ == '__main__':
