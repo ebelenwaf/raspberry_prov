@@ -14,8 +14,11 @@ import sys
 import numpy as np
 
 sys.path.append(os.path.join("..", "graph_similarity"))
-
 from graph_driver import calculate_similarity
+
+sys.path.append(os.path.join("..", "pruning_implementation"))
+from pruning import get_pruned_data
+from pruning import create_stream_file
 
 def usage():
     print("Usage: experiment.py -[hvi:o:d:n:f:p:]\n\
@@ -33,6 +36,7 @@ def usage():
                         1   FIFO\n\
                         2   J1939 Priority\n\
   -t --threshold    threshold below which anomalies are detected [0.95]\n\
+  -l --length       max length of trace before pruning (if prune > 0) [1024]\n\
 ")
 
 def read_lists_from_CSV(filename):
@@ -120,10 +124,10 @@ def generate_trace_metadata(data, log_format):
     else:
         assert False, "Error: unrecognized log format: " + log_format
 
-def prune_trace(prune, ctf):
-    pass # FIXME
+def prune_trace(prune, ctf, length):
+    create_stream_file(os.path.join(ctf, "stream"), get_pruned_data(ctf, length))
 
-def generate_trace(temp_filename, prune):
+def generate_trace(temp_filename, prune, length):
     if not os.path.exists("ctf"):
         print("Error: ctf subdirectory does not exist")
         exit(1)
@@ -133,7 +137,7 @@ def generate_trace(temp_filename, prune):
         exit(1)
     os.system(canbus_exe + " " + temp_filename)
     if prune > 0:
-        prune_trace(prune, "ctf")
+        prune_trace(prune, "ctf", length)
 
 def convert_trace_to_prov(output_dir, tag):
     # FIXME: import ctf_to_prov?
@@ -147,7 +151,7 @@ def convert_trace_to_prov(output_dir, tag):
     os.rename("output.json", filename)
     return filename
 
-def generate_prov(output_dir, log_format, windows, window_count, train_count, prune, verbose):
+def generate_prov(output_dir, log_format, windows, window_count, train_count, prune, max_trace_length, verbose):
     train_files = []
     test_files = []
     test_count = window_count - train_count
@@ -167,7 +171,7 @@ def generate_prov(output_dir, log_format, windows, window_count, train_count, pr
             print("Generating provenance (" + tag + ") window #" + str(index))
         td = generate_trace_metadata(w, log_format)
         write_lists_to_CSV(temp_filename, td)
-        generate_trace(temp_filename, prune)
+        generate_trace(temp_filename, prune, max_trace_length)
         f =  convert_trace_to_prov(output_dir, tag + str(index))
         if index >= train_count:
             test_files.append(f)
@@ -234,15 +238,16 @@ def main():
     fraction = 1.0
     prune = 0
     threshold = 0.95
+    trace_length = 1024
 
     log_format = "J1939"
 
     # Parse command line arguments
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hvi:o:d:n:f:p:t:",
+        opts, args = getopt.getopt(sys.argv[1:], "hvi:o:d:n:f:p:t:l:",
             ["help", "verbose", "input=", "output_dir=",
              "disregard=", "numevts=", "fraction=", "prune=",
-             "threshold="])
+             "threshold=", "length="])
     except getopt.GetoptError, err:
         print(str(err))
         usage()
@@ -268,6 +273,8 @@ def main():
             prune = int(arg)
         elif opt in ("-t", "--threshold"):
             threshold = float(arg)
+        elif opt in ("-l", "--length"):
+            trace_length = int(arg)
         else:
             print("Unhandled option: " + opt + "\n")
             usage()
@@ -299,7 +306,7 @@ def main():
         print("Number of events: " + str(numevts))
         print("Window size got: " + str(window_size))
 
-    (train_files, test_files) = generate_prov(output_dir, log_format, windows, wc, train_count, prune, verbose)
+    (train_files, test_files) = generate_prov(output_dir, log_format, windows, wc, train_count, prune, trace_length, verbose)
     scores = calculate_similarity(train_files, test_files)
 
     # Anomaly Detection. scores is a list of lists containing the similarity
