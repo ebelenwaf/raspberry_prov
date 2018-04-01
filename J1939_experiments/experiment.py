@@ -32,6 +32,7 @@ def usage():
                         0   None\n\
                         1   FIFO\n\
                         2   J1939 Priority\n\
+  -t --threshold    threshold below which anomalies are detected [0.95]\n\
 ")
 
 def read_lists_from_CSV(filename):
@@ -221,14 +222,16 @@ def main():
     numevts = None
     fraction = 1.0
     prune = 0
+    threshold = 0.95
 
     log_format = "J1939"
 
     # Parse command line arguments
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hvi:o:d:n:f:p:",
+        opts, args = getopt.getopt(sys.argv[1:], "hvi:o:d:n:f:p:t:",
             ["help", "verbose", "input=", "output_dir=",
-             "disregard=", "numevts=", "fraction=", "prune="])
+             "disregard=", "numevts=", "fraction=", "prune=",
+             "threshold="])
     except getopt.GetoptError, err:
         print(str(err))
         usage()
@@ -252,6 +255,8 @@ def main():
             fraction = float(arg)
         elif opt in ("-p", "--prune"):
             prune = int(arg)
+        elif opt in ("-t", "--threshold"):
+            threshold = float(arg)
         else:
             print("Unhandled option: " + opt + "\n")
             usage()
