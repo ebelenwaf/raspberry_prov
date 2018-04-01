@@ -291,13 +291,16 @@ def main():
     (train_files, test_files) = generate_prov(output_dir, log_format, windows, wc, train_count, prune, verbose)
     scores = calculate_similarity(train_files, test_files)
 
-    min_scores = [min(x) for x in scores]
-    m = min(min_scores)
-    i = min_scores.index(m)
+    ##min_scores = [min(x) for x in scores]
+    ##m = min(min_scores)
+    ##i = min_scores.index(m)
 
+    # Anomaly Detection. scores is a list of lists containing the similarity
+    # of each test window (from test_files) compared to every training window
+    # (from train_files). An anomaly is detected in a test window if its score
+    # is below a threshold for all training windows.
     max_scores = [max(x) for x in scores]
-    M = max(max_scores)
-    I = max_scores.index(m)
+    anomalies = [x <= threshold for x in max_scores]
 
 
 
