@@ -201,10 +201,7 @@ def validate_args(input_filename, output_dir, log_format,
         eprint("Error: input file not found: " + input_filename)
         return False
 
-    if os.path.exists(output_dir):
-        eprint("Warning: will overwrite existing files in output directory: "
-                + output_dir)
-    else:
+    if not os.path.exists(output_dir):
         os.mkdir(output_dir)
 
     if log_format is None:
