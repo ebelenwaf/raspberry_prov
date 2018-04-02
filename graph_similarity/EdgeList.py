@@ -22,7 +22,7 @@ class EdgeList(object):
         edge_label = ['wasAssociatedWith', 'wasGeneratedBy', 'used']
         for label in edge_label:
             for data, value in provJsonData[label].items():
-                keys = value.keys()
+                keys = list(value.keys())
                 destination_node = value[keys[0]]
                 source_node = value[keys[1]]
                 edgeVal = edge(source_node, destination_node, label)

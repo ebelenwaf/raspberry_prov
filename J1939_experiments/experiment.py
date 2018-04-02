@@ -14,8 +14,11 @@ import sys
 import numpy as np
 
 sys.path.append(os.path.join("..", "graph_similarity"))
-
 from graph_driver import calculate_similarity
+
+sys.path.append(os.path.join("..", "pruning_implementation"))
+from pruning import get_pruned_data
+from pruning import create_stream_file
 
 def usage():
     print("Usage: experiment.py -[hvi:o:d:n:f:p:]\n\
@@ -29,8 +32,11 @@ def usage():
   -n --numevts      number of events in the input file\n\
   -f --fraction     fraction in (0,1] to subdivide window sizes [1]\n\
   -p --prune        pruning algorithm to use, one of:\n\
+                        0   None\n\
                         1   FIFO\n\
                         2   J1939 Priority\n\
+  -t --threshold    threshold below which anomalies are detected [0.95]\n\
+  -l --length       max length of trace before pruning (if prune > 0) [1024]\n\
 ")
 
 def read_lists_from_CSV(filename):
@@ -118,7 +124,10 @@ def generate_trace_metadata(data, log_format):
     else:
         assert False, "Error: unrecognized log format: " + log_format
 
-def generate_trace(temp_filename):
+def prune_trace(prune, ctf, length):
+    create_stream_file(os.path.join(ctf, "stream"), get_pruned_data(ctf, length))
+
+def generate_trace(temp_filename, prune, length):
     if not os.path.exists("ctf"):
         print("Error: ctf subdirectory does not exist")
         exit(1)
@@ -127,6 +136,8 @@ def generate_trace(temp_filename):
         print("Error: canbus executable not found at: " + canbus_exe)
         exit(1)
     os.system(canbus_exe + " " + temp_filename)
+    if prune > 0:
+        prune_trace(prune, "ctf", length)
 
 def convert_trace_to_prov(output_dir, tag):
     # FIXME: import ctf_to_prov?
@@ -140,7 +151,7 @@ def convert_trace_to_prov(output_dir, tag):
     os.rename("output.json", filename)
     return filename
 
-def generate_prov(output_dir, log_format, windows, window_count, train_count, verbose):
+def generate_prov(output_dir, log_format, windows, window_count, train_count, prune, max_trace_length, verbose):
     train_files = []
     test_files = []
     test_count = window_count - train_count
@@ -160,7 +171,7 @@ def generate_prov(output_dir, log_format, windows, window_count, train_count, ve
             print("Generating provenance (" + tag + ") window #" + str(index))
         td = generate_trace_metadata(w, log_format)
         write_lists_to_CSV(temp_filename, td)
-        generate_trace(temp_filename)
+        generate_trace(temp_filename, prune, max_trace_length)
         f =  convert_trace_to_prov(output_dir, tag + str(index))
         if index >= train_count:
             test_files.append(f)
@@ -169,40 +180,51 @@ def generate_prov(output_dir, log_format, windows, window_count, train_count, ve
         index = index + 1
     return (train_files, test_files)
 
+def get_ground_truth(input_filename, window_size, window_count, train_count):
+    anom_windows = []
+    infile_base = os.path.basename(input_filename)
+    infile_root = os.path.splitext(infile_base)[0]
+    s = infile_root.split("_")
+    injection_index = int(s[3])
+    injection_window = int(injection_index / window_size)
+    iw_index = injection_window - train_count
+    anom_windows = [i == iw_index for i in range(window_count - train_count)]
+    return anom_windows 
+
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
 def validate_args(input_filename, output_dir, log_format,
         disregard, numevts, fraction, prune):
     if not os.path.exists(input_filename):
-        print("Error: input file not found: " + input_filename)
+        eprint("Error: input file not found: " + input_filename)
         return False
 
-    if os.path.exists(output_dir):
-        print("Warning: will overwrite existing files in output directory: "
-                + output_dir)
-    else:
+    if not os.path.exists(output_dir):
         os.mkdir(output_dir)
 
     if log_format is None:
-        print("Error: missing required argument to specify the log format.")
+        eprint("Error: missing required argument to specify the log format.")
         return False
 
     if log_format != "CAN" and log_format != "J1939":
-        print("Error: invalid log format specified: " + log_format)
+        eprint("Error: invalid log format specified: " + log_format)
         return False
 
     if numevts is not None and numevts < 1:
-        print("Error: invalid numevts: " + str(numevts))
+        eprint("Error: invalid numevts: " + str(numevts))
         return False
 
     if disregard < 1 or (numevts is not None and disregard > numevts):
-        print("Error: invalid disregard: " + str(disregard))
+        eprint("Error: invalid disregard: " + str(disregard))
         return False
 
     if fraction <= 0 or fraction > 1:
-        print("Error: invalid fraction: " + str(fraction))
+        eprint("Error: invalid fraction: " + str(fraction))
         return False
 
-    if prune < 1 or prune > 2:
-        print("Error: invalid prune: " + str(prune))
+    if prune < 0 or prune > 2:
+        eprint("Error: invalid prune: " + str(prune))
         return False
 
     return True
@@ -214,16 +236,20 @@ def main():
     disregard = 2
     numevts = None
     fraction = 1.0
-    prune = 1
+    prune = 0
+    threshold = 0.95
+    trace_length = 1024
+    verbose = False
 
     log_format = "J1939"
 
     # Parse command line arguments
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hvi:o:d:n:f:p:",
+        opts, args = getopt.getopt(sys.argv[1:], "hvi:o:d:n:f:p:t:l:",
             ["help", "verbose", "input=", "output_dir=",
-             "disregard=", "numevts=", "fraction=", "prune="])
-    except getopt.GetoptError, err:
+             "disregard=", "numevts=", "fraction=", "prune=",
+             "threshold=", "length="])
+    except (getopt.GetoptError, err):
         print(str(err))
         usage()
         sys.exit(2)
@@ -246,6 +272,10 @@ def main():
             fraction = float(arg)
         elif opt in ("-p", "--prune"):
             prune = int(arg)
+        elif opt in ("-t", "--threshold"):
+            threshold = float(arg)
+        elif opt in ("-l", "--length"):
+            trace_length = int(arg)
         else:
             print("Unhandled option: " + opt + "\n")
             usage()
@@ -277,15 +307,37 @@ def main():
         print("Number of events: " + str(numevts))
         print("Window size got: " + str(window_size))
 
-    (train_files, test_files) = generate_prov(output_dir, log_format, windows, wc, train_count, verbose)
+    (train_files, test_files) = generate_prov(output_dir, log_format, windows, wc, train_count, prune, trace_length, verbose)
     scores = calculate_similarity(train_files, test_files)
 
-    min_scores = [min(x) for x in scores]
-    m = min(min_scores)
-    i = min_scores.index(m)
+    # Anomaly Detection. scores is a list of lists containing the similarity
+    # of each test window (from test_files) compared to every training window
+    # (from train_files). An anomaly is detected in a test window if its score
+    # is below a threshold for all training windows.
+    max_scores = [max(x) for x in scores]
+    detected_anomalies = [x <= threshold for x in max_scores]
+
+    real_anomalies = get_ground_truth(input_filename, window_size, wc, train_count)
 
     if verbose is True:
-        print("Min = " + str(m) + " @ " + str(i))
+        print(scores)
+        print(max_scores)
+        print(detected_anomalies)
+        print(real_anomalies)
+
+    TN = TP = FN = FP = 0
+    for w in range(wc - train_count):
+        if detected_anomalies[w] == False and real_anomalies[w] == False:
+             TN += 1
+        elif detected_anomalies[w] == True and real_anomalies[w] == True:
+             TP += 1
+        elif detected_anomalies[w] == False and real_anomalies[w] == True:
+             FN += 1
+        elif detected_anomalies[w] == True and real_anomalies[w] == False:
+             FP += 1
+
+    print("%d\t%d\t%d\t%d" % (TN, TP, FN, FP))
+
 
 
 if __name__ == '__main__':
