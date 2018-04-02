@@ -9,6 +9,7 @@ import csv
 import getopt
 import itertools
 import os
+import shutil
 import sys
 
 import numpy as np
@@ -136,6 +137,7 @@ def generate_trace(temp_filename, prune, length):
         print("Error: canbus executable not found at: " + canbus_exe)
         exit(1)
     os.system(canbus_exe + " " + temp_filename)
+    shutil.copy("stream", os.path.join("ctf", "stream"))
     if prune > 0:
         prune_trace(prune, "ctf", length)
 
@@ -190,41 +192,43 @@ def get_ground_truth(input_filename, window_size, window_count, train_count):
     anom_windows = [i != iw_index for i in range(window_count - train_count)]
     return anom_windows 
 
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
 
 def validate_args(input_filename, output_dir, log_format,
         disregard, numevts, fraction, prune):
     if not os.path.exists(input_filename):
-        print("Error: input file not found: " + input_filename)
+        eprint("Error: input file not found: " + input_filename)
         return False
 
     if os.path.exists(output_dir):
-        print("Warning: will overwrite existing files in output directory: "
+        eprint("Warning: will overwrite existing files in output directory: "
                 + output_dir)
     else:
         os.mkdir(output_dir)
 
     if log_format is None:
-        print("Error: missing required argument to specify the log format.")
+        eprint("Error: missing required argument to specify the log format.")
         return False
 
     if log_format != "CAN" and log_format != "J1939":
-        print("Error: invalid log format specified: " + log_format)
+        eprint("Error: invalid log format specified: " + log_format)
         return False
 
     if numevts is not None and numevts < 1:
-        print("Error: invalid numevts: " + str(numevts))
+        eprint("Error: invalid numevts: " + str(numevts))
         return False
 
     if disregard < 1 or (numevts is not None and disregard > numevts):
-        print("Error: invalid disregard: " + str(disregard))
+        eprint("Error: invalid disregard: " + str(disregard))
         return False
 
     if fraction <= 0 or fraction > 1:
-        print("Error: invalid fraction: " + str(fraction))
+        eprint("Error: invalid fraction: " + str(fraction))
         return False
 
     if prune < 0 or prune > 2:
-        print("Error: invalid prune: " + str(prune))
+        eprint("Error: invalid prune: " + str(prune))
         return False
 
     return True
