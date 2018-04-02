@@ -6,9 +6,9 @@ class entityActivity:
 
 
 
-	# def __init__(self, entity, activity):
-	# 	self.entity = entity
-	# 	self.activity = activity
+	def __init__(self):
+		self.entity = None
+		self.activity = None
 
 
 	def getEntity(self):

@@ -117,7 +117,7 @@ def ctfToProv():
 
         for index in range(len(entityActivityList)-1):
             d1.wasAssociatedWith(entityActivityList[index].getEntity(), entityActivityList[index + 1].getEntity())
-            d1.wasGeneratedBy(entityActivityList[index], entityActivityList[index].getActivity())
+            d1.wasGeneratedBy(entityActivityList[index].getEntity(), entityActivityList[index].getActivity())
             d1.wasAssociatedWith(entityActivityList[index].getActivity(), producer_agent)
 
 
