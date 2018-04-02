@@ -88,11 +88,13 @@ int main(int argc, char *argv[])
 
   initialize();
 
+  /*
 #if defined(BE_TIMELY)
   printf("Running at approximately the same speed as the log.\n");
 #else
   printf("Running at super speed!\n");
 #endif
+ */
 
   while ( result == 0 ) {
     result = simulate_rcv(&ts, &network_id, &node_id, data);
