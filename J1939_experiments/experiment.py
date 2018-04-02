@@ -319,6 +319,12 @@ def main():
 
     real_anomalies = get_ground_truth(input_filename, window_size, wc, train_count)
 
+    if verbose is True:
+        print(scores)
+        print(max_scores)
+        print(detected_anomalies)
+        print(real_anomalies)
+
     TN = TP = FN = FP = 0
     for w in range(wc - train_count):
         if detected_anomalies[w] == False and real_anomalies[w] == False:
