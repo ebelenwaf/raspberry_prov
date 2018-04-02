@@ -6,6 +6,7 @@ import sys
 import os
 import datetime
 from prov.dot import prov_to_dot
+from collections import defaultdict
 from prov.model import ProvDocument, Namespace, Literal, PROV, Identifier
 #import yaml
 
