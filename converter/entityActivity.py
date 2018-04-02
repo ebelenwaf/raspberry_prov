@@ -17,7 +17,7 @@ class entityActivity:
 	def getActivity(self):
 		return self.activity
 
-	def addData(self, entity, activity):
+	def addEntityActivity(self, entity, activity):
 		self.entity = entity
 		self.activity = activity
 
