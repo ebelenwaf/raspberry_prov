@@ -9,7 +9,6 @@ import csv
 import getopt
 import itertools
 import os
-import shutil
 import sys
 
 import numpy as np
@@ -137,7 +136,6 @@ def generate_trace(temp_filename, prune, length):
         print("Error: canbus executable not found at: " + canbus_exe)
         exit(1)
     os.system(canbus_exe + " " + temp_filename)
-    shutil.copy("stream", os.path.join("ctf", "stream"))
     if prune > 0:
         prune_trace(prune, "ctf", length)
 
