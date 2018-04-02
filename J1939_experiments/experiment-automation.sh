@@ -13,7 +13,7 @@ for pruning in 0 1 2; do
   for f in 1.0 0.0625 0.00390625; do
     FILE=experiment_data_${f}.txt
     echo -n "" > ${OUTDIR}/${FILE}
-    for infile in `ls log/driving_data_*00_*`; do
+    for infile in `ls log/driving_data_*00_* log/driving_data_0_*`; do
       echo "python3.5 experiment.py -i ${infile} -f ${f} -d 4 -p ${pruning} >> ${OUTDIR}/${FILE}"
       # TODO: Uncomment this when ready to run it for real!
       #python3.5 experiment.py -i ${infile} -f ${f} -d 4 -p ${pruning} >> ${OUTDIR}/${FILE}
