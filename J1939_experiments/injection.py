@@ -8,7 +8,7 @@ import numpy as np
 
 
 def usage():
-   print "Usage: injection.py -[hvi:o:d:p:n]\n\
+   print "Usage: injection.py -[hvi:o:d:]\n\
  -h --help         print this help\n\
  -v --verbose      print more information [False]\n\
  -i --input        input log filename [driving_data.csv]\n\
@@ -16,8 +16,6 @@ def usage():
  -d --disregard    denominator of 1/d % events not subject to injection [4]\n\
 					   Note: d must match that used during injection, and\n\
 					   the max window size is n/d.\n\
--p --injection-point [0] \n\
--n --num-injections [10] \n\
 "
 
 
@@ -42,7 +40,7 @@ def fabricate_msg(mal_str, original_ts, offset):
 	return mal_message
 
 
-def injectMsg(in_file, disregard, gap_to_inject ,mal_str, num_msg):
+def injectMsg(data, disregard, gap_to_inject ,mal_str, num_msg):
 	""" This method injects a user specified amount of malicious J1939 messages into a given data set. 
 		Parameters:
 		in-file - The desired input data file name
@@ -59,10 +57,8 @@ def injectMsg(in_file, disregard, gap_to_inject ,mal_str, num_msg):
 
 	anom_data = []
 
-	data = read_lists_from_CSV(in_file)
-
 	if gap_to_inject <= 0:
-		return -1, data
+		return gap_to_inject, data
 
 	timestamp_rows = [ HHMMSSmmuu_ts_to_microseconds(row[0]) for row in data]
 	start_idx = int((1.0/disregard) * len(data))
@@ -157,16 +153,25 @@ def main():
 			usage()
 			sys.exit(2)
 
-	index, malData = injectMsg(in_file, disregard, inject_point, malicious_msg, number_injections )
-	if index >= 0:
-		write_lists_to_CSV(output, malData)
+	inject_point = 0
+	index = 0
 
-	if verbose == True:
-		print " Messages injected at index %d " % index
+	if not os.path.exists("log"):
+		os.mkdir("log")
 
+	data = read_lists_from_CSV(in_file)
 
+	while index >= 0:
+		index, malData = injectMsg(data, disregard, inject_point, malicious_msg, number_injections)
+		if index >= 0:
+			outfile_name = os.path.join("log", "driving_data_" + str(inject_point) + "_" + str(index) + ".csv")
+			write_lists_to_CSV(outfile_name, malData)
 
+		if verbose == True:
+			print " Messages injected at index %d " % index
 
+		inject_point += 1
+	return 0
 
 if __name__ == '__main__':
 	main()
