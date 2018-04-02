@@ -13,9 +13,9 @@ for pruning in 0 1 2; do
     FILE=experiment_data_${f}.txt
     echo -n "" > ${OUTDIR}/${FILE}
     for infile in `ls log/*`; do
-      echo "python experiment.py -i ${infile} -f ${f} -d 4 -p ${pruning} >> ${OUTDIR}/${FILE}"
+      echo "python3.5 experiment.py -i ${infile} -f ${f} -d 4 -p ${pruning} >> ${OUTDIR}/${FILE}"
       # TODO: Uncomment this when ready to run it for real!
-      #python experiment.py -i ${infile} -f ${f} -d 4 -p ${pruning} >> ${OUTDIR}/${FILE}
+      #python3.5 experiment.py -i ${infile} -f ${f} -d 4 -p ${pruning} >> ${OUTDIR}/${FILE}
     done
   done
 done

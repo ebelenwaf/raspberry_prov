@@ -248,7 +248,7 @@ def main():
             ["help", "verbose", "input=", "output_dir=",
              "disregard=", "numevts=", "fraction=", "prune=",
              "threshold=", "length="])
-    except getopt.GetoptError, err:
+    except (getopt.GetoptError, err):
         print(str(err))
         usage()
         sys.exit(2)
