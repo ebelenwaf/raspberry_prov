@@ -5,8 +5,8 @@ import babeltrace
 import sys
 import os
 import datetime
-from prov.dot import prov_to_dot
 from collections import defaultdict
+from prov.dot import prov_to_dot
 from prov.model import ProvDocument, Namespace, Literal, PROV, Identifier
 # import yaml
 
@@ -53,7 +53,7 @@ def ctfToProv():
 
         sa = event['producer_id']
 
-        activity = d1.activity('ex:'+event['activity']+str(counter))
+        activity = event['activity']
 
 
         e1 = d1.entity(ex['event'+str(counter)],dataset)
