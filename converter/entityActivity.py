@@ -1,10 +1,6 @@
 from prov.model import ProvDocument, Namespace, Literal, PROV, Identifier
 
-
-
 class entityActivity:
-
-
 
 	def __init__(self):
 		self.entity = None
