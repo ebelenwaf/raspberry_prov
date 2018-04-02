@@ -8,6 +8,7 @@ import datetime
 from prov.dot import prov_to_dot
 from collections import defaultdict
 from prov.model import ProvDocument, Namespace, Literal, PROV, Identifier
+from entityActivity import entityActivity
 # import yaml
 
 #provneo4j_api = provneo4j.api.Api(base_url="http://localhost:7474/db/data", username="neo4j", password="neo4j")
