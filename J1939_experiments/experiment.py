@@ -141,7 +141,7 @@ def generate_trace(temp_filename, prune, length):
 
 def convert_trace_to_prov(output_dir, tag):
     # FIXME: import ctf_to_prov?
-    converter = os.path.join("..", "converter", "ctf_to_prov.py")
+    converter = os.path.join("..", "converter", "ctf_to_prov_can.py")
     if not os.path.exists(converter):
         print("Error: ctf_to_prov.py not found at: " + converter)
         exit(1)
