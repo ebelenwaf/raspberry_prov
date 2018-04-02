@@ -54,10 +54,10 @@ def ctfToProv():
 
         sa = event['producer_id']
 
-        activity = d1.activity('ex:'+event['activity']+str(counter))
 
 
         e1 = d1.entity(ex['event'+str(counter)],dataset)
+        activity = d1.activity('ex:'+event['activity']+str(counter))
 
         #create class object to store entity and activity data field.
 
