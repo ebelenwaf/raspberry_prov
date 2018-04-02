@@ -316,8 +316,16 @@ def main():
     # is below a threshold for all training windows.
     max_scores = [max(x) for x in scores]
     detected_anomalies = [x <= threshold for x in max_scores]
-
     real_anomalies = get_ground_truth(input_filename, window_size, wc, train_count)
+
+    output_filename = os.path.join(output_dir, str(prune), str(fraction),
+            os.path.splitext(os.path.basename(input_filename))[0] + ".txt")
+
+    with open(output_filename, 'w') as scores_file:
+        print(scores, file=scores_file)
+        print(max_scores, file=scores_file)
+        print(detected_anomalies, file=scores_file)
+        print(real_anomalies, file=scores_file)
 
     if verbose is True:
         print(scores)
