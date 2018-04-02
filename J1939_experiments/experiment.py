@@ -239,6 +239,7 @@ def main():
     prune = 0
     threshold = 0.95
     trace_length = 1024
+    verbose = False
 
     log_format = "J1939"
 
