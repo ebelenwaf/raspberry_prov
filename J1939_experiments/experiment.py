@@ -183,7 +183,8 @@ def generate_prov(output_dir, log_format, windows, window_count, train_count, pr
 def get_ground_truth(input_filename, window_size, window_count, train_count):
     anom_windows = []
     infile_base = os.path.basename(input_filename)
-    s = infile_base.split("_")
+    infile_root = os.path.splitext(infile_base)[0]
+    s = infile_root.split("_")
     injection_index = int(s[3])
     injection_window = injection_index / window_size
     iw_index = injection_window - train_count
