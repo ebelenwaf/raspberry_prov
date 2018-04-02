@@ -188,7 +188,7 @@ def get_ground_truth(input_filename, window_size, window_count, train_count):
     injection_index = int(s[3])
     injection_window = injection_index / window_size
     iw_index = injection_window - train_count
-    anom_windows = [i != iw_index for i in range(window_count - train_count)]
+    anom_windows = [i == iw_index for i in range(window_count - train_count)]
     return anom_windows 
 
 def eprint(*args, **kwargs):
@@ -315,9 +315,14 @@ def main():
     # (from train_files). An anomaly is detected in a test window if its score
     # is below a threshold for all training windows.
     max_scores = [max(x) for x in scores]
+    print(max_scores)
+    print(scores)
     detected_anomalies = [x <= threshold for x in max_scores]
 
+    print(detected_anomalies)
+
     real_anomalies = get_ground_truth(input_filename, window_size, wc, train_count)
+    print(real_anomalies)
 
     TN = TP = FN = FP = 0
     for w in range(wc - train_count):
