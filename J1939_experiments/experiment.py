@@ -141,12 +141,12 @@ def generate_trace(temp_filename, prune, length):
 
 def convert_trace_to_prov(output_dir, tag):
     # FIXME: import ctf_to_prov?
-    converter = os.path.join("..", "converter", "ctf_to_prov_can.py")
+    converter = os.path.join("..", "converter", "ctf_to_prov.py")
     if not os.path.exists(converter):
         print("Error: ctf_to_prov.py not found at: " + converter)
         exit(1)
     ctf = os.path.join("..", os.path.basename(os.getcwd()), "ctf")
-    os.system("python3.5 " + converter + " " + ctf)
+    os.system("python3 " + converter + " " + ctf)
     filename = os.path.join(output_dir, tag + ".json")
     os.rename("output.json", filename)
     return filename
