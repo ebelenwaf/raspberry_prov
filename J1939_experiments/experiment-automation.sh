@@ -11,6 +11,7 @@ for pruning in 0 1 2; do
   mkdir ${OUTDIR}
   #for f in 1.0 0.5 0.25 0.125 0.0625 0.03125 0.015625 0.0078125 0.00390625; do
   for f in 1.0 0.0625 0.00390625; do
+    mkdir ${OUTDIR}/${f}
     FILE=experiment_data_${f}.txt
     echo -n "" > ${OUTDIR}/${FILE}
     for infile in `ls log/driving_data_*00_* log/driving_data_0_*`; do
