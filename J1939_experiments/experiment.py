@@ -186,7 +186,7 @@ def get_ground_truth(input_filename, window_size, window_count, train_count):
     infile_root = os.path.splitext(infile_base)[0]
     s = infile_root.split("_")
     injection_index = int(s[3])
-    injection_window = injection_index / window_size
+    injection_window = int(injection_index / window_size)
     iw_index = injection_window - train_count
     anom_windows = [i == iw_index for i in range(window_count - train_count)]
     return anom_windows 
