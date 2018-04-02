@@ -41,9 +41,9 @@ def ctfToProv():
         entities.append(e1)
         producer_agent = d1.agent('ex:'+event['producer_id'])
         if event['producer_id'] not in producer_events:
-                producer_events[event['producer_id']] = []
+                producer_events[event['producer_id']] = [e1]
         else:
-                pel = producer_events[events['producer_id']]
+                pel = producer_events[event['producer_id']]
                 d1.wasAssociatedWith(pel[len(pel)-1], e1)
                 pel.append(e1)
         controller_agent = d1.agent('ex:'+event['controller_id'])
