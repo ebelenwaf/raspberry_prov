@@ -17,7 +17,8 @@ sys.path.append(os.path.join("..", "graph_similarity"))
 from graph_driver import calculate_similarity
 
 sys.path.append(os.path.join("..", "pruning_implementation"))
-from pruning import get_pruned_data
+from pruning import get_pruned_data_FIFO
+from pruning import get_pruned_data_priority
 from pruning import create_stream_file
 
 def usage():
@@ -128,8 +129,11 @@ def prune_trace(prune, ctf, pctf, length):
     if not os.path.exists(pctf):
         print("Error: " + str(pctf) + " subdirectory does not exist")
         exit(1)
-    my_deque = get_pruned_data(ctf, length)
-    create_stream_file(pctf, my_deque)
+    if prune == 1:
+        Q = get_pruned_data_FIFO(ctf, length)
+    else:
+        Q = get_pruned_data_priority(ctf, length)
+    create_stream_file(pctf, Q)
 
 def generate_trace(temp_filename, prune, length):
     if not os.path.exists("ctf"):
@@ -317,7 +321,7 @@ def main():
         print("Number of events: " + str(numevts))
         print("Window size got: " + str(window_size))
 
-    (train_files, test_files) = generate_prov(output_dir, log_format, windows, wc, train_count, prune, trace_length, verbose)
+    (train_files, test_files) = generate_prov(output_dir, log_format, windows, wc, train_count, prune, int(window_size/2), verbose)
     scores = calculate_similarity(train_files, test_files)
 
     # Anomaly Detection. scores is a list of lists containing the similarity
