@@ -71,6 +71,7 @@ metadata:
               controller_id: string
               producer_id: string
               activity: string
+              priority: uint32
               ts: uint32
               data0: uint8
               data1: uint8
