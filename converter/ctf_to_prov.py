@@ -31,6 +31,7 @@ def ctfToProv():
     entities = []
     activities = []
     producer_events = {}
+    producer_counters = {}
     for event in trace_collection.events:
         dataset = {'ex:'+k:event[k] for k in event.field_list_with_scope(
             babeltrace.CTFScope.EVENT_FIELDS)}
@@ -42,12 +43,15 @@ def ctfToProv():
         producer_agent = d1.agent('ex:'+event['producer_id'])
         if event['producer_id'] not in producer_events:
                 producer_events[event['producer_id']] = [e1]
+                producer_counters[event['producer_id']] = 0
         else:
                 pel = producer_events[event['producer_id']]
                 d1.wasAssociatedWith(pel[len(pel)-1], e1)
                 pel.append(e1)
+                producer_counters[event['producer_id']] += 1
+        pc = producer_counters[event['producer_id']]
         controller_agent = d1.agent('ex:'+event['controller_id'])
-        activity = d1.activity('ex:'+event['activity']+str(counter_1))
+        activity = d1.activity('ex:'+event['activity']+str(pc))
         activities.append(activity)
         d1.wasGeneratedBy(e1, activity)
         # strings used to detect if the relationship already exists in the d1 document
