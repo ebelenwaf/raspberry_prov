@@ -49,35 +49,27 @@ def main(rootdirectory):
 
 	if(len(sys.argv) > 2 or len(sys.argv) < 2):
 
-		print("incomplete arguments-usage: evaluateresult.py experiment_result_root_directory")
+		print("incomplete arguments. usage: evaluateresult.py experiment_result_root_directory")
 		sys.exit(2)
 
 	directory = "roc_plots"   #output directory
 
-	if not os.path.exists(directory):
-		os.makedirs(directory)
+	if not os.path.exists(rootdirectory+"/"+directory):
+		os.makedirs(rootdirectory+"/"+directory)
 
-	fileout = open('summary_statistics.txt', 'w') 
+	fileout = open(rootdirectory+'/summary_statistics.txt', 'w') 
 
 	wr = csv.writer(fileout, delimiter='\t')
 
 
 	for file in os.listdir(rootdirectory):
-			print(file)
-
-			xpath = os.path.join(rootdirectory,file)
-
-			print(xpath)
-			if 'experiment_data' in xpath:
-				print(xpath)
-				
-
-				result, tpr, fpr = sumresult(file)
+			#print(rootdirectory+"/"+file)
+			if file.startswith("experiment_data"):
+				#print(file)
+				result, tpr, fpr = sumresult(rootdirectory+"/"+file)
 				print(tpr)
 				print(fpr)
-
 				wr.writerow(result)
-
 				plot_roc(tpr, fpr, sys.argv[1]+"/"+directory+'/roc_'+file+'.pdf')
 
 
