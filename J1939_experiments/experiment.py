@@ -35,7 +35,7 @@ def usage():
                         0   None\n\
                         1   FIFO\n\
                         2   J1939 Priority\n\
-  -t --threshold    threshold below which anomalies are detected [0.75]\n\
+  -t --threshold    threshold below which anomalies are detected [0.70]\n\
   -l --length       max length of trace before pruning (if prune > 0) [1024]\n\
 ")
 
@@ -193,10 +193,12 @@ def get_ground_truth(input_filename, window_size, window_count, train_count):
     infile_base = os.path.basename(input_filename)
     infile_root = os.path.splitext(infile_base)[0]
     s = infile_root.split("_")
-    injection_index = int(s[3])
-    injection_window = int(injection_index / window_size)
-    iw_index = injection_window - train_count
-    anom_windows = [i == iw_index for i in range(window_count - train_count)]
+    injection_base_index = int(s[3])
+    injection_window = int(injection_base_index / window_size)
+    injection_window2 = int((injection_base_index + 10) / window_size)
+    iw_base = injection_window - train_count
+    iw_end = injection_window2 - train_count
+    anom_windows = [i == iw_base or i == iw_end for i in range(window_count - train_count)]
     return anom_windows 
 
 def eprint(*args, **kwargs):
@@ -245,7 +247,7 @@ def main():
     numevts = None
     fraction = 1.0
     prune = 0
-    threshold = 0.75
+    threshold = 0.70
     trace_length = 1024
     verbose = False
 
