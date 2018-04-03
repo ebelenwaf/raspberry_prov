@@ -9,6 +9,7 @@ from collections import deque
 def get_pruned_data_FIFO(file_path, capacity):
     
     my_deque = deque(maxlen = capacity)
+    counter = itertools.count() # To keep track of duplicates while sorting.
     trace_collection = babeltrace.TraceCollection()
     
     if trace_collection.add_trace(file_path,'ctf') is None:
@@ -21,7 +22,8 @@ def get_pruned_data_FIFO(file_path, capacity):
         temp_dict['event_name'] = event.name
         if(len(my_deque) >= capacity):
             my_deque.popleft()
-        my_deque.append(temp_dict)
+        event_copy = (temp_dict['priority'], next(counter), temp_dict)
+        my_deque.append(event_copy)
     return my_deque
 
 
