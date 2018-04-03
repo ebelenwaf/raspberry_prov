@@ -47,11 +47,6 @@ def main(rootdirectory):
 	'''given a file directory, sums and returns all of the tn, tp, fn, fp for each file 
 	contained in the directory. Stores the resulting output to a new folder experiment_summary'''
 
-	if(len(sys.argv) > 2 or len(sys.argv) < 2):
-
-		print("incomplete arguments. usage: evaluateresult.py experiment_result_root_directory")
-		sys.exit(2)
-
 	directory = "roc_plots"   #output directory
 
 	if not os.path.exists(rootdirectory+"/"+directory):
@@ -88,8 +83,8 @@ def plot_roc(tpr, fpr, output):
  	plt.xlabel("False Positive Rate", fontsize=14)
  	plt.ylabel("True Positive Rate", fontsize=14)
  	plt.title("ROC Curve", fontsize=14)
- 	plt.ylim([0, 1])
- 	plt.xlim([0, 1])
+ 	plt.ylim([0, 1.5])
+ 	plt.xlim([0, 1.5])
 
  	plt.plot(fpr, tpr, color=color1, linewidth=1, label='0.40')
  	#plt.plot(fpr1, tpr1, linestyle='dashed', color=color2 ,linewidth=1, label='0.35')
@@ -103,7 +98,12 @@ def plot_roc(tpr, fpr, output):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1])
+	if(len(sys.argv)!= 2):
+		print("incomplete arguments. usage: evaluateresult.py experiment_result_root_directory")
+		sys.exit(2)
+
+	main(sys.argv[1])
+
 
 
 
