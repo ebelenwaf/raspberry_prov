@@ -35,7 +35,7 @@ def usage():
                         0   None\n\
                         1   FIFO\n\
                         2   J1939 Priority\n\
-  -t --threshold    threshold below which anomalies are detected [0.95]\n\
+  -t --threshold    threshold below which anomalies are detected [0.75]\n\
   -l --length       max length of trace before pruning (if prune > 0) [1024]\n\
 ")
 
@@ -124,8 +124,12 @@ def generate_trace_metadata(data, log_format):
     else:
         assert False, "Error: unrecognized log format: " + log_format
 
-def prune_trace(prune, ctf, length):
-    create_stream_file(os.path.join(ctf, "stream"), get_pruned_data(ctf, length))
+def prune_trace(prune, ctf, pctf, length):
+    if not os.path.exists(pctf):
+        print("Error: " + str(pctf) + " subdirectory does not exist")
+        exit(1)
+    my_deque = get_pruned_data(ctf, length)
+    create_stream_file(pctf, my_deque)
 
 def generate_trace(temp_filename, prune, length):
     if not os.path.exists("ctf"):
@@ -137,15 +141,19 @@ def generate_trace(temp_filename, prune, length):
         exit(1)
     os.system(canbus_exe + " " + temp_filename)
     if prune > 0:
-        prune_trace(prune, "ctf", length)
+        prune_trace(prune, "ctf", "pctf", length)
 
-def convert_trace_to_prov(output_dir, tag):
+def convert_trace_to_prov(output_dir, tag, prune):
     # FIXME: import ctf_to_prov?
+    ctf = None
     converter = os.path.join("..", "converter", "ctf_to_prov.py")
     if not os.path.exists(converter):
         print("Error: ctf_to_prov.py not found at: " + converter)
         exit(1)
-    ctf = os.path.join("..", os.path.basename(os.getcwd()), "ctf")
+    if prune > 0:
+        ctf = os.path.join("..", os.path.basename(os.getcwd()), "pctf")
+    else:
+        ctf = os.path.join("..", os.path.basename(os.getcwd()), "ctf")
     os.system("python3 " + converter + " " + ctf)
     filename = os.path.join(output_dir, tag + ".json")
     os.rename("output.json", filename)
@@ -172,7 +180,7 @@ def generate_prov(output_dir, log_format, windows, window_count, train_count, pr
         td = generate_trace_metadata(w, log_format)
         write_lists_to_CSV(temp_filename, td)
         generate_trace(temp_filename, prune, max_trace_length)
-        f =  convert_trace_to_prov(output_dir, tag + str(index))
+        f =  convert_trace_to_prov(output_dir, tag + str(index), prune)
         if index >= train_count:
             test_files.append(f)
         else:
@@ -237,7 +245,7 @@ def main():
     numevts = None
     fraction = 1.0
     prune = 0
-    threshold = 0.95
+    threshold = 0.75
     trace_length = 1024
     verbose = False
 
