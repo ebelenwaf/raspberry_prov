@@ -4,8 +4,28 @@ import sys
 from collections import Counter
 import heapq
 import itertools
+from collections import deque
 
-def get_pruned_data(file_path, capacity):
+def get_pruned_data_FIFO(file_path, capacity):
+    
+    my_deque = deque(maxlen = capacity)
+    trace_collection = babeltrace.TraceCollection()
+    
+    if trace_collection.add_trace(file_path,'ctf') is None:
+        raise RuntimeError('Cannot add trace')
+    
+    for event in trace_collection.events:
+        temp_dict = {}
+        for key in event:
+            temp_dict[key] = event[key]
+        temp_dict['event_name'] = event.name
+        if(len(my_deque) >= capacity):
+            my_deque.popleft()
+        my_deque.append(temp_dict)
+    return my_deque
+
+
+def get_pruned_data_priority(file_path, capacity):
     prior_queue = []
     counter = itertools.count() # To keep track of duplicates while sorting.
     trace_collection = babeltrace.TraceCollection()
@@ -127,7 +147,7 @@ def create_stream_file(streamfile_dest, my_prio_queue):
 def main():
     capacity = 1000
     file_path1 = 'ctf' #replace 'ctf' with a file path that has your stream file
-    my_prio_queue = get_pruned_data(file_path1, capacity)
+    my_prio_queue = get_pruned_data_priority(file_path1, capacity)
     create_stream_file("new_file3", my_prio_queue) # replace 'new_file3' with a file destination
     print('{}'.format(my_prio_queue))
 
