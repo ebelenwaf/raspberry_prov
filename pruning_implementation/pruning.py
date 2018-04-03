@@ -28,7 +28,7 @@ def get_pruned_data_FIFO(file_path, capacity):
 
 
 def get_pruned_data_priority(file_path, capacity):
-    prior_queue = []
+    prio_queue = []
     counter = itertools.count() # To keep track of duplicates while sorting.
     trace_collection = babeltrace.TraceCollection()
     
