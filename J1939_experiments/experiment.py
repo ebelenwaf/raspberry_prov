@@ -35,7 +35,7 @@ def usage():
                         0   None\n\
                         1   FIFO\n\
                         2   J1939 Priority\n\
-  -t --threshold    threshold below which anomalies are detected [0.95]\n\
+  -t --threshold    threshold below which anomalies are detected [0.75]\n\
   -l --length       max length of trace before pruning (if prune > 0) [1024]\n\
 ")
 
@@ -237,7 +237,7 @@ def main():
     numevts = None
     fraction = 1.0
     prune = 0
-    threshold = 0.95
+    threshold = 0.75
     trace_length = 1024
     verbose = False
 
