@@ -113,7 +113,7 @@ def main():
 	in_file = 'driving_data.csv'
 	disregard = 4
 	inject_point = 0
-	malicious_msg = '1,2,C000003x,C000003x,CAN - EXT,8,01 41 A0 FF FF FF FF FF,Tx'
+	malicious_msg = '1,2,00000003,00000003,CAN - EXT,8,01 41 A0 FF FF FF FF FF,Tx'
 	output = "log"
 	number_injections = 10
 	verbose = False
