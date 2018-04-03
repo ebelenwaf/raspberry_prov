@@ -12,7 +12,7 @@ def usage():
  -h --help         print this help\n\
  -v --verbose      print more information [False]\n\
  -i --input        input log filename [driving_data.csv]\n\
- -o --output       output log filename [anomalous_data.csv]\n\
+ -o --output       output log directory [log]\n\
  -d --disregard    denominator of 1/d % events not subject to injection [4]\n\
 					   Note: d must match that used during injection, and\n\
 					   the max window size is n/d.\n\
@@ -114,7 +114,7 @@ def main():
 	disregard = 4
 	inject_point = 0
 	malicious_msg = '1,2,C000003x,C000003x,CAN - EXT,8,01 41 A0 FF FF FF FF FF,Tx'
-	output = 'anomalous_data.csv'
+	output = "log"
 	number_injections = 10
 	verbose = False
 
@@ -139,7 +139,7 @@ def main():
 		elif opt in ("-v", "--verbose"):
 			verbose = True
 		elif opt in ("-i", "--input"):
-			input_filename = arg
+			in_file = arg
 		elif opt in ("-o", "--output"):
 			output = arg
 		elif opt in ("-d", "--disregard"):
@@ -156,15 +156,15 @@ def main():
 	inject_point = 0
 	index = 0
 
-	if not os.path.exists("log"):
-		os.mkdir("log")
+	if not os.path.exists(output):
+		os.mkdir(output)
 
 	data = read_lists_from_CSV(in_file)
 
 	while index >= 0:
 		index, malData = injectMsg(data, disregard, inject_point, malicious_msg, number_injections)
 		if index >= 0:
-			outfile_name = os.path.join("log", "driving_data_" + str(inject_point) + "_" + str(index) + ".csv")
+			outfile_name = os.path.join(output, "driving_data_" + str(inject_point) + "_" + str(index) + ".csv")
 			write_lists_to_CSV(outfile_name, malData)
 
 		if verbose == True:
