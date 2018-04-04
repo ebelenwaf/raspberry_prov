@@ -111,6 +111,7 @@ int main(int argc, char *argv[])
 
     source_address = &node_id[6];
     priority = (uint32_t)strtol(node_id, NULL, 16);
+    priority = ((uint32_t)-1) - priority;
     barectf_default_trace_canbus_rcv(
         barectf_platform_linux_fs_get_barectf_ctx(platform_ctx),
         network_id, source_address, "read", priority,
