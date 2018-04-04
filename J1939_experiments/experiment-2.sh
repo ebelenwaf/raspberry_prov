@@ -10,7 +10,7 @@ for pruning in 2; do
   OUTDIR=out/${pruning}/
   mkdir ${OUTDIR}
   #for f in 1.0 0.5 0.25 0.125 0.0625 0.03125 0.015625 0.0078125 0.00390625; do
-  for f in 0.25 0.125 0.0625 0.03125 0.0125 0.01 0.0075 0.005 0.00391 ; do
+  for f in 0.0625 0.03125 0.0125 0.01 0.0075 0.005 0.00391 ; do
     mkdir ${OUTDIR}/${f}
     FILE=experiment_data_${f}.txt
     echo -n "" > ${OUTDIR}/${FILE}
@@ -18,6 +18,9 @@ for pruning in 2; do
       echo "python3 experiment.py -i ${infile} -f ${f} -d 4 -p ${pruning} >> ${OUTDIR}/${FILE}"
       time python3 experiment.py -i ${infile} -f ${f} -d 4 -p ${pruning} >> ${OUTDIR}/${FILE}
     done
+    git add ${OUTDIR}/${FILE}
+    git commit -m "Add ${FILE}"
+    git push
   done
 done
 
